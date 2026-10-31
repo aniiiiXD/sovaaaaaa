@@ -1,6 +1,12 @@
-# Praxis: target accounts and video outreach
+# Sova: target accounts and video outreach
 
 Working recommendation · 31 October 2026. Priorities, durations and outreach counts are hypotheses to test. No messages have been sent. No model benchmark has been run for this outreach.
+
+## Sova context
+
+Sova builds workflow-specific models and the infrastructure to evaluate, route and serve them. The intended offer combines customer-owned weights, deployment within the customer’s chosen infrastructure, and measured quality, latency and cost. The technical loop is data → post-training → evaluation → iteration → performance engineering → serving. SFT and RL are methods selected for the task, not the customer-facing product.
+
+Existing project evidence includes the Banking77 triage report. Rig is written but unexecuted; do not present its planned capabilities as measured production results. A prospect-specific benchmark remains to be run.
 
 ## Start with one task and one buyer
 
@@ -35,7 +41,7 @@ Record the relevant browser tab plus your face, or point the camera at a legible
 
 ## Read-aloud script
 
-Hey [Name], I’m Ani, building Praxis. I saw that [Company] handles [specific workflow], and I put together one idea for that part of the product.
+Hey [Name], I’m Ani, building Sova. We’re building specialist models for recurring business workflows, with customer-owned weights and deployment on infrastructure you control. I saw that [Company] handles [specific workflow], and I put together one experiment for that part of the product.
 
 On this board are three illustrative cases: a routine request, an ambiguous one, and one that should go to a human. These are examples I made—not results from your system.
 

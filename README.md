@@ -2,7 +2,7 @@
 
 Full project snapshot: [aniiiiXD/sovaaaaaa](https://github.com/aniiiiXD/sovaaaaaa).
 
-The Praxis-branded custom-model market brief is in
+The Sova-branded custom-model market brief is in
 [`Research/rl-post-training-2026-10-31/index.html`](Research/rl-post-training-2026-10-31/index.html).
 Open it directly in a browser; the accompanying research, sources, tweet drafts
 and chart plans live beside it. Its market-size scenarios are illustrative.
