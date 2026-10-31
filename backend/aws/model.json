@@ -1,0 +1,29 @@
+{
+  "ModelName": "sova-fin-o1-14b-bd4b97b8",
+  "ExecutionRoleArn": "arn:aws:iam::169970912263:role/PasskarwadoSageMaker",
+  "EnableNetworkIsolation": true,
+  "PrimaryContainer": {
+    "Mode": "SingleModel",
+    "Image": "763104351884.dkr.ecr.ap-south-1.amazonaws.com/vllm:server-sagemaker-cuda-v2.7",
+    "ModelDataSource": {
+      "S3DataSource": {
+        "S3Uri": "s3://passkarwado/sova/fin-o1-14b/bd4b97b8e5f6954c2c6d92da75b6ba4cb948b56d/",
+        "S3DataType": "S3Prefix",
+        "CompressionType": "None"
+      }
+    },
+    "Environment": {
+      "SM_VLLM_SERVED_MODEL_NAME": "fin-o1-14b",
+      "SM_VLLM_DTYPE": "bfloat16",
+      "SM_VLLM_MAX_MODEL_LEN": "8192",
+      "SM_VLLM_MAX_NUM_SEQS": "4",
+      "SM_VLLM_GPU_MEMORY_UTILIZATION": "0.9",
+      "SM_VLLM_DISABLE_LOG_REQUESTS": "true",
+      "STANDARD_AUTO_INSTALL_REQ": "false"
+    }
+  },
+  "Tags": [
+    { "Key": "Project", "Value": "Sova" },
+    { "Key": "ModelRevision", "Value": "bd4b97b8e5f6954c2c6d92da75b6ba4cb948b56d" }
+  ]
+}

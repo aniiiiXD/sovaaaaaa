@@ -1,0 +1,23 @@
+{
+  "jobName": "sova-fin-o1-14b-bd4b97b8",
+  "importedModelName": "sova-fin-o1-14b-bd4b97b8",
+  "roleArn": "arn:aws:iam::169970912263:role/SovaBedrockModelImport",
+  "modelDataSource": {
+    "s3DataSource": {
+      "s3Uri": "s3://passkarwado-useast1/sova/fin-o1-14b/bd4b97b8e5f6954c2c6d92da75b6ba4cb948b56d/"
+    }
+  },
+  "jobTags": [
+    {
+      "key": "SovaService",
+      "value": "fin-o1-14b"
+    }
+  ],
+  "importedModelTags": [
+    {
+      "key": "SovaService",
+      "value": "fin-o1-14b"
+    }
+  ],
+  "clientRequestToken": "sova-fin-o1-14b-bd4b97b8-20261024"
+}

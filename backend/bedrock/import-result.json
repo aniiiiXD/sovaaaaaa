@@ -1,0 +1,8 @@
+{
+  "modelArn": "arn:aws:bedrock:us-east-1:169970912263:imported-model/agzp8jpcfo1b",
+  "jobArn": "arn:aws:bedrock:us-east-1:169970912263:model-import-job/frqte2u3ndp2",
+  "status": "Completed",
+  "customModelUnitsPerModelCopy": 2,
+  "customModelUnitsVersion": "v1.0",
+  "instructSupported": false
+}

@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-24",
+  "url": "https://sova-native.vercel.app/demo",
+  "deployment": "dpl_6xWPMiPk2C6rVkhDNGqivvuFXb9v",
+  "production": {
+    "pageStatus": 200,
+    "recordedResult": true,
+    "noDemoCredentialInPage": true,
+    "unauthorizedStatus": 401,
+    "authenticatedInvalidBodyStatus": 400
+  },
+  "tests": {
+    "demo": 5,
+    "inference": 19,
+    "typecheck": "passed",
+    "lint": "passed",
+    "build": "passed"
+  },
+  "examples": [
+    {
+      "name": "Aster",
+      "durationMs": 11083,
+      "outputTokens": 659,
+      "numericChecksPassed": 4
+    },
+    {
+      "name": "Northline",
+      "durationMs": 9433,
+      "outputTokens": 647,
+      "numericChecksPassed": 4
+    }
+  ],
+  "browser": {
+    "desktop": "reviewed",
+    "mobile390": "reviewed",
+    "reference": "verified",
+    "customInputGate": "verified",
+    "export": "verified"
+  },
+  "baseline": "Disabled: GPT-6.1 Sol invocation rejected by AWS account access.",
+  "note": "Example timings are individual smoke measurements, not a benchmark; actual billed cost not retrieved."
+}

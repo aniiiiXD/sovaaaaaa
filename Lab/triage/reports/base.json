@@ -1,0 +1,11 @@
+{
+ "model": "mlx-community/Qwen3-0.6B-bf16",
+ "adapter": null,
+ "n": 770,
+ "accuracy": 0.1312,
+ "p50_ttft_ms": 82.0,
+ "p50_tok_per_s": 87.5,
+ "usd_per_gpu_hour": 8.0,
+ "usd_per_1k_tasks": 0.7451,
+ "label": "base"
+}

@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#E4502A" stop-opacity="0.20"/>
+      <stop offset="70%" stop-color="#E4502A" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#E4502A" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="sunGrad" cx="50%" cy="42%" r="65%">
+      <stop offset="0%" stop-color="#F0603A"/>
+      <stop offset="72%" stop-color="#E4502A"/>
+      <stop offset="100%" stop-color="#C43E1C"/>
+    </radialGradient>
+    <linearGradient id="irisGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F7B733"/>
+      <stop offset="100%" stop-color="#D97B12"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ground -->
+  <rect width="1600" height="900" fill="#0A0A0C"/>
+
+  <!-- ambient glow behind subject -->
+  <circle cx="800" cy="470" r="560" fill="url(#glow)"/>
+
+  <!-- stars -->
+  <g fill="#ECECEE">
+    <circle cx="140" cy="120" r="2" opacity=".4"/>
+    <circle cx="260" cy="210" r="1.5" opacity=".3"/>
+    <circle cx="420" cy="90" r="2" opacity=".35"/>
+    <circle cx="560" cy="160" r="1.6" opacity=".3"/>
+    <circle cx="1180" cy="110" r="2" opacity=".4"/>
+    <circle cx="1310" cy="190" r="1.6" opacity=".32"/>
+    <circle cx="1440" cy="120" r="2.2" opacity=".42"/>
+    <circle cx="1500" cy="260" r="1.5" opacity=".28"/>
+    <circle cx="90" cy="320" r="1.8" opacity=".3"/>
+    <circle cx="1540" cy="420" r="1.8" opacity=".3"/>
+    <circle cx="380" cy="300" r="1.4" opacity=".25"/>
+    <circle cx="1230" cy="260" r="1.6" opacity=".3"/>
+  </g>
+
+  <!-- orbit rings -->
+  <ellipse cx="800" cy="480" rx="430" ry="120" fill="none" stroke="#ECECEE" stroke-opacity=".13" stroke-width="1.5" transform="rotate(-12 800 480)"/>
+  <ellipse cx="800" cy="480" rx="470" ry="155" fill="none" stroke="#ECECEE" stroke-opacity=".07" stroke-width="1.5" transform="rotate(-12 800 480)"/>
+
+  <!-- vermilion sun -->
+  <circle cx="800" cy="480" r="285" fill="#C43E1C"/>
+  <circle cx="800" cy="480" r="262" fill="url(#sunGrad)"/>
+  <circle cx="800" cy="480" r="302" fill="none" stroke="#F5A623" stroke-opacity=".45" stroke-width="2" stroke-dasharray="4 12"/>
+
+  <!-- floating interface chips -->
+  <g>
+    <rect x="1152" y="292" width="4" height="18" fill="#E4502A" opacity=".85" transform="rotate(18 1154 301)"/>
+    <rect x="1168" y="308" width="4" height="12" fill="#ECECEE" opacity=".5" transform="rotate(18 1170 314)"/>
+    <circle cx="1196" cy="330" r="3" fill="#F5A623" opacity=".9"/>
+    <circle cx="1208" cy="330" r="3" fill="#ECECEE" opacity=".7"/>
+    <circle cx="1220" cy="330" r="3" fill="#2E7D4F"/>
+  </g>
+  <circle cx="520" cy="258" r="10" fill="none" stroke="#E4502A" stroke-opacity=".4" stroke-width="2"/>
+  <g fill="#ECECEE" opacity=".35">
+    <rect x="1046" y="216" width="10" height="2"/>
+    <rect x="1050" y="212" width="2" height="10"/>
+  </g>
+
+  <!-- back hair -->
+  <path d="M 690 400 Q 685 298 800 293 Q 915 298 910 400 L 922 560 Q 935 720 950 900 L 650 900 Q 665 720 678 560 Z" fill="#171823"/>
+
+  <!-- neck -->
+  <path d="M 775 515 L 825 515 L 825 595 L 775 595 Z" fill="#E8BC96"/>
+  <path d="M 775 515 Q 800 560 825 515 L 825 545 Q 800 578 775 545 Z" fill="#D9A57F" opacity=".85"/>
+
+  <!-- face -->
+  <ellipse cx="800" cy="425" rx="92" ry="100" fill="#F2C9A8"/>
+
+  <!-- forehead shadow under fringe -->
+  <path d="M 715 448 Q 800 472 885 448 L 885 464 Q 800 488 715 464 Z" fill="#D9A57F" opacity=".45"/>
+
+  <!-- eyes -->
+  <g>
+    <!-- left eye -->
+    <ellipse cx="757" cy="472" rx="25" ry="26" fill="#FBF6EF"/>
+    <circle cx="757" cy="474" r="18" fill="url(#irisGrad)"/>
+    <circle cx="757" cy="474" r="8.5" fill="#241505"/>
+    <circle cx="751" cy="467" r="4.5" fill="#FFFFFF"/>
+    <circle cx="763" cy="481" r="2" fill="#FFFFFF" opacity=".8"/>
+    <path d="M 733 462 Q 757 440 781 462" fill="none" stroke="#14121C" stroke-width="7" stroke-linecap="round"/>
+    <path d="M 733 462 L 724 454" fill="none" stroke="#14121C" stroke-width="5" stroke-linecap="round"/>
+    <path d="M 737 493 Q 757 501 777 493" fill="none" stroke="#C89A7E" stroke-width="2.5" stroke-linecap="round" opacity=".55"/>
+    <!-- right eye -->
+    <ellipse cx="843" cy="472" rx="25" ry="26" fill="#FBF6EF"/>
+    <circle cx="843" cy="474" r="18" fill="url(#irisGrad)"/>
+    <circle cx="843" cy="474" r="8.5" fill="#241505"/>
+    <circle cx="837" cy="467" r="4.5" fill="#FFFFFF"/>
+    <circle cx="849" cy="481" r="2" fill="#FFFFFF" opacity=".8"/>
+    <path d="M 819 462 Q 843 440 867 462" fill="none" stroke="#14121C" stroke-width="7" stroke-linecap="round"/>
+    <path d="M 867 462 L 876 454" fill="none" stroke="#14121C" stroke-width="5" stroke-linecap="round"/>
+    <path d="M 823 493 Q 843 501 863 493" fill="none" stroke="#C89A7E" stroke-width="2.5" stroke-linecap="round" opacity=".55"/>
+  </g>
+
+  <!-- brows -->
+  <path d="M 730 442 Q 757 430 784 440" fill="none" stroke="#262038" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M 816 440 Q 843 430 870 442" fill="none" stroke="#262038" stroke-width="4.5" stroke-linecap="round"/>
+
+  <!-- nose + mouth + blush -->
+  <circle cx="800" cy="502" r="2.5" fill="#D9A57F"/>
+  <path d="M 781 520 Q 800 532 819 520" fill="none" stroke="#B4563E" stroke-width="3.5" stroke-linecap="round"/>
+  <ellipse cx="733" cy="500" rx="13" ry="6.5" fill="#E89A8D" opacity=".38"/>
+  <ellipse cx="867" cy="500" rx="13" ry="6.5" fill="#E89A8D" opacity=".38"/>
+
+  <!-- bangs -->
+  <path d="M 705 430 L 705 380 Q 705 320 800 315 Q 895 320 895 380 L 895 430 L 872 448 L 852 428 L 830 452 L 806 430 L 782 454 L 760 430 L 740 450 L 720 430 Z" fill="#171823"/>
+  <path d="M 722 366 L 748 350 L 778 366 L 806 350 L 836 366 L 862 352" fill="none" stroke="#4A4C63" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+  <path d="M 724 384 L 750 368 L 780 384 L 808 368 L 838 384 L 864 370" fill="none" stroke="#E4502A" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>
+
+  <!-- hoodie -->
+  <path d="M 800 596 C 760 596 745 585 738 588 C 660 610 610 640 588 690 C 566 745 560 820 558 900 L 1042 900 C 1040 820 1034 745 1012 690 C 990 640 940 610 862 588 C 855 585 840 596 800 596 Z" fill="#17181E"/>
+  <path d="M 700 640 Q 800 692 900 640 L 900 662 Q 800 714 700 662 Z" fill="#101116" opacity=".6"/>
+  <path d="M 738 588 Q 800 622 862 588" fill="none" stroke="#34363F" stroke-width="12" stroke-linecap="round"/>
+  <path d="M 800 622 L 800 900" fill="none" stroke="#262833" stroke-width="3"/>
+  <path d="M 782 612 L 778 672" fill="none" stroke="#ECECEE" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 818 612 L 822 672" fill="none" stroke="#ECECEE" stroke-width="4" stroke-linecap="round"/>
+  <rect x="775" y="672" width="6" height="11" rx="2" fill="#E4502A"/>
+  <rect x="819" y="672" width="6" height="11" rx="2" fill="#E4502A"/>
+
+  <!-- chest emblem owl -->
+  <g>
+    <circle cx="740" cy="706" r="13" fill="#E4502A"/>
+    <circle cx="736" cy="703" r="2.6" fill="#0A0A0C"/>
+    <circle cx="744" cy="703" r="2.6" fill="#0A0A0C"/>
+    <path d="M 738 707 L 742 707 L 740 712 Z" fill="#F5A623"/>
+  </g>
+
+  <!-- side locks over shoulders -->
+  <path d="M 702 410 L 728 410 L 720 640 Q 718 740 700 820 Q 692 740 694 640 Z" fill="#14151F"/>
+  <path d="M 898 410 L 872 410 L 880 640 Q 882 740 900 820 Q 908 740 906 640 Z" fill="#14151F"/>
+
+  <!-- owl companion on shoulder -->
+  <g>
+    <path d="M 628 566 L 640 586 L 648 564 Z" fill="#262833"/>
+    <path d="M 668 566 L 656 586 L 648 564 Z" fill="#262833"/>
+    <ellipse cx="648" cy="608" rx="32" ry="42" fill="#262833"/>
+    <ellipse cx="648" cy="618" rx="18" ry="23" fill="#3A3C46"/>
+    <circle cx="636" cy="596" r="9" fill="#F5A623"/>
+    <circle cx="660" cy="596" r="9" fill="#F5A623"/>
+    <circle cx="636" cy="596" r="3.8" fill="#0A0A0C"/>
+    <circle cx="660" cy="596" r="3.8" fill="#0A0A0C"/>
+    <circle cx="634" cy="593" r="2" fill="#FFFFFF"/>
+    <circle cx="658" cy="593" r="2" fill="#FFFFFF"/>
+    <path d="M 644 604 L 652 604 L 648 614 Z" fill="#F5A623"/>
+    <path d="M 640 650 L 640 659 M 656 650 L 656 659" fill="none" stroke="#E8B44C" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+</svg>

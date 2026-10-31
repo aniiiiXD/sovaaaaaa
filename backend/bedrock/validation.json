@@ -1,0 +1,64 @@
+{
+  "date": "2026-10-24",
+  "modelArn": "arn:aws:bedrock:us-east-1:169970912263:imported-model/agzp8jpcfo1b",
+  "deployment": "https://sova-native-muqqdz0bm-aniiiixds-projects.vercel.app",
+  "direct": {
+    "correctAnswer": "25%",
+    "completionTokens": 306,
+    "requestSeconds": 6.79,
+    "includesCliAndNetwork": true
+  },
+  "gateway": [
+    {
+      "stream": false,
+      "status": 200,
+      "durationSeconds": 7.42,
+      "usage": {
+        "prompt_tokens": 30,
+        "total_tokens": 335,
+        "completion_tokens": 305,
+        "prompt_tokens_details": null
+      },
+      "correctAnswer": true
+    },
+    {
+      "stream": true,
+      "status": 200,
+      "durationSeconds": 6.7,
+      "correctAnswer": true
+    }
+  ],
+  "streamingUsage": "Bedrock emitted no OpenAI usage even with include_usage=true and stream=true; raw invocation metrics report inputTokenCount=0. No token counts are fabricated. Use non-streaming responses for token accounting.",
+  "cost": "2 CMUs v1.0; $0.5718 per active five-minute window and $3.90/month model storage at the checked price; actual billing not retrieved.",
+  "productionBaseUrl": "https://sova-native.vercel.app/api/v1",
+  "production": [
+    {
+      "path": "/",
+      "status": 200,
+      "authenticated": false
+    },
+    {
+      "path": "/api/v1/models",
+      "status": 401,
+      "authenticated": false
+    },
+    {
+      "path": "/api/v1/models",
+      "status": 200,
+      "authenticated": true
+    },
+    {
+      "path": "/api/v1/chat/completions",
+      "status": 200,
+      "correctAnswer": true,
+      "durationSeconds": 4.978,
+      "usage": {
+        "prompt_tokens": 30,
+        "total_tokens": 339,
+        "completion_tokens": 309,
+        "prompt_tokens_details": null
+      }
+    }
+  ],
+  "state": "Live"
+}

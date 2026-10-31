@@ -1,0 +1,368 @@
+@import "tailwindcss";
+
+/* ============================================================
+   SOVA — dark cinematic + liquid glass
+   Near-black base, near-white ink, monochrome glass surfaces with a
+   masked gradient border, and vermilion reserved only as a live signal.
+   Display = Instrument Serif, body = Geist, utility = Geist Mono.
+   ============================================================ */
+:root {
+  --paper:    #0A0A0C;   /* page ground — near-black */
+  --paper-2:  #141417;   /* raised solid panels / grid cells */
+  --paper-3:  #0F0F12;   /* wells / insets */
+
+  --ink:      #F5F4F2;   /* primary text — near-white */
+  --muted:    #A6A6AE;   /* secondary text */
+  --faint:    #86868F;   /* captions — ≥4.5:1 on every dark surface (5.1:1 worst case) */
+
+  /* repurposed for the dark theme: a near-white "primary" neutral so
+     legacy var(--pine) usages (ticks, labels, the featured card) read light */
+  --pine:     #ECECEE;
+  --pine-2:   #D4D4D8;
+  --pine-ink: #CDCDD3;
+
+  --signal:   #FF5C2E;   /* vermilion — LIVE signal only. Bright enough for AA small text on dark (5.97:1 on --paper-2). */
+
+  --line:     rgba(255, 255, 255, 0.10);
+  --line-2:   rgba(255, 255, 255, 0.16);
+  --line-3:   rgba(255, 255, 255, 0.26);
+}
+
+@theme inline {
+  --font-display: var(--font-instrument);
+  --font-sans:    var(--font-geist-sans);
+  --font-mono:    var(--font-roboto-mono);
+
+  --color-paper:   var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-ink:     var(--ink);
+  --color-muted:   var(--muted);
+  --color-faint:   var(--faint);
+  --color-pine:    var(--pine);
+  --color-signal:  var(--signal);
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--line);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* keep anchored sections clear of the fixed nav */
+  :where(section[id], article[id]) {
+    scroll-margin-top: 4.75rem;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-sans), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--signal) 40%, transparent);
+    color: #fff;
+  }
+
+  ::-webkit-scrollbar { width: 11px; height: 11px; }
+  ::-webkit-scrollbar-track { background: var(--paper); }
+  ::-webkit-scrollbar-thumb { background: #26262b; border-radius: 99px; border: 3px solid var(--paper); }
+  ::-webkit-scrollbar-thumb:hover { background: #34343b; }
+
+  :focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+}
+
+@layer components {
+  /* --- type --- */
+  .font-display { font-family: var(--font-display), serif; }
+  .mono { font-family: var(--font-mono), monospace; }
+
+  .display {
+    font-family: var(--font-display), serif;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    line-height: 1.03;
+  }
+
+  .lead {
+    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+    line-height: 1.55;
+    color: var(--muted);
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-mono), monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* --- layout --- */
+  .container-x {
+    width: 100%;
+    max-width: 1180px;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 2.75rem);
+  }
+  .section { position: relative; padding-block: clamp(4.5rem, 10vw, 8rem); }
+
+  /* faint grid texture — light hairlines on the dark ground */
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, var(--line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+    background-size: 46px 46px;
+    background-position: center;
+    -webkit-mask-image: radial-gradient(120% 90% at 72% 8%, #000 30%, transparent 78%);
+    mask-image: radial-gradient(120% 90% at 72% 8%, #000 30%, transparent 78%);
+    opacity: 0.5;
+  }
+
+  /* --- liquid glass (shared across surfaces) --- */
+  .liquid-glass,
+  .card,
+  .well,
+  .chip,
+  .tag {
+    position: relative;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.02);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
+    border: none;
+  }
+  .liquid-glass::before,
+  .card::before,
+  .well::before,
+  .chip::before,
+  .tag::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.2px;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.42) 0%,
+      rgba(255, 255, 255, 0.12) 22%,
+      rgba(255, 255, 255, 0) 45%,
+      rgba(255, 255, 255, 0) 55%,
+      rgba(255, 255, 255, 0.12) 78%,
+      rgba(255, 255, 255, 0.42) 100%
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .card { border-radius: 1rem; }
+  .well { border-radius: 0.9rem; }
+
+  /* --- buttons --- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    font-size: 0.95rem;
+    line-height: 1.2;
+    min-height: 44px;           /* AA touch-target floor */
+    max-width: 100%;
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.65rem;
+    transition: transform .16s ease, background .2s ease, border-color .2s ease, color .2s ease, opacity .2s ease;
+    white-space: normal;        /* labels wrap instead of overflowing at 320px */
+    cursor: pointer;
+  }
+  .btn svg { flex: none; }
+  .btn-primary {
+    color: #0a0a0c;
+    background: #ffffff;
+    border: 1px solid #ffffff;
+  }
+  .btn-primary:hover { background: rgba(255, 255, 255, 0.86); transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0); }
+  /* secondary: solid dark fill + visible outline so it stays readable over the hero photo */
+  .btn-ghost {
+    color: var(--ink);
+    border-radius: 0.65rem;
+    background: color-mix(in oklab, var(--paper) 74%, transparent);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--line-3);
+  }
+  .btn-ghost:hover {
+    background: color-mix(in oklab, var(--paper) 90%, transparent);
+    border-color: rgba(255, 255, 255, 0.42);
+    transform: translateY(-1px);
+  }
+  .btn-ghost:active { transform: translateY(0); }
+
+  /* --- signal system --- */
+  .signal-dot {
+    width: 8px; height: 8px; border-radius: 99px;
+    background: var(--signal);
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--signal) 60%, transparent);
+    animation: signal 2.2s ease-out infinite;
+  }
+  .signal-dot--calm { animation: none; background: var(--muted); box-shadow: none; }
+
+  .tag {
+    display: inline-flex; align-items: center; gap: 0.42rem;
+    font-family: var(--font-mono), monospace;
+    font-size: 0.66rem; letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 0.28rem 0.55rem; border-radius: 0.45rem;
+    color: var(--muted);
+  }
+  .tag--live { color: var(--signal); }
+
+  .chip {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: var(--font-mono), monospace;
+    font-size: 0.72rem; letter-spacing: 0.02em;
+    padding: 0.4rem 0.7rem; border-radius: 99px;
+    color: var(--muted);
+  }
+
+  /* numbered marker — only where order is real (the process) */
+  .num {
+    font-family: var(--font-mono), monospace;
+    font-size: 0.8rem; font-weight: 500;
+    color: var(--signal); letter-spacing: 0.05em;
+  }
+
+  /* animated link underline */
+  .ulink { position: relative; color: var(--muted); transition: color .2s ease; }
+  .ulink::after {
+    content: ""; position: absolute; left: 0; right: 100%; bottom: -3px;
+    height: 1.5px; background: var(--ink);
+    transition: right .28s cubic-bezier(.2,.7,.2,1);
+  }
+  .ulink:hover { color: var(--ink); }
+  .ulink:hover::after { right: 0; }
+
+  /* shift-board scan line */
+  .scan { position: relative; overflow: hidden; }
+  .scan::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--signal) 10%, transparent), transparent);
+    transform: translateX(-100%);
+    animation: scan 4.5s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  /* scroll reveal */
+  .reveal {
+    opacity: 0; transform: translateY(16px);
+    transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);
+    will-change: opacity, transform;
+  }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ============================================================
+     Fluid hero system — large-desktop / ultrawide composition.
+     .container-hero aligns nav + hero + proof strip to the same
+     edges and grows with the viewport to a hard 1800px cap, so
+     2560/3440 screens feel purpose-sized without stretching at 4K.
+     Body sections intentionally remain on .container-x (1180px).
+     All scales are viewport-fluid clamps with hard caps.
+     Rules documented in DESIGN.md → "Fluid hero system".
+     ============================================================ */
+  .container-hero {
+    width: 100%;
+    max-width: 112.5rem; /* 1800px hard cap — no infinite stretch at 4K */
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 4rem);
+  }
+
+  /* Headline: 38px phone → ~58px tablet → ~76px laptop → ~122px @2560 → 128px cap */
+  .hero-display {
+    font-size: clamp(2.25rem, 1.4rem + 2.4vw, 3.9rem);
+  }
+
+  /* Opaque caption chip: pure white #FFFFFF on --paper (19.8:1), fully
+     opaque — never scrim-dependent. 18px phone → ~26px laptop → 28px cap;
+     width 22rem → 30rem including padding. */
+  .hero-caption {
+    max-width: clamp(21rem, 42vw, 36rem);
+    padding-top: 1.1rem;
+    color: #ffffff;
+    font-size: clamp(1.05rem, 0.55rem + 1vw, 1.4rem);
+    line-height: 1.5;
+    text-align: left;
+    position: relative;
+  }
+
+  .hero-caption::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2.5rem;
+    height: 2px;
+    background: var(--signal);
+  }
+
+  /* Hero/nav CTA scale: 44px touch floor → 56px wide; 15px → 20px label.
+     Declared after .btn so its size overrides win in the same layer. */
+  .hero-cta {
+    min-height: clamp(2.75rem, 2.4rem + 0.9vw, 3.5rem);
+    padding-inline: clamp(1.1rem, 0.9rem + 0.8vw, 1.9rem);
+    font-size: clamp(0.95rem, 0.78rem + 0.45vw, 1.25rem);
+  }
+
+  /* Nav CTA scale: compact 36px pill for the 64px bar. Declared after .btn
+     so its size overrides win in the same layer (min-height beats any
+     utility height, so it must be overridden here, not in the markup). */
+  .btn-nav {
+    min-height: 2.25rem;
+    padding: 0.35rem 1rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* ---------- keyframes ---------- */
+@keyframes signal {
+  0%   { box-shadow: 0 0 0 0 color-mix(in oklab, var(--signal) 55%, transparent); }
+  70%  { box-shadow: 0 0 0 7px color-mix(in oklab, var(--signal) 0%, transparent); }
+  100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--signal) 0%, transparent); }
+}
+@keyframes scan {
+  0%, 100% { transform: translateX(-100%); }
+  50%      { transform: translateX(100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .signal-dot, .scan::after { animation: none !important; }
+  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .btn, .btn:hover { transform: none !important; }
+}

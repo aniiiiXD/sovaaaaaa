@@ -1,0 +1,74 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "PassOnlySovaImportRoleToBedrock",
+      "Effect": "Allow",
+      "Action": "iam:PassRole",
+      "Resource": "arn:aws:iam::169970912263:role/SovaBedrockModelImport",
+      "Condition": {
+        "StringEquals": {
+          "iam:PassedToService": "bedrock.amazonaws.com"
+        }
+      }
+    },
+    {
+      "Sid": "InspectSovaImportRole",
+      "Effect": "Allow",
+      "Action": "iam:GetRole",
+      "Resource": "arn:aws:iam::169970912263:role/SovaBedrockModelImport"
+    },
+    {
+      "Sid": "ImportInVirginia",
+      "Effect": "Allow",
+      "Action": [
+        "bedrock:CreateModelImportJob"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {
+          "aws:RequestedRegion": "us-east-1",
+          "aws:RequestTag/SovaService": "fin-o1-14b"
+        }
+      }
+    },
+    {
+      "Sid": "ReadSovaImportJobs",
+      "Effect": "Allow",
+      "Action": "bedrock:GetModelImportJob",
+      "Resource": "arn:aws:bedrock:us-east-1:169970912263:model-import-job/*",
+      "Condition": {
+        "StringEquals": {
+          "aws:ResourceTag/SovaService": "fin-o1-14b"
+        }
+      }
+    },
+    {
+      "Sid": "ReadSovaImportedModel",
+      "Effect": "Allow",
+      "Action": [
+        "bedrock:GetImportedModel",
+        "bedrock:ListTagsForResource"
+      ],
+      "Resource": "arn:aws:bedrock:us-east-1:169970912263:imported-model/*",
+      "Condition": {
+        "StringEquals": {
+          "aws:ResourceTag/SovaService": "fin-o1-14b"
+        }
+      }
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "bedrock:InvokeModel",
+        "bedrock:InvokeModelWithResponseStream"
+      ],
+      "Resource": "arn:aws:bedrock:us-east-1:169970912263:imported-model/*",
+      "Condition": {
+        "StringEquals": {
+          "aws:ResourceTag/SovaService": "fin-o1-14b"
+        }
+      }
+    }
+  ]
+}

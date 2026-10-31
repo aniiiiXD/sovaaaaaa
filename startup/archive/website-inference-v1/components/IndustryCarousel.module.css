@@ -1,0 +1,297 @@
+.explorer {
+  margin-top: 54px;
+}
+
+.explorerTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.industryJumps {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  gap: clamp(12px, 2.5vw, 40px);
+}
+
+.tab {
+  position: relative;
+  display: flex;
+  min-height: 72px;
+  align-items: center;
+  gap: 12px;
+  padding: 0 0 0 2px;
+  border: 0;
+  background: transparent;
+  color: var(--copy-muted);
+  font: inherit;
+  font-size: 13px;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 180ms ease;
+}
+
+.tab:hover,
+.activeTab {
+  color: var(--ink);
+}
+
+.tabIndex {
+  align-self: flex-start;
+  padding-top: 21px;
+  color: var(--copy-muted);
+  font: 10px/1.2 "SFMono-Regular", Consolas, monospace;
+  letter-spacing: .08em;
+}
+
+.tabSignal {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  background: transparent;
+  transform: scaleX(.35);
+  transform-origin: left;
+  transition: transform 220ms ease, background-color 220ms ease;
+}
+
+.activeTab .tabSignal {
+  background: var(--accent);
+  transform: scaleX(1);
+}
+
+.controls {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 7px;
+}
+
+.counter {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-right: 6px;
+  color: var(--copy-muted);
+  font: 11px "SFMono-Regular", Consolas, monospace;
+  letter-spacing: .08em;
+  white-space: nowrap;
+}
+
+.counter strong {
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.playControl {
+  min-width: 84px;
+  justify-content: center;
+  gap: 9px;
+}
+
+.viewport {
+  margin-top: 24px;
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  transition: transform 760ms cubic-bezier(.22, .72, .2, 1);
+  will-change: transform;
+}
+
+.trackSnapping {
+  transition: none !important;
+}
+
+.card {
+  position: relative;
+  height: clamp(380px, 34vw, 480px);
+  flex: 0 0 calc((100% - 32px) / 3);
+  min-width: 0;
+  overflow: hidden;
+  border-radius: var(--button-radius);
+  background: #202b35;
+  border-radius: var(--button-radius);
+}
+
+.cardImage {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  overflow: hidden;
+  background: #202b35;
+}
+
+.image {
+  object-fit: cover;
+  filter: saturate(.94) contrast(1.02);
+  transition: transform 900ms cubic-bezier(.2, .7, .2, 1);
+}
+
+.card:hover .image {
+  transform: scale(1.035);
+}
+
+.cardCaption {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 22px 24px 24px;
+  background: linear-gradient(180deg, rgb(7 12 19 / .28) 0%, rgb(7 12 19 / .02) 29%, rgb(7 12 19 / .89) 100%);
+  color: #f5f6f1;
+}
+
+.cardMeta {
+  display: flex;
+  justify-content: space-between;
+  font: 10px "SFMono-Regular", Consolas, monospace;
+  letter-spacing: .12em;
+}
+
+.cardCopy {
+  max-width: 420px;
+  padding-right: 18px;
+}
+
+.cardName {
+  display: block;
+  margin-bottom: 12px;
+  color: #b8d2e8;
+  font: 10px "SFMono-Regular", Consolas, monospace;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.cardCopy h3 {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  font-size: clamp(23px, 2.1vw, 31px);
+  font-weight: 400;
+  line-height: 1.06;
+  letter-spacing: -.045em;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.cardCopy p {
+  display: -webkit-box;
+  max-width: 400px;
+  margin: 12px 0 0;
+  overflow: hidden;
+  color: rgb(245 246 241 / .84);
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.tasksLabel {
+  margin: 16px 0 0;
+  color: #b8d2e8;
+  font: 9px/1 "SFMono-Regular", Consolas, monospace;
+  letter-spacing: .14em;
+}
+
+.cardTasks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-width: 400px;
+  margin: 9px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cardTasks li {
+  padding: 5px 9px;
+  border: 1px solid rgb(245 246 241 / .32);
+  border-radius: var(--button-radius);
+  background: rgb(7 12 19 / .4);
+  color: rgb(245 246 241 / .92);
+  font: 10px/1.3 "SFMono-Regular", Consolas, monospace;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+
+.cardArrow {
+  position: absolute;
+  right: 22px;
+  bottom: 24px;
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border: 1px solid rgb(245 246 241 / .55);
+  border-radius: var(--button-radius);
+  color: #f5f6f1;
+  font-size: 14px;
+}
+
+.note {
+  margin: 16px 0 0;
+  color: var(--copy-muted);
+  font-size: 12px;
+}
+
+@media (max-width: 980px) {
+  .explorerTop {
+    display: block;
+  }
+
+  .industryJumps {
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+
+  .controls {
+    justify-content: flex-end;
+    padding: 12px 0;
+  }
+
+  .card {
+    height: clamp(380px, 46vw, 460px);
+    flex-basis: calc((100% - 16px) / 2);
+  }
+}
+
+@media (max-width: 700px) {
+  .explorer { margin-top: 35px; }
+  .industryJumps { gap: 22px; margin-inline: -2px; }
+  .tab { min-height: 62px; font-size: 12px; }
+  .tabIndex { padding-top: 17px; }
+  .controls { gap: 6px; }
+  .counter { margin-right: 2px; }
+  .playControl { min-width: 76px; }
+  .card {
+    height: clamp(320px, 86vw, 400px);
+    flex-basis: calc((100% - 10px) / 2);
+  }
+  .track { gap: 10px; }
+  .cardCaption { padding: 17px 15px 18px; }
+  .cardMeta { font-size: 8px; }
+  .cardName { margin-bottom: 8px; font-size: 8px; letter-spacing: .1em; }
+  .cardCopy h3 { font-size: clamp(17px, 4.3vw, 22px); line-height: 1.08; }
+  .cardCopy p { display: none; }
+  .tasksLabel { margin-top: 12px; }
+  .cardTasks { gap: 4px; margin-top: 6px; }
+  .cardTasks li { padding: 4px 7px; font-size: 8px; }
+  .cardArrow { right: 14px; bottom: 18px; width: 25px; height: 25px; font-size: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track { transition: none; }
+  .image, .tabSignal, .tab { transition: none; }
+}

@@ -1,0 +1,16 @@
+{
+  "EndpointConfigName": "sova-fin-o1-14b-bd4b97b8",
+  "ProductionVariants": [
+    {
+      "VariantName": "AllTraffic",
+      "ModelName": "sova-fin-o1-14b-bd4b97b8",
+      "InstanceType": "ml.g6e.2xlarge",
+      "InitialInstanceCount": 1,
+      "InitialVariantWeight": 1.0,
+      "ModelDataDownloadTimeoutInSeconds": 1800,
+      "ContainerStartupHealthCheckTimeoutInSeconds": 1800,
+      "InferenceAmiVersion": "al2-ami-sagemaker-inference-gpu-3-1"
+    }
+  ],
+  "Tags": [{ "Key": "Project", "Value": "Sova" }]
+}

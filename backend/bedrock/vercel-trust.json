@@ -1,0 +1,18 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Federated": "arn:aws:iam::169970912263:oidc-provider/oidc.vercel.com/aniiiixds-projects"
+      },
+      "Action": "sts:AssumeRoleWithWebIdentity",
+      "Condition": {
+        "StringEquals": {
+          "oidc.vercel.com/aniiiixds-projects:aud": "https://vercel.com/aniiiixds-projects",
+          "oidc.vercel.com/aniiiixds-projects:sub": "owner:aniiiixds-projects:project:sova-native:environment:production"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+id,entity,as_of,value,unit,measure,qualification,source_url
+F01,Prime Intellect,2026-07-08,130000000,USD,Series A financing,Selected recent funding basket,https://primeintellect.one/blog/series-a
+F02,Snorkel AI,2026-09-22,350000000,USD,Series E financing,Selected recent funding basket,https://snorkel.ai/blog/data-2-0-and-the-research-era-of-ai-data/
+F03,Halluminate,2026-10-01,30000000,USD,Series A financing,Selected recent funding basket,https://www.halluminate.ai/blog/series-a
+F04,Labelbox,2026-10-14,100000000,USD,Series E financing,Strictly greater than this value; includes equity and credit facility,https://www.prnewswire.com/news-releases/labelbox-raises-100-million-in-series-e-funding-to-advance-reinforcement-learning-and-enterprise-ai-agents-302909147.html
+F05,Mercor,2025-10-27,350000000,USD,Series C financing,Historical context; outside recent four-company basket,https://www.mercor.com/blog/series-c/
+F06,Mercor,2025-10-27,10000000000,USD,Valuation,Not capital raised,https://www.mercor.com/blog/series-c/
+F07,Turing,2025-06-10,111000000,USD,Series E financing,Company page publication date; not verified round closing date,https://www.turing.com/blog/turing-raises-111m-to-accelerate-the-future-of-agi
+F08,Ineffable Intelligence,2026-06-16,1100000000,USD,Seed financing,Confirmed in later partner release; frontier lab not data vendor,https://www.googlecloudpresscorner.com/2026-06-16-Ineffable-Intelligence-Selects-Google-Cloud-To-Power-Its-Superintelligence-Mission
+F09,Meta-Scale transaction,2025-06-12,14300000000,USD,Reported strategic investment,Includes shareholder liquidity; not fresh RL training budget,https://apnews.com/article/4b55aabf7ea018e38ffdccb66e37cf26
+F10,Snorkel AI,2026-09-22,375000000,USD per year,Annualized revenue run rate,Company-reported recent pace; not actual full-year revenue,https://snorkel.ai/blog/data-2-0-and-the-research-era-of-ai-data/
+F11,Prime Intellect,2026-07-08,100000000,USD per year,Annualized revenue,Company reports over this amount; includes broader stack,https://primeintellect.one/blog/series-a
+F12,Grand View Research,2026,3900000000,USD per year,AI training dataset market estimate,Broad category; not RL-only TAM,https://www.grandviewresearch.com/industry-analysis/ai-training-dataset-market
+F13,Grand View Research,2033,16300000000,USD per year,AI training dataset market forecast,Forecast not observed revenue,https://www.grandviewresearch.com/industry-analysis/ai-training-dataset-market
+F14,Fortune Business Insights,2026,4440000000,USD per year,AI training dataset market estimate,Broad category; not RL-only TAM,https://www.fortunebusinessinsights.com/ai-training-dataset-market-109241
+F15,Fortune Business Insights,2034,23180000000,USD per year,AI training dataset market forecast,Different horizon from F13; do not combine forecast endpoints,https://www.fortunebusinessinsights.com/ai-training-dataset-market-109241
+F16,Menlo Ventures,2025,4000000000,USD per year,Model-training infrastructure spend estimate,Adjacent category; overlaps opportunity and is not additive TAM,https://menlovc.com/perspective/2025-the-state-of-generative-ai-in-the-enterprise/
+T01,DeepSeek-R1-Zero,2025-01-22,15.6,percent,AIME 2024 initial pass at 1,Research-reported result from original paper,https://arxiv.org/html/2501.12948v1
+T02,DeepSeek-R1-Zero,2025-01-22,71.0,percent,AIME 2024 post-RL pass at 1,Same metric as T01; not majority-vote accuracy,https://arxiv.org/html/2501.12948v1
+T03,DeepSeek-R1,2025-01-22,800000,examples,Curated SFT dataset,Approximate count in multistage training pipeline,https://arxiv.org/html/2501.12948v1
+R01,Dvar AI,2026-10-27,4000000,USD,Reported proposed investment,Talks with General Catalyst; not confirmed closed; exclude from funding sums,https://www.moneycontrol.com/news/business/startup/peak-xv-partners-lightspeed-activate-general-catalyst-in-talks-to-invest-in-half-a-dozen-indian-ai-startups-14060568.html
+U01,Hyde,2026-10-31,,USD,Financing amount not verified,BCV seed backing confirmed; unknown is not zero,https://baincapitalventures.com/team/kevin-zhang/
+U02,Isoquant,2026-10-31,,USD,Financing total not verified,YC-backed; conflicting secondary amounts excluded,https://www.ycombinator.com/companies/isoquant/jobs
+C01,Hyde,2026-05-04,75000,model runs,Vendor case-study activity,More than this count; unnamed stock-exchange customer; not revenue,https://hyde.ai/blog/us-stock-exchange
+C02,Dvar,2026-10-31,59.7,percent,Hinglish classifier baseline accuracy,Company-reported case retrieved on this date; not independent validation,https://www.dvarlabs.ai/banking77
+C03,Dvar,2026-10-31,88.1,percent,Hinglish classifier post-SFT accuracy,Supervised cross-entropy; not RL; company-reported,https://www.dvarlabs.ai/banking77
+C04,Isoquant,2026-10-31,74.7,percent,Banking-intent baseline accuracy,GPT-5.4 mini in vendor comparison on 3079 requests,https://isoquant.ai/case-studies/banking-intent-classification
+C05,Isoquant,2026-10-31,91.8,percent,Banking-intent specialist accuracy,Qwen3-8B in same vendor comparison; not independently replicated,https://isoquant.ai/case-studies/banking-intent-classification
+C06,Isoquant,2026-10-31,91.7,percent,Estimated inference-cost reduction,Vendor estimate for one workload; not total business-cost savings,https://isoquant.ai/case-studies/banking-intent-classification
+N01,Applied Compute,2026-04-08,80000000,USD,New financing,Round announcement; not cumulative total,https://www.appliedcompute.com/company/fundraise
+N02,AfterQuery,2026-04-09,30000000,USD,Series A financing,Company-issued announcement,https://www.businesswire.com/news/home/20260409469482/en/
+N03,Bespoke Labs,2026-07-06,40000000,USD,Combined seed and Series A announcement,Multiple rounds; not a single Series A; closing dates not established,https://bespokelabs.ai/blog/bespoke-labs-raises-40m-to-build-environments-that-enable-reliable-agents
+N04,Plato,2026-10-28,16000000,USD,Series A financing,New round; cumulative total is 19M,https://www.prnewswire.com/news-releases/plato-raises-16-million-to-build-the-training-grounds-for-ais-next-leap-into-real-work-302921832.html
+N05,Veris AI,2025-06-03,8500000,USD,Seed financing,Historical context; outside 2026 sample,https://veris.ai/blog/introducing-veris-ai-a-new-way-to-train-enterprise-ai-agents-through-simulated-experience
+N06,HUD,2026-10-31,16000000,USD,Company-stated funding backing,Observation date; YC employer listing gives no round date; exclude from dated sum,https://www.ycombinator.com/companies/hud/jobs/xRmqcxW-senior-software-engineer-reinforcement-learning
+N07,micro1,2026-10-12,1000000000,USD,Annual run rate,Company claims greater than this value; not audited annual revenue or subscription ARR,https://www.micro1.ai/blog/q3
+N08,micro1,2026-10-12,4000000000,USD,Series B valuation,Not capital raised,https://www.micro1.ai/blog/q3
+N09,micro1,2026-10-12,25000000,USD,Employee tender,Approximate liquidity amount; not fresh operating capital,https://www.micro1.ai/blog/q3
+N10,AfterQuery,2026-04-09,100000000,USD,Annual revenue run rate,Company claims greater than this value; not audited annual sales,https://www.businesswire.com/news/home/20260409469482/en/
+N11,Glean Waldo,2026-10-31,50,percent,End-to-end latency reduction,Approximate company-reported full-system result; observation date; not RL-only ablation,https://www.glean.com/blog/waldo-launch
+N12,Glean Waldo,2026-10-31,25,percent,Token-use reduction,Approximate company-reported full-system result; observation date,https://www.glean.com/blog/waldo-launch
+N13,AfterQuery Hebbia Nemotron,2026-10-15,47,percent,Base perfect-solve rate,Nominal 100 tasks; 5 judge failures excluded; one run per task,https://www.afterquery.com/blog/post-training-nemotron-on-credit-workflows-in-partnership-with-hebbia
+N14,AfterQuery Hebbia Nemotron,2026-10-15,74,percent,Post-trained perfect-solve rate,Nominal 100 tasks; 8 judge failures excluded; one run per task,https://www.afterquery.com/blog/post-training-nemotron-on-credit-workflows-in-partnership-with-hebbia
+N15,Tinker Qwen3-8B 32K,2026-10-14,0.195,USD per million tokens,Uncached prefill list price,Training-client pricing context; not full project cost,https://thinkingmachines.ai/tinker/pricing/
+N16,Tinker Qwen3-8B 32K,2026-10-14,0.60,USD per million tokens,Sampling list price,Not full project cost,https://thinkingmachines.ai/tinker/pricing/
+N17,Tinker Qwen3-8B 32K,2026-10-14,0.44,USD per million tokens,Training list price,Not full project cost,https://thinkingmachines.ai/tinker/pricing/

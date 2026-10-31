@@ -1,0 +1,771 @@
+gold,pred,hit,ttft_s,tok_per_s,gen_s
+top_up_by_card_charge,top_up_by_card_charge,1,0.1118,88.92,0.3599
+terminate_account,"The customer message ""I would like to close my account"" indicates a **close account** intent.",0,0.064,85.5,0.2456
+get_physical_card,"The message ""Are PIN separately?"" does not match any of the provided intents. However, based on the list of intents, the closest one that might be related",0,0.0626,89.46,0.3577
+card_payment_wrong_exchange_rate,card_payment_wrong_exchange_rate,1,0.0646,90.91,0.088
+exchange_charge,"The message: ""Is there a fee for exchanging foreign currencies?"" does not match any of the provided intents. However, if we must choose from the list,",0,0.0625,85.81,0.3729
+passcode_forgotten,card_payment_not_recognised,0,0.0616,85.8,0.3613
+apple_pay_or_google_pay,card_not_working,0,0.0618,92.48,0.0649
+topping_up_by_card,"The message: ""How do I transfer money using my credit card?"" indicates a request for instructions on how to perform a transfer using a credit card. Among the",0,0.0609,88.11,0.3632
+atm_support,atm_support,1,0.0619,85.05,0.2939
+activate_my_card,activate_my_card,1,0.0645,82.34,0.0729
+beneficiary_not_allowed,The customer message indicates they are trying to exchange cryptocurrency and it's not working. The intent is to resolve the issue with the exchange process. The most appropriate classification,0,0.0635,86.59,0.3695
+extra_charge_on_statement,"The message: **""Why is there an extra 1 pound charge on my card?""** indicates a **card payment fee** or **charge**. Among",0,0.0616,87.44,0.366
+fiat_currency_support,exchange_rate,0,0.0617,88.54,0.2598
+country_support,"The message: ""I live in the US can I still get a card?"" is indicating a request to **get a card**. Among the list of intents",0,0.0622,87.92,0.364
+transfer_timing,"The message: ""how soon will I see the transfer in my account?"" is **not** related to a banking intent. After reviewing the list of intents,",0,0.0642,87.99,0.3637
+order_physical_card,card_delivery_estimate,0,0.0621,86.9,0.3682
+pending_cash_withdrawal,declined_card_payment,0,0.0632,90.89,0.066
+top_up_reverted,card_not_working,0,0.0625,86.9,0.3222
+change_pin,change_pin,1,0.0624,86.99,0.2529
+fiat_currency_support,fiat_currency_support,1,0.0615,89.18,0.314
+age_limit,"The message does **not** match any of the provided intents. However, if we had to choose from the list, the closest intent would be:",0,0.0648,87.68,0.3649
+card_about_to_expire,"The message: ""Do you have to order a new card before your current card expires?"" indicates a **request for information** about the card's expiration and the",0,0.0627,89.16,0.3589
+cash_withdrawal_charge,card_payment_fee_charged,0,0.0667,83.07,0.2167
+card_payment_fee_charged,"The message: ""I made a card payment and a fee is showing up?"" indicates that the customer is experiencing a card payment with a fee, which is likely",0,0.0682,87.19,0.367
+declined_transfer,declined_card_payment,0,0.0621,88.96,0.3597
+lost_or_stolen_phone,"The message: ""I lost my phone and need help securing it."" does not match any of the listed banking intents. However, if we must choose from the",0,0.0622,88.74,0.3606
+activate_my_card,"The message: ""How can I start using my card?"" indicates a request to activate the card. The most appropriate intent from the list is: **activate_my",0,0.0622,89.27,0.3584
+card_linking,card_linking,1,0.0645,89.28,0.3136
+declined_cash_withdrawal,declined_card_payment,0,0.0638,93.57,0.0641
+card_arrival,"The message: ""i want to track the card you sent"" does not match any of the provided intents. However, if we must choose from the list,",0,0.0625,88.79,0.3604
+pending_top_up,card_payment_not_recognised,0,0.0629,91.15,0.0987
+why_verify_identity,card_payment_not_recognised,0,0.0624,90.0,0.3333
+card_payment_not_recognised,card_payment_wrong_exchange_rate,0,0.0645,91.34,0.0876
+supported_cards_and_currencies,card_acceptance,0,0.0637,85.3,0.3752
+pending_top_up,"The message: **""Why is my top-up still pending?""** indicates a **pending card payment** intent.",0,0.064,88.2,0.2721
+declined_cash_withdrawal,"The message indicates a concern about accessing their own money from the machine, which is likely related to a **card payment** or **cash withdrawal**. The specific",0,0.0634,88.38,0.3621
+lost_or_stolen_card,"The customer message ""I lost my card"" does not match any of the listed intents. However, based on the options provided, the closest intent that might be",0,0.0647,86.33,0.3707
+balance_not_updated_after_cheque_or_cash_deposit,"The message: ""I made a deposit this morning but it is still pending?"" indicates that the customer is experiencing a pending transaction, likely related to a card payment",0,0.0617,87.37,0.3663
+reverted_card_payment?,declined_card_payment,0,0.0638,85.04,0.3763
+transaction_charged_twice,card_payment_not_recognised,0,0.0696,73.25,0.0956
+fiat_currency_support,supported_cards_and_currencies,0,0.0662,88.85,0.3602
+lost_or_stolen_card,lost_or_stolen_card,1,0.065,81.46,0.2824
+get_disposable_virtual_card,get_disposable_virtual_card,1,0.067,85.14,0.3054
+card_delivery_estimate,"The message: ""How long until my card is delivered?"" does not match any of the provided intents. However, if we must choose from the list, the",0,0.0654,87.91,0.364
+atm_support,atm_support,1,0.0643,88.97,0.2698
+lost_or_stolen_card,The message indicates that the customer is concerned about a lost or stolen card and is asking if someone else has been using it. This is related to the intent of,0,0.0655,88.05,0.3634
+request_refund,"The message ""How do I claim a refund?"" does not match any of the provided intent categories. However, based on the list of intents, the closest match",0,0.0629,87.24,0.3668
+balance_not_updated_after_cheque_or_cash_deposit,card_payment_not_recognised,0,0.0689,85.18,0.0822
+wrong_amount_of_cash_received,"The message: **""Why did I not get my cash back after I withdrew?""** indicates a **request for clarification** about a transaction. Among the provided",0,0.0749,88.24,0.3626
+change_pin,"The message: ""I need a new Pin how do I go about that?"" indicates the customer is asking how to change their PIN.",0,0.0731,89.0,0.3595
+transfer_fee_charged,card_payment_not_recognised,0,0.0728,90.66,0.2096
+wrong_exchange_rate_for_cash_withdrawal,"The customer message is about a **wrong exchange rate** during a cash withdrawal, which is a **card payment** issue. The correct intent from the list is",0,0.0671,88.58,0.3613
+card_delivery_estimate,"The customer message ""I need my card now!"" indicates a **need to access or use the card**, which aligns with the intent **card_payment_not_rec",0,0.0675,87.45,0.3659
+transfer_into_account,card_payment_not_recognised,0,0.0663,89.81,0.3563
+transfer_timing,"The message: ""How long does it take for a transfer?"" does not match any of the provided intents. However, if we must choose from the list,",0,0.0675,89.4,0.3579
+pin_blocked,"The customer message is about their card being frozen, which indicates a **frozen card** or **card not working**. Among the list of intents, the",0,0.0651,83.89,0.3814
+exchange_charge,"The message ""whats the exchange charge"" does not match any of the provided intents. However, based on the list of intents, the closest one that could",0,0.0691,87.46,0.3659
+verify_my_identity,"The message: ""Do I need any kind of documentation for the identity check?"" does not match any of the provided intents. However, if you are referring to",0,0.0676,88.07,0.3634
+get_disposable_virtual_card,"The message ""What does a disposable virtual card do?"" is asking about the purpose or function of a disposable virtual card. Among the list of intents, **card",0,0.0645,90.1,0.3552
+top_up_by_bank_transfer_charge,top_up_by_card_charge,0,0.067,89.92,0.278
+balance_not_updated_after_bank_transfer,Intent: **message**,0,0.068,91.07,0.0659
+lost_or_stolen_card,lost_or_stolen_card,1,0.0661,89.97,0.3557
+pending_transfer,"The message: ""How long can I expect a transfer to pend for?"" does not match any of the provided intents. However, if we must choose from the",0,0.067,89.35,0.3581
+cash_withdrawal_charge,"The message indicates a concern about a cash withdrawal fee, which is a common issue with banking services. The intent is likely related to **card payment** or **",0,0.0665,89.64,0.357
+balance_not_updated_after_bank_transfer,The customer message indicates that a transfer was made to their account but it doesn't show up. This is a common issue related to **card payment** or **,0,0.0669,89.24,0.3586
+virtual_card_not_working,card_not_working,0,0.0649,89.09,0.3255
+pending_card_payment,pending_transfer,0,0.0657,86.01,0.372
+pending_transfer,pending_transfer,1,0.0688,88.15,0.0567
+card_linking,"The customer message is asking how to link their existing card to another account, which is a request for card linking. The correct intent from the list is: **",0,0.0689,88.17,0.3629
+request_refund,card_payment_not_recognised,0,0.0672,92.5,0.0757
+visa_or_mastercard,"The message: **""Can you give me a visa?""** does not match any of the provided intents. However, if we must choose from the list,",0,0.0659,90.06,0.3553
+top_up_limits,top_up_by_card_charge,0,0.0681,90.29,0.3544
+failed_transfer,"The message ""don't understand why transfer failed"" indicates a lack of understanding of the intent behind the transaction. Based on the list of intents, the most appropriate",0,0.0671,90.58,0.3533
+country_support,"The message: ""I'm not in the UK, can I get a card?"" indicates a request to obtain a card, which is related to banking and card",0,0.065,89.71,0.3567
+card_payment_fee_charged,"The message: ""im not sure what this charge is for"" does not directly indicate a specific banking intent. However, based on the list of intents provided,",0,0.0637,85.51,0.3742
+cash_withdrawal_not_recognised,card_payment_not_recognised,0,0.0699,91.02,0.0989
+direct_debit_payment_not_recognised,card_payment_not_recognised,0,0.0688,91.68,0.0982
+receiving_money,contactless_not_working,0,0.0691,90.07,0.2998
+transfer_not_received_by_recipient,pending_card_payment,0,0.0655,91.38,0.2845
+disposable_card_limits,"The message: **""I need to create several disposable cards per day.""**",0,0.0666,90.77,0.2754
+atm_support,atm_support,1,0.0657,90.48,0.3537
+terminate_account,"The message ""How do I delete my account?"" does not match any of the provided intents. However, if we must choose from the list, the closest intent",0,0.0674,90.06,0.3553
+cancel_transfer,pending_transfer,0,0.0668,92.56,0.054
+disposable_card_limits,card_linking,0,0.0642,89.87,0.2671
+declined_card_payment,"The message: ""Do you know why my card payment is declined?"" indicates a **query about the reason for a declined card payment**. Among the provided intents",0,0.0668,88.78,0.3604
+activate_my_card,"The message: ""How do I activate a new card?"" indicates the intent to **activate a new card**.",0,0.0671,86.91,0.2761
+supported_cards_and_currencies,card_linking,0,0.0696,87.75,0.2507
+top_up_limits,"The message: ""Do you have any restrictions to my top-up?"" indicates that the customer is asking about restrictions related to a top-up transaction. Among the list",0,0.0658,88.41,0.3619
+transfer_into_account,card_payment_not_recognised,0,0.07,92.43,0.0757
+verify_my_identity,"The message ""What do I do for the identity check?"" indicates the customer is asking for assistance regarding identity verification. Among the provided intents, **""verify_my",0,0.0683,87.67,0.365
+fiat_currency_support,supported_cards_and_currencies,0,0.0671,86.1,0.36
+cash_withdrawal_not_recognised,"The message indicates that the customer did not receive cash from an ATM, but the app said they did. This suggests a **cash_withdrawal_not_recogn",0,0.0698,89.66,0.3569
+top_up_by_card_charge,card_payment_fee_charged,0,0.0694,90.68,0.3088
+declined_card_payment,"The message: **""Why is my debit card being declined when I have money?""** indicates a **declined card payment** intent.",0,0.07,89.62,0.3236
+edit_personal_details,"The message ""I moved. Where do I update my details?"" does not directly indicate a banking intent. However, the closest intent that aligns with the message",0,0.0675,89.94,0.3558
+top_up_by_card_charge,top_up_by_card_charge,1,0.0675,88.3,0.2831
+top_up_by_card_charge,card_payment_fee_charged,0,0.0694,87.96,0.3297
+getting_spare_card,get_physical_card,0,0.0691,90.32,0.31
+direct_debit_payment_not_recognised,declined_card_payment,0,0.0704,90.12,0.344
+card_linking,lost_or_stolen_card,0,0.0696,91.12,0.0878
+exchange_rate,"The message: **""Can you tell me the foreign exchange rate?""** does not match any of the listed intents. However, if we must choose from the",0,0.066,90.03,0.3554
+getting_virtual_card,get_physical_card,0,0.0683,89.69,0.301
+Refund_not_showing_up,request_refund,0,0.0697,92.43,0.0649
+wrong_exchange_rate_for_cash_withdrawal,card_payment_not_recognised,0,0.0689,91.24,0.2082
+compromised_card,"The message indicates that the customer is experiencing issues with transaction recognition on their card, possibly due to incorrect information or a problem with the card's functionality. The most",0,0.0703,89.58,0.3572
+request_refund,"The message: ""I want to reverse a purchase. Can I cancel it?"" indicates the intent to **cancel a transfer**.",0,0.0679,90.05,0.2998
+balance_not_updated_after_cheque_or_cash_deposit,"The message: ""How long does it take to process cheque deposits?"" does not match any of the provided intents. However, if we must choose from the list",0,0.0677,88.51,0.3615
+contactless_not_working,contactless_not_working,1,0.0691,90.66,0.2868
+exchange_via_app,"The message: ""How do I exchange my GBP to AUD?"" does not match any of the provided intent options. However, if we must choose from the list",0,0.0696,88.15,0.363
+compromised_card,card_not_working,0,0.0693,90.79,0.3084
+get_physical_card,"The message ""About this card PIN?"" does not match any of the provided intents. However, based on the list of intents, the closest one that could be",0,0.0686,90.25,0.3546
+getting_spare_card,"The message: ""How can I get additional cards?"" does not match any of the provided intents. However, if we must choose from the list, the closest",0,0.0695,90.54,0.3534
+wrong_exchange_rate_for_cash_withdrawal,declined_card_payment,0,0.0702,91.65,0.1309
+transfer_fee_charged,declined_card_payment,0,0.0719,92.01,0.0652
+getting_virtual_card,"The message ""Is there an option to have a virtual card?"" indicates the intent to **activate a virtual card**.",0,0.0664,88.52,0.2824
+atm_support,atm_support,1,0.0691,90.85,0.3192
+card_payment_wrong_exchange_rate,card_payment_fee_charged,0,0.0734,88.44,0.3505
+verify_top_up,card_payment_not_recognised,0,0.0673,84.25,0.3798
+top_up_by_bank_transfer_charge,"The message: ""I would like to make a transfer. How much does it cost?"" indicates a **transfer** intent.",0,0.0817,78.07,0.333
+pending_transfer,pending_transfer,1,0.0732,80.69,0.3966
+pending_cash_withdrawal,"The customer message ""My cash withdrawal is still showing as pending."" indicates a **pending cash withdrawal**.",0,0.0732,79.37,0.4032
+why_verify_identity,"The message: ""do I need to verify my identity every time I log into my account?"" does not match any of the provided intents. However, if you",0,0.0798,80.87,0.3957
+topping_up_by_card,"The message: **""WHERE IS MY MONEY I WAS USING MY CARD AND IT DISAPPEARED""** indicates a **lost or stolen card** intent.",0,0.0769,81.14,0.3944
+card_acceptance,card_payment_not_recognised,0,0.0761,80.91,0.3461
+card_arrival,card_arrival,1,0.077,82.75,0.3504
+request_refund,"The message: ""How do I apply for a refund?"" does not match any of the provided intent categories. However, based on the list of intents, the",0,0.0768,82.29,0.3889
+transaction_charged_twice,"The message: **""I have a duplicate payment showing""** indicates a **duplicate transaction** or **duplicate payment**. This is not a banking intent related",0,0.0784,79.87,0.4006
+balance_not_updated_after_cheque_or_cash_deposit,"The message: *""Where is my cash deposit?""* does not match any of the provided intents. However, if we must choose from the list, the closest",0,0.076,60.34,0.5303
+getting_virtual_card,"The customer message is asking about where to purchase a virtual card, which is a direct request for a card. Among the list of intents, the most relevant one",0,0.0847,84.53,0.3786
+exchange_rate,"The message: ""The exchange rates are?"" does not match any of the provided intents. However, if we must choose from the list, the closest intent would",0,0.076,87.96,0.3638
+cancel_transfer,cancel_transfer,1,0.0749,88.19,0.3288
+exchange_charge,"The message: ""Are there any extra hidden fees for exchanging currencies?"" does not match any of the provided intents. However, if we must choose from the list",0,0.0741,90.52,0.3535
+declined_transfer,card_payment_not_recognised,0,0.0765,91.31,0.1205
+verify_my_identity,"The message: **""Is there any documentation needed for the identity check?""** does not match any of the provided intents. However, if you meant to ask",0,0.0719,91.0,0.3517
+reverted_card_payment?,"The customer message indicates a **canceled payment** for their card. Based on the list of intents, the most appropriate classification is:",0,0.0733,90.78,0.3525
+getting_virtual_card,"The message ""Where is the virtual card?"" does not match any of the provided intents. However, if we must choose from the list, the closest intent would",0,0.075,91.05,0.3515
+country_support,"The message: ""What countries do you do business in?"" does not match any of the provided intents. However, if we must choose from the list, the",0,0.0722,90.71,0.3528
+pending_cash_withdrawal,"The message: ""Is my pending cash withdrawal processed?"" indicates that the customer is asking whether their pending cash withdrawal has been successfully processed. This aligns with the",0,0.0708,86.27,0.3709
+passcode_forgotten,"The message: ""What steps do I take to receive another passcode?"" does not match any of the provided intents. However, if we must choose from the",0,0.0723,90.23,0.3547
+direct_debit_payment_not_recognised,declined_card_payment,0,0.0734,91.22,0.2631
+exchange_charge,"The message: ""How much more do I have to pay to exchange currencies?"" indicates a request for assistance regarding currency exchange fees. Among the provided intents, **",0,0.0747,90.75,0.3526
+pending_transfer,pending_transfer,1,0.0735,94.5,0.0529
+wrong_exchange_rate_for_cash_withdrawal,"The message indicates a problem with the exchange rate for a withdrawal, specifically mentioning it doesn't match the actual exchange rate. This is related to **card payment**",0,0.0732,90.03,0.3554
+card_delivery_estimate,"The customer message ""I need my card as soon as possible."" indicates a need to process a card-related transaction, likely for immediate access or usage. Among the",0,0.0708,77.63,0.4122
+verify_my_identity,"The message: ""What do you need so I can verify my identity?"" indicates the intent to **verify the identity of the customer**.",0,0.1362,66.33,0.4825
+transfer_into_account,"The message ""How do I top up my card?"" indicates the intent to perform a **top-up** operation. Among the list of intents, **top_up",0,0.1044,71.08,0.4502
+pin_blocked,card_payment_wrong_exchange_rate,0,0.0943,75.73,0.1056
+top_up_limits,top_up_limits,1,0.0893,76.28,0.2884
+top_up_by_bank_transfer_charge,"The message ""Are SWIFT transfers accepted?"" is related to **card payment** and **transaction acceptance**. Among the list of intents, **SWIFT transfers",0,0.0873,74.8,0.4278
+declined_transfer,declined_card_payment,0,0.0807,85.4,0.0703
+terminate_account,terminate_account,1,0.0787,80.03,0.3999
+top_up_failed,"The message: **""Why didn`t my topup go through?""** indicates a **top-up failure**.",0,0.0786,89.08,0.3592
+card_swallowed,lost_or_stolen_card,0,0.0783,89.8,0.2895
+visa_or_mastercard,"The message: ""Do you guys accept mastercard or visa?"" indicates that the customer is asking about card acceptance, specifically regarding the support for Mastercard and Visa",0,0.0735,90.95,0.3518
+topping_up_by_card,"The message: **""Can friends add to my account""** does not match any of the provided intents. However, if we must choose from the list,",0,0.0783,89.29,0.3584
+getting_spare_card,card_payment_fee_charged,0,0.0744,90.67,0.3088
+transfer_fee_charged,card_payment_not_recognised,0,0.0768,89.51,0.3575
+verify_source_of_funds,"The message: ""How can I see my source of funds?"" does not match any of the provided intents. However, if we must choose from the list,",0,0.076,83.93,0.3813
+declined_transfer,"The message: ""For what reason was my transfer declined?"" indicates the intent to **decline a card payment**.",0,0.0748,89.77,0.3565
+why_verify_identity,"The message ""What is the purpose for the identity check"" does not match any of the provided intents. However, if we must choose from the list, the",0,0.0741,89.49,0.3576
+extra_charge_on_statement,"The message: **""Why is there a fee for an extra pound in my statement?""** indicates a **query about a fee** related to a transaction.",0,0.0735,91.64,0.3492
+disposable_card_limits,card_not_working,0,0.0771,91.57,0.2621
+why_verify_identity,"The message ""Do I have to do an identity check?"" does not match any of the provided intents. However, if we must choose from the list, the",0,0.0753,90.82,0.3524
+top_up_by_cash_or_cheque,"The message: ""How do I top-up using cash?"" indicates the intent to perform a **cash-to-top-up** operation. Among the list of intents,",0,0.0727,90.57,0.3533
+card_payment_not_recognised,"The message: ""What should I do if I see a payment I didn't make?"" indicates a **need to resolve a payment issue**. Among the list",0,0.0768,90.24,0.3546
+transfer_not_received_by_recipient,failed_transfer,0,0.0714,91.19,0.3509
+card_swallowed,card_swallowed,1,0.0767,92.88,0.0646
+age_limit,"The message: **""Can my 19 year old daughter open a savings account at the bank?""**",0,0.0747,90.13,0.355
+edit_personal_details,"The customer message is about editing personal details, which is a common banking activity. Based on the list of intents, the most appropriate classification is:",0,0.0724,91.43,0.35
+card_payment_fee_charged,The message indicates that the user is asking for a reason they were charged a fee for using their card as payment. This aligns with the intent **card_payment,0,0.0763,91.12,0.3512
+verify_source_of_funds,"The message: ""How can I view the source of my available funds?"" does not match any of the provided intents. However, if we must choose from the",0,0.0743,90.88,0.3521
+beneficiary_not_allowed,"The customer message: **""Can you help with a transfer to an account""**",0,0.0717,90.66,0.2868
+apple_pay_or_google_pay,card_payment_not_recognised,0,0.0715,91.25,0.3068
+activate_my_card,activate_my_card,1,0.0711,94.58,0.0634
+failed_transfer,failed_transfer,1,0.0706,91.59,0.3494
+extra_charge_on_statement,declined_card_payment,0,0.0743,90.57,0.3092
+top_up_reverted,card_payment_not_recognised,0,0.0725,93.36,0.0964
+card_about_to_expire,"The message is asking about the fees and time it takes to get a new card, which is related to card-related services. Among the list of intents, the",0,0.0732,91.13,0.3511
+change_pin,"The message: **""Can I change my PIN at the ATM?""**",0,0.0736,91.39,0.2736
+card_not_working,card_not_working,1,0.0708,91.51,0.2404
+balance_not_updated_after_cheque_or_cash_deposit,The customer message indicates that they made a deposit of cash and check that has not been added to their balance. This is a **cash_withdrawal_not_rec,0,0.0741,91.07,0.3514
+card_acceptance,contactless_not_working,0,0.0728,90.99,0.2967
+order_physical_card,"The customer message ""Send me a physical card"" does not match any of the provided intent options. However, based on the list of intents, the closest match",0,0.0691,90.75,0.3526
+card_acceptance,card_payment_not_recognised,0,0.0742,90.82,0.3083
+card_about_to_expire,card_arrival,0,0.0749,90.79,0.3414
+passcode_forgotten,"The message ""What do I do if I forget my passcode? Because I did."" indicates a **passcode-forgotten** intent.",0,0.0766,90.83,0.3523
+contactless_not_working,contactless_not_working,1,0.0756,93.12,0.0752
+card_swallowed,"The message ""How can I get my card back out?"" does not match any of the provided intents. However, if we must choose from the list, the",0,0.0719,89.35,0.3581
+declined_card_payment,card_not_working,0,0.0713,91.52,0.2185
+card_payment_wrong_exchange_rate,"The message indicates a problem with the exchange rate, and the intent is to request verification of the exchange rate. However, the intent listed does not include ""exchange",0,0.0736,90.93,0.3519
+card_payment_fee_charged,"The message: ""Will I always be charged a fee for using my card?"" is **not** in the list of intents provided. However, if you are",0,0.0719,90.94,0.3519
+pending_cash_withdrawal,pending_cash_withdrawal,1,0.0752,92.38,0.0866
+card_not_working,card_not_working,1,0.0715,90.87,0.3521
+top_up_limits,"The message ""What is the top-ups limit?"" does not match any of the provided intents. However, if we must choose from the list, the closest intent",0,0.0684,91.77,0.3487
+declined_card_payment,declined_card_payment,1,0.073,90.93,0.3519
+passcode_forgotten,passcode_forgotten,1,0.0679,91.12,0.3073
+cash_withdrawal_not_recognised,The customer message indicates a **lost or stolen card** and is asking for assistance in retrieving the money. The most appropriate intent from the list is:,0,0.0716,90.78,0.3525
+transfer_timing,"The message: ""How long do I have to wait for a transfer from the US?"" does not match any of the provided intents. However, if we must",0,0.0748,85.1,0.376
+declined_card_payment,"The customer message ""I tried using my card and it kept getting declined, Why?"" indicates a **declined card payment** intent.",0,0.0738,90.87,0.3081
+verify_top_up,"The message: ""How is the top-up card verified?"" indicates the intent to verify the card's status or process a top-up. Among the list of intents",0,0.0766,91.39,0.3501
+card_not_working,"The message: ""How do I unblock my card using the app?"" indicates the intent to **unblock the card**.",0,0.0741,91.67,0.2945
+automatic_top_up,"The message ""Is there a limit when using auto top-up?"" is classified as **card_auto_top_up**.",0,0.074,91.56,0.2621
+contactless_not_working,"The message: ""How can I make my contactless work for the metro?"" indicates a request to use contactless payment methods, specifically for a metro. This",0,0.0743,91.1,0.3513
+contactless_not_working,contactless_not_working,1,0.0699,93.07,0.0752
+terminate_account,"The message indicates that the customer is requesting to delete their account, which is a direct intent to terminate the service. The most appropriate classification from the list is:",0,0.0715,91.21,0.3508
+why_verify_identity,verify_my_identity,0,0.0713,91.41,0.2735
+order_physical_card,card_delivery_estimate,0,0.0707,91.58,0.2621
+cancel_transfer,cancel_transfer,1,0.0723,91.56,0.2512
+pending_transfer,card_payment_fee_charged,0,0.0744,86.33,0.3707
+age_limit,"The message does **not** match any of the provided intents. However, if you're referring to a banking intent related to a card or account, the closest",0,0.0723,89.72,0.3567
+exchange_via_app,"The message ""Where do I go to change GBP?"" does not match any of the provided intents. However, if we must choose from the list, the closest",0,0.0747,91.06,0.3514
+topping_up_by_card,"The message: **""Are my friends able to top up my account?""** does not match any of the provided intents. However, if we must choose from",0,0.0728,91.51,0.3497
+failed_transfer,transfer_not_received_by_recipient,0,0.0739,90.48,0.3537
+card_payment_not_recognised,declined_card_payment,0,0.0757,89.32,0.0672
+transfer_not_received_by_recipient,"The message indicates that the recipient cannot see the transaction, which is related to **card payment** or **payment not recognized**. The most appropriate intent from the",0,0.0717,90.02,0.3555
+age_limit,"The message ""How old do we have to be?"" does not match any of the provided intent options. However, if we must choose from the list, the",0,0.0758,91.39,0.3501
+disposable_card_limits,disposable_card_limits,1,0.075,91.22,0.296
+unable_to_verify_identity,"The customer message is **not** related to a banking intent. After reviewing the list of intents, the message **does not** match any of the provided options",0,0.0729,91.12,0.3512
+card_acceptance,card_arrival,0,0.0725,91.09,0.2854
+extra_charge_on_statement,The message indicates that there is an extra charge on the statement that is pending and does not resolve after a few days. This is likely related to a card payment,0,0.077,90.93,0.3519
+pending_top_up,pending_transfer,0,0.0814,93.72,0.0534
+card_about_to_expire,card_arrival,0,0.0751,91.5,0.2732
+transfer_into_account,transfer_into_account,1,0.0762,93.49,0.0642
+edit_personal_details,"The message: ""My address has changed. How do I report it?"" indicates a request to report a change in address, which is related to **card payment",0,0.072,91.57,0.3495
+compromised_card,"The message: ""I see random purchases to my account, was it hacked?"" indicates a concern about unauthorized transactions or potential fraud. Among the provided intents, **",0,0.0755,91.53,0.3496
+unable_to_verify_identity,contactless_not_working,0,0.073,91.43,0.2625
+direct_debit_payment_not_recognised,"The message: ""I may have a fraud charge on my debit statement.""",0,0.0734,91.78,0.2397
+exchange_rate,"The message: ""How much will I get with the exchange rate?"" does not match any of the provided intents. However, if we must choose from the list",0,0.0729,91.41,0.3501
+top_up_by_cash_or_cheque,"The customer message is asking how to top up cash, which aligns with the intent **card_top_up**.",0,0.0754,91.61,0.262
+edit_personal_details,"The message: **""Where can I go to update my personal profile?""** does not match any of the provided intents. However, if you meant to ask",0,0.0735,91.79,0.3486
+card_delivery_estimate,"The message: *"" Whats the delivery time to the United States?""* does not match any of the provided intents. However, if we must choose from the list",0,0.0726,90.75,0.3526
+reverted_card_payment?,"The message is indicating that the customer has a claim regarding a payment issue, specifically that the price of an item was returned to their checking account. This is related",0,0.0787,90.14,0.355
+top_up_limits,top_up_limits,1,0.0735,91.18,0.351
+reverted_card_payment?,card_payment_not_recognised,0,0.0747,91.63,0.3492
+cancel_transfer,cancel_transfer,1,0.0718,91.62,0.2729
+cash_withdrawal_not_recognised,card_not_working,0,0.0764,94.59,0.0634
+declined_transfer,declined_card_payment,0,0.0736,89.22,0.0672
+top_up_reverted,The message indicates that the customer topped up their card and the app reverted the transaction. This aligns with the intent **card_reverted**.,0,0.0684,91.66,0.3273
+get_physical_card,lost_or_stolen_card,0,0.0721,91.65,0.2619
+getting_spare_card,The customer message indicates that they want to add their child to the account they currently have. This is related to **card linking** or **card acceptance**.,0,0.0766,90.9,0.352
+card_linking,"The message indicates that the customer is trying to reactivate a lost card found in their jacket. Based on the list of intents, the most appropriate classification is:",0,0.0721,91.27,0.3506
+card_acceptance,card_payment_not_recognised,0,0.073,92.93,0.1076
+fiat_currency_support,"The message: **""Do you offer additional currency options?""** does not match any of the provided intents. However, if you are referring to a specific intent",0,0.0717,90.93,0.3519
+top_up_by_card_charge,"The message: ""Will it cost anything to top up a US card?"" indicates a **top-up** intent.",0,0.0757,91.87,0.2612
+age_limit,"The message: **""Can I open an account for a child?""** does not match any of the provided intents. However, if we must choose from the",0,0.0731,90.38,0.3541
+receiving_money,card_payment_not_recognised,0,0.0689,91.66,0.3055
+pin_blocked,The customer message indicates they are **locked out of using their card** due to forgetting their PIN. The most relevant intent from the list is:,0,0.0752,91.21,0.3508
+wrong_amount_of_cash_received,"The message: ""Will declined funds I tried to withdraw be returned to me?"" indicates a **declined card payment**.",0,0.077,91.22,0.285
+card_about_to_expire,card_not_working,0,0.0715,91.98,0.2609
+verify_my_identity,"The message: ""Is there a specific type you need for identity verification?"" does not match any of the provided intents. However, if you are referring to a",0,0.0738,91.18,0.3509
+wrong_amount_of_cash_received,cash_withdrawal_not_recognised,0,0.0761,90.81,0.3193
+receiving_money,exchange_rate,0,0.0721,92.08,0.2607
+top_up_by_bank_transfer_charge,top_up_by_card_charge,0,0.0738,91.24,0.3178
+country_support,"The message: ""I live in the US but want to get a card"" indicates a **card acquisition** intent. The most appropriate classification from the list is",0,0.071,91.5,0.3497
+top_up_by_cash_or_cheque,"The message: *""Where are the options to top up with a cheque on my account?""*",0,0.0752,90.92,0.319
+get_disposable_virtual_card,card_not_working,0,0.0765,91.3,0.3176
+pending_cash_withdrawal,pending_transfer,0,0.0747,95.25,0.0525
+edit_personal_details,"The message: **""Where can I go to modify my detail?""** does not match any of the provided intents. However, if we must choose from the",0,0.0716,91.47,0.3498
+get_disposable_virtual_card,"The message: ""how does a virtual card work"" does not match any of the provided intent options. However, if we must choose from the list, the",0,0.0726,91.38,0.3502
+edit_personal_details,edit_personal_details,1,0.0734,91.87,0.3048
+card_payment_wrong_exchange_rate,"The message: ""When I made a purchase last Saturday, I was charged extra. Did I receive the right exchange rate?"" indicates a concern about the exchange rate",0,0.0722,91.19,0.3509
+declined_transfer,"The message: **""Why did I get a transfer declined?""** indicates a **declined card payment** intent.",0,0.0705,91.47,0.2733
+order_physical_card,card_payment_fee_charged,0,0.0723,91.78,0.2833
+verify_source_of_funds,"The customer message ""My source of funds need verified."" indicates a need to verify identity or source of funds, which is related to banking and financial transactions. Among",0,0.0725,90.06,0.3553
+exchange_rate,"The message: **""when does the rate get determined""** does not match any of the provided intents. However, if you meant to ask about the **",0,0.0696,90.29,0.3544
+getting_spare_card,"The message ""May I have another card?"" indicates the customer is requesting to obtain a new card. Among the list of intents, the most appropriate classification is:",0,0.0744,91.33,0.3504
+transfer_into_account,card_payment_not_recognised,0,0.0751,91.63,0.3492
+top_up_reverted,"The message: ""It seems my top up is reverted?"" indicates the intent to **revert a card payment**.",0,0.0735,91.69,0.2727
+top_up_limits,"The message: **""Do you have a limit to top ups?""**",0,0.0736,91.45,0.2734
+pending_transfer,pending_transfer,1,0.0732,91.56,0.3495
+declined_cash_withdrawal,declined_card_payment,0,0.0749,91.16,0.3291
+order_physical_card,card_payment_fee_charged,0,0.073,90.88,0.2861
+exchange_rate,"The message ""why do your exchange rates change"" is related to **exchange rate changes**, which is a common concern when dealing with international transactions. However, **",0,0.0721,91.55,0.3495
+terminate_account,"The message: ""How do I get rid of my account ASAP?"" does not match any of the provided intents. However, if we must choose from the list",0,0.0727,89.62,0.357
+beneficiary_not_allowed,"The message ""A transfer to an account was not allowed"" indicates a **blocked transfer**. The correct intent from the list is: **blocked_transfer**.",0,0.0735,91.3,0.3505
+card_swallowed,lost_or_stolen_card,0,0.0769,90.97,0.3078
+top_up_by_bank_transfer_charge,"The message: ""can i do a transfer with swift"" indicates a request to perform a transfer, which aligns with the intent **transfer_not_received_by_rec",0,0.0734,90.92,0.3519
+contactless_not_working,contactless_not_working,1,0.0767,89.64,0.357
+transfer_fee_charged,declined_card_payment,0,0.0749,88.68,0.2819
+automatic_top_up,activate_my_card,0,0.0744,94.93,0.0632
+declined_transfer,"The message: ""Double check your funds may be declined"" indicates a **declined card payment** intent.",0,0.0736,91.77,0.2506
+balance_not_updated_after_bank_transfer,"The message: **""Why doesn't my balance reflect my transfer""** indicates a **balance not updated after a transfer**.",0,0.0742,91.15,0.3511
+card_payment_wrong_exchange_rate,"The message: ""This rate is too low. Are you sure your using the right exchange rate."" indicates a concern about the exchange rate, possibly related to a",0,0.0733,91.35,0.3503
+getting_spare_card,"The message: *""Can I have a card to my daughter?""* indicates a request to **activate a card** for someone else (the daughter).",0,0.0753,91.36,0.3503
+failed_transfer,pending_transfer,0,0.0781,94.46,0.0529
+exchange_via_app,"The message: ""What is the best way to exchange currency?"" does not match any of the provided intents. However, if we must choose from the list,",0,0.0706,91.31,0.3505
+verify_my_identity,"The customer message ""I need to verify my identity"" does not match any of the listed intents. However, based on the options provided, the closest intent that",0,0.0749,91.22,0.3508
+get_physical_card,"The message: **""what is the process for setting up a pin""** does not match any of the provided intents. However, if you meant to ask",0,0.0739,90.77,0.3525
+card_delivery_estimate,"The message ""When will my card arrive?"" does not match any of the provided intents. However, based on the list of intents, the closest one that could",0,0.0715,91.56,0.3495
+edit_personal_details,"The message ""got married and need to change name"" does not match any of the listed intents. However, if we must choose from the provided list, the",0,0.0745,91.23,0.3507
+failed_transfer,request_refund,0,0.0733,94.3,0.0636
+failed_transfer,"The message: **""Why did my transfer fail?""** indicates a **query about the reason for a failed transfer**. Among the provided intents, **""",0,0.0699,91.3,0.3505
+verify_top_up,"The message: ""how come the verification with the top up"" indicates a request for verification related to a top-up transaction. Among the list of intents, the",0,0.0747,90.54,0.3534
+transfer_timing,"The message: ""How many days does a transfer from the US take?"" does **not** match any of the provided intents. However, if we must choose",0,0.0747,90.31,0.3543
+Refund_not_showing_up,declined_card_payment,0,0.0772,93.97,0.0638
+contactless_not_working,contactless_not_working,1,0.0748,93.62,0.0748
+verify_source_of_funds,"The message: *""Where does all this money come from though?""* is most likely related to **card payment** or **transfer**. The intent is to",0,0.0734,90.96,0.3518
+apple_pay_or_google_pay,card_payment_not_recognised,0,0.0745,92.91,0.0969
+card_not_working,"The customer message is asking about how to fix a broken card, which is related to card functionality. Among the list of intents, the most relevant one is:",0,0.0751,91.48,0.3498
+fiat_currency_support,card_payment_fee_charged,0,0.0741,88.81,0.3603
+terminate_account,"The customer message indicates dissatisfaction with the company and wants to close out their account. Based on the list of intents, the most appropriate classification is:",0,0.0767,90.28,0.3544
+request_refund,"The message ""What's the refund process?"" is not directly related to a banking intent. However, based on the list of intents provided, the closest match is",0,0.0729,91.08,0.3513
+verify_my_identity,"The message indicates the need to verify the identity of the customer, which is a common requirement for banking transactions. The most relevant intent from the list is:",0,0.0762,91.3,0.3505
+cash_withdrawal_charge,"The message: ""I took cash and got charged a fee"" indicates a **card payment fee**. Therefore, the correct classification is:",0,0.0771,91.15,0.3511
+disposable_card_limits,"The message: ""How many disposable cards per day am I allowed to have?"" does not match any of the provided intents. However, if we must choose from",0,0.0729,90.65,0.353
+get_disposable_virtual_card,get_physical_card,0,0.0742,91.56,0.284
+exchange_rate,"The message: ""How are exchange rates calculated?"" does not match any of the provided intents. However, if we must choose from the list, the closest intent",0,0.0751,90.65,0.353
+card_payment_not_recognised,The customer message indicates concern about a payment that was made on their card and mentions not recognizing the transaction recipient's name. This is most closely related to **card,0,0.0753,89.54,0.3574
+get_physical_card,"The message ""is my card PIN saved in the app"" indicates that the customer is asking about the location of their card PIN. This is not a direct banking",0,0.072,90.35,0.3542
+wrong_exchange_rate_for_cash_withdrawal,exchange_rate,0,0.0745,91.89,0.2503
+get_disposable_virtual_card,get_physical_card,0,0.0748,91.25,0.3068
+top_up_failed,The customer message indicates that the app denied their topped-up transaction. The most appropriate intent from the list is: **card_payment_denied**.,0,0.0764,91.32,0.3285
+exchange_via_app,exchange_rate,0,0.0737,91.93,0.2502
+automatic_top_up,"The message: *""Can I space out how often money is transferred along my travels?""* does not match any of the provided intents. However, if we must",0,0.0746,91.32,0.3504
+compromised_card,"The customer message indicates that someone is using their card for transactions they don't remember, which is a concern about the card's functionality or usage. This is most",0,0.0768,91.51,0.3497
+card_payment_fee_charged,"The message is asking about the pattern of fees on payments, which is related to **card payment fees**. However, the intent is not explicitly stated as """,0,0.0764,90.61,0.3531
+card_swallowed,card_swallowed,1,0.0778,90.89,0.3521
+getting_spare_card,"The message ""May I have a second card?"" indicates a request to obtain a second card, which is likely related to card availability or linking. Among the provided",0,0.0724,91.48,0.3498
+passcode_forgotten,"The customer message is asking for a code to get into the app, which is a common request related to accessing a banking service. Among the list of intents,",0,0.0765,90.85,0.3522
+card_payment_not_recognised,"The message: ""I saw a payment i did not do"" indicates that the customer is referring to a payment that was made but not received. This is most",0,0.072,90.36,0.3541
+unable_to_verify_identity,"The customer message ""I can't verify my ID"" does not match any of the listed intents. However, based on the options provided, the closest intent that",0,0.0758,90.73,0.3527
+transfer_fee_charged,declined_card_payment,0,0.0762,91.7,0.2726
+apple_pay_or_google_pay,card_payment_not_recognised,0,0.0764,91.51,0.3278
+declined_cash_withdrawal,"The customer message ""I attempted to get cash but was declined."" indicates a **declined card payment**.",0,0.0746,91.6,0.2511
+receiving_money,"The message: ""How can someone send me money?"" does not match any of the provided intents. However, if we must choose from the list, the closest",0,0.0699,91.76,0.3487
+top_up_by_bank_transfer_charge,card_payment_fee_charged,0,0.0747,89.72,0.3121
+contactless_not_working,contactless_not_working,1,0.0746,90.9,0.242
+supported_cards_and_currencies,"The message ""What options do I have in regards to payment?"" is indicating a request for payment options, which aligns with the intent **card_payment_not_rec",0,0.0729,90.36,0.3541
+card_delivery_estimate,"The message: ""When should I expect my card?"" does not match any of the provided intents. However, if you are referring to a specific intent related to",0,0.0749,87.58,0.3654
+top_up_failed,card_payment_not_recognised,0,0.0756,60.61,0.1485
+wrong_exchange_rate_for_cash_withdrawal,exchange_rate,0,0.1382,57.38,0.5577
+balance_not_updated_after_bank_transfer,balance_not_updated_after_bank_transfer,1,0.1007,58.75,0.5446
+why_verify_identity,"The customer message ""I won't verify my identity"" does not match any of the listed intents. However, based on the options provided, the closest intent that",0,0.1058,78.64,0.4069
+pending_card_payment,"The message: ""How long do card transactions take to clear?"" does not match any of the provided intents. However, if we must choose from the list,",0,0.087,82.31,0.3888
+get_disposable_virtual_card,The customer message is about using a disposable virtual card for online purchases. The intent is to **confirm the ability to use the card for online transactions**.,0,0.0826,77.8,0.4113
+order_physical_card,card_delivery_estimate,0,0.0809,89.99,0.2445
+topping_up_by_card,"The message: **""Who else can top up my account""** indicates a request to **top up the account**, which aligns with the intent **card",0,0.0781,87.85,0.3643
+card_payment_wrong_exchange_rate,"The message: ""The rate applied to my foreign purchase was incorrect"" indicates a **problem with the exchange rate**. However, the intent listed does not include",0,0.0744,88.92,0.3599
+wrong_exchange_rate_for_cash_withdrawal,card_payment_wrong_exchange_rate,0,0.0777,90.52,0.1988
+age_limit,"The message **""Is there an age minimum?""** does not match any of the provided intents. However, if you meant to ask about a specific intent related",0,0.0764,80.95,0.3953
+transfer_timing,"The message: ""How long is the wait for a US transfer?"" does **not** match any of the provided intents. However, if we must choose from",0,0.0813,78.53,0.4075
+lost_or_stolen_phone,"The message ""lost phone, can i still access account?"" indicates a **lost or stolen card**. Therefore, the correct classification is:",0,0.0803,79.38,0.4031
+wrong_exchange_rate_for_cash_withdrawal,The message indicates that the customer made a withdrawal from the ATM and is concerned about a charge that was too high. This suggests a **card payment issue** or,0,0.0831,82.08,0.3899
+supported_cards_and_currencies,"The customer message is asking how to transfer funds from their American Express into their account. This is a request for assistance in a banking transaction, specifically a transfer.",0,0.0843,82.31,0.3888
+balance_not_updated_after_bank_transfer,"The message: ""When will my transfer be available in my account."" is **not** in the list of intents provided. However, if you are referring to",0,0.0817,85.09,0.3761
+pending_cash_withdrawal,pending_transfer,0,0.0834,91.82,0.0545
+balance_not_updated_after_cheque_or_cash_deposit,"The customer message indicates that **when they deposit cheques and cash, their balance does not update**. This is a common issue related to **card payment methods",0,0.0821,70.14,0.4562
+pin_blocked,The customer message is asking about unblocking their pin after entering it wrong too many times. This is related to **pin blocking** or **pin verification**.,0,0.0928,73.61,0.4347
+get_physical_card,pin_blocked,0,0.0905,75.93,0.4214
+apple_pay_or_google_pay,activate_my_card,0,0.0934,80.04,0.2749
+why_verify_identity,"The message: **""Why do you need to know so much about me""** does not match any of the provided intents. However, if we must choose",0,0.1059,68.43,0.4676
+terminate_account,Intent: quit_the_account,0,0.0851,87.13,0.0689
+topping_up_by_card,"The message: **""Can I top up using my car?""** does not match any of the provided intents. However, if we must choose from the list",0,0.0823,87.16,0.3671
+top_up_limits,top_up_by_card_charge,0,0.078,81.33,0.3443
+supported_cards_and_currencies,"The message: ""I just have one other card from the US. Is that okay?"" indicates that the customer is confirming the availability of another card from the US",0,0.0811,84.74,0.3776
+top_up_limits,top_up_limits,1,0.0837,88.31,0.317
+supported_cards_and_currencies,card_payment_not_recognised,0,0.0795,90.81,0.3083
+apple_pay_or_google_pay,card_payment_not_recognised,0,0.0786,88.77,0.3154
+pin_blocked,pin_blocked,1,0.0763,93.41,0.0535
+card_acceptance,"The message: *""Where should my card work?""* is asking about the location or physical location of the card, not about a banking intent. However, the",0,0.0762,87.09,0.3674
+exchange_via_app,"The customer message indicates they want to use **AUD** instead of **GBP**. Based on the list of intents, the most appropriate classification is:",0,0.0785,90.54,0.3535
+card_payment_not_recognised,compromised_card,0,0.0782,93.04,0.0537
+verify_source_of_funds,"The message: *""Where has my available money come from?""* is asking about the source of the money, which is related to **card payment** or **",0,0.0754,89.86,0.3561
+compromised_card,compromised_card,1,0.077,91.22,0.2302
+receiving_money,contactless_not_working,0,0.0807,90.55,0.2871
+transaction_charged_twice,"The message is indicating a problem with recurring charges for the same item, which is likely related to **card payment fees** or **recurring charges**. However",0,0.079,89.53,0.3574
+card_linking,"The message ""Where on the website do I go to link my card?"" does not match any of the provided intents. However, if we must choose from the",0,0.0778,89.93,0.3558
+transfer_timing,"The message: ""How long does it take for funds to come through the US to my account?"" does not match any of the provided intents. However, if",0,0.0778,89.77,0.3565
+pin_blocked,"The message ""What can you do to unblock my pin?"" indicates the intent to **cancel a transfer** or **terminate a transaction**.",0,0.075,90.62,0.3311
+reverted_card_payment?,declined_card_payment,0,0.0783,91.39,0.2517
+receiving_money,contactless_not_working,0,0.0796,90.79,0.3304
+activate_my_card,activate_my_card,1,0.0794,91.08,0.3404
+wrong_amount_of_cash_received,"The customer message ""I asked for 100 but only got 20."" indicates a **transaction failure** or **payment mismatch**. Based on",0,0.0751,89.3,0.3584
+Refund_not_showing_up,"The message indicates a request for a refund from a seller, which aligns with the intent **refund_not_showing_up**.",0,0.0794,90.08,0.2997
+top_up_by_cash_or_cheque,card_payment_not_recognised,0,0.0775,89.91,0.3559
+exchange_charge,"The message: ""My work sends me all over the world, can I get a discount for all the money I have to exchange?""",0,0.0778,85.21,0.3755
+card_arrival,"The customer message ""still waiting on my new card"" indicates a **waiting for the card to be processed**. Among the list of intents, the most relevant",0,0.0766,90.26,0.3545
+reverted_card_payment?,declined_card_payment,0,0.0761,93.0,0.0645
+contactless_not_working,contactless_not_working,1,0.0768,89.03,0.3145
+cash_withdrawal_charge,declined_card_payment,0,0.0796,89.0,0.0674
+top_up_reverted,card_payment_not_recognised,0,0.0753,90.34,0.0996
+pending_top_up,card_not_working,0,0.0779,84.93,0.0706
+order_physical_card,"The message: *""Where do you deliver cards by mail?""* does not match any of the provided intents. However, if we must choose from the list,",0,0.078,87.7,0.3649
+Refund_not_showing_up,declined_card_payment,0,0.0777,92.58,0.0972
+pending_transfer,"The message: **""Why is my transfer not done yet?""** indicates a **request for verification** or **inquiry about the status of a transfer**",0,0.0755,87.0,0.3678
+exchange_rate,"The message ""What are your international exchange rates?"" does not match any of the provided intents. However, if we must choose from the list, the closest intent",0,0.0763,89.04,0.3594
+compromised_card,"The customer message ""Freeze my account it's been hacked."" indicates a **security concern** or **account protection**. Among the provided intents, the most",0,0.088,68.61,0.4664
+card_about_to_expire,"The message: ""Will I need to order a new card since mine expires next month?"" indicates that the customer is concerned about their current card expiring and needing",0,0.0885,71.16,0.4497
+transfer_timing,"The message is asking about the time it takes for a transfer to complete, which is related to the **transfer timing**. However, none of the provided intents",0,0.0998,80.09,0.3996
+get_physical_card,"The message ""Where is the card PIN?"" does not match any of the provided intents. However, if we must choose from the list, the closest intent would",0,0.0811,83.66,0.3825
+transfer_timing,"The message: ""How long is it going to take for my funds to show in my account?"" is related to **card payment** and **transaction timing**",0,0.0832,82.43,0.3882
+pending_transfer,Pending transfer?,0,0.0819,81.61,0.049
+card_delivery_estimate,"The customer message ""i need my card quick"" indicates a request to get their card, which is likely related to a card-related transaction or service. Among the",0,0.0865,72.8,0.4396
+topping_up_by_card,card_payment_not_recognised,0,0.0955,73.17,0.123
+exchange_via_app,"The message: **""May I exchange currencies with this?""**",0,0.1264,60.98,0.3608
+change_pin,"The message ""How do I change my PIN?"" does not match any of the provided intent categories. However, based on the list of intents, the closest match",0,0.0982,78.89,0.4056
+failed_transfer,pending_transfer,0,0.1036,85.39,0.2811
+wrong_amount_of_cash_received,cash_withdrawal_not_recognised,0,0.0898,86.81,0.311
+declined_card_payment,"The customer message ""My credit card was declined"" indicates a **declined card payment**.",0,0.0779,90.13,0.2219
+declined_cash_withdrawal,declined_card_payment,0,0.0855,91.72,0.0654
+cash_withdrawal_charge,card_payment_not_recognised,0,0.0836,88.4,0.362
+pin_blocked,pin_blocked,1,0.0814,91.32,0.0548
+activate_my_card,"The customer message ""Could you please activate my card"" indicates the intent to **activate their card**.",0,0.0774,87.71,0.2508
+passcode_forgotten,"The message ""What should I do if I forgot my passcode?"" indicates a **passcode-forgotten** intent.",0,0.0788,86.87,0.3684
+country_support,"The message: **""Can I get one of your cards in the EU""** is an invitation to **contact your bank** to request a card in the",0,0.0787,88.18,0.3629
+declined_card_payment,declined_card_payment,1,0.0866,80.33,0.3237
+unable_to_verify_identity,card_payment_not_recognised,0,0.0923,57.82,0.4669
+declined_card_payment,card_not_working,0,0.1778,57.2,0.437
+card_swallowed,card_not_working,0,0.0957,55.34,0.4337
+terminate_account,Intent: close_my_account,0,0.0965,81.84,0.0733
+pending_card_payment,pending_card_payment,1,0.114,87.28,0.3208
+wrong_amount_of_cash_received,declined_card_payment,0,0.0863,88.7,0.1466
+getting_virtual_card,"The message: **""Where is the virtual card located?""** does not match any of the provided intents. However, if we must choose from the list,",0,0.093,84.02,0.3809
+activate_my_card,"The customer message: **""Is there a way my new card can be renewed?""**",0,0.0947,85.15,0.3406
+pending_top_up,pending_card_payment,0,0.094,85.67,0.3502
+balance_not_updated_after_cheque_or_cash_deposit,"The message: **""Why hasn't my balance increased after depositing a check?""** indicates a **balance not updated after a check deposit**.",0,0.0923,84.38,0.3792
+balance_not_updated_after_cheque_or_cash_deposit,The customer message is indicating that the payment into their account is not showing up. This is related to **card payment not recognised**.,0,0.1014,82.02,0.3901
+top_up_by_card_charge,card_payment_fee_charged,0,0.1016,79.43,0.4029
+country_support,"The message: ""I'm not in the UK, can I still get a card?"" indicates a request to get a card, but it does not specify the",0,0.0945,85.07,0.3762
+beneficiary_not_allowed,beneficiary_not_allowed,1,0.0979,81.82,0.33
+getting_virtual_card,"The message ""How do you get a virtual card?"" is asking for instructions on how to obtain a virtual card. Among the list of intents, the most relevant",0,0.0888,86.45,0.3702
+failed_transfer,"The customer message indicates that they tried to transfer money but it did not work. Based on the list of intents, the most appropriate classification is:",0,0.0927,81.54,0.3924
+order_physical_card,card_delivery_estimate,0,0.0967,83.88,0.31
+top_up_limits,top_up_limits,1,0.0938,80.83,0.3588
+unable_to_verify_identity,"The customer message ""Help my verify my id"" does not match any of the provided intents. However, based on the list of intents, the closest one that",0,0.094,83.25,0.3844
+top_up_by_cash_or_cheque,"The message: ""What can I pay with? Does cash work?"" indicates a request for information about payment options, specifically about whether cash is supported. Among the",0,0.0927,81.35,0.3934
+balance_not_updated_after_bank_transfer,"The message is asking about the time it takes for transfers from a UK account, and it mentions that the transfer is not showing up. This is related to the",0,0.1002,84.89,0.377
+cancel_transfer,cancel_transfer,1,0.0879,84.06,0.2974
+pin_blocked,"The message: ""What should I do if I've tried to enter my PIN too often?"" indicates a **PIN-related issue**. Among the list of intents",0,0.096,71.65,0.4466
+pending_card_payment,pending_card_payment,1,0.1446,62.55,0.0959
+exchange_via_app,"The message: ""How would I use my money in a different country?"" does not match any of the provided intents. However, if we must choose from the",0,0.1094,73.79,0.4337
+pending_top_up,"The message: **""Is there a reason my top up hasn't gone through""** indicates a **top-up issue**.",0,0.0935,69.42,0.461
+disposable_card_limits,"The message: ""How many disposable cards can I have?"" does not match any of the provided intents. However, if we must choose from the list, the",0,0.1041,47.5,0.6737
+top_up_by_bank_transfer_charge,top_up_by_card_charge,0,0.1478,60.85,0.4766
+atm_support,atm_support,1,0.1232,63.65,0.3299
+top_up_reverted,"The message indicates that the customer is experiencing a problem with a top-up transaction, specifically that the top-up is no longer available. The message also asks if it",0,0.2039,57.17,0.5598
+direct_debit_payment_not_recognised,"The customer message: ""There is a Direct Debit that I don't recognize.""",0,0.4866,43.15,0.6953
+cash_withdrawal_not_recognised,"The customer message indicates a **cash withdrawal transaction** that they are unsure of. Based on the list of intents provided, the most appropriate classification is:",0,0.0956,66.65,0.4801
+cancel_transfer,cancel_transfer,1,0.0773,89.48,0.2347
+topping_up_by_card,"The message: ""How do my friends top up my account"" does not match any of the provided intents. However, if we must choose from the list,",0,0.083,87.6,0.3653
+get_disposable_virtual_card,"The message: **""Can I get a throw away card""** indicates a request to obtain a disposable card, which aligns with the intent **card_delivery",0,0.0933,59.74,0.5356
+extra_charge_on_statement,"The message: **""Why is there an extra dollar charged to my account?""** indicates a **card payment fee** or **charge**. Among the list",0,0.1184,66.28,0.4828
+cash_withdrawal_not_recognised,lost_or_stolen_card,0,0.1097,72.89,0.1783
+cash_withdrawal_not_recognised,"The customer message ""There is a odd withdrawal on my account."" indicates a **withdrawal** issue. Among the list of intents, **withdrawal** is",0,0.1032,79.35,0.4033
+cancel_transfer,"The customer message ""I need to cancel an incorrect transaction"" indicates the intent to **cancel a transfer**.",0,0.0955,84.08,0.2736
+order_physical_card,card_payment_fee_charged,0,0.0966,84.78,0.3067
+atm_support,atm_support,1,0.0991,76.32,0.4193
+top_up_by_cash_or_cheque,"The message: **""Is there an option to top up a with cheque?""**",0,0.1024,75.85,0.356
+compromised_card,card_payment_not_recognised,0,0.1088,72.97,0.4385
+card_not_working,card_not_working,1,0.1036,49.26,0.6496
+lost_or_stolen_phone,"The message: *""Can I still use the app if I switched phones?""* does not match any of the provided intents. However, if you are referring to",0,0.1106,78.95,0.4053
+card_arrival,card_delivery_estimate,0,0.0947,63.09,0.3804
+terminate_account,terminate_account,1,0.1113,68.97,0.406
+passcode_forgotten,"The customer message indicates that their password is not being accepted and they need to reset it. This is related to account security and password management, not directly to card",0,0.099,65.97,0.4851
+getting_virtual_card,"The customer message is asking where they obtain their virtual card, which is a direct question about the process of obtaining a virtual card. Among the list of intents,",0,0.1054,72.8,0.4396
+atm_support,contactless_not_working,0,0.1091,65.36,0.4131
+atm_support,"The message: *""Where can I withdrawal my money?""* indicates a request for assistance regarding a withdrawal. Among the provided intents, the most relevant one is:",0,0.1056,46.17,0.6931
+direct_debit_payment_not_recognised,The message indicates a dispute with a charge that the user is unsure they made. The intent is to **dispute the charge**.,0,1.5534,60.32,0.5305
+virtual_card_not_working,card_not_working,0,0.1763,60.65,0.4617
+top_up_failed,The customer message is indicating that their top-up failed and asking how to fix it. The most relevant intent from the list is: **card_payment_not_recogn,0,0.1314,35.23,0.9083
+beneficiary_not_allowed,declined_card_payment,0,0.1136,62.17,0.4504
+card_not_working,card_not_working,1,0.227,47.18,0.4663
+virtual_card_not_working,card_not_working,0,0.0829,50.52,0.4949
+exchange_charge,"The message does **not** match any of the provided intents. However, if you're looking for a match, the closest intent would be:",0,0.1287,46.94,0.6817
+declined_cash_withdrawal,"The customer message ""My ATM transaction was unsuccessful."" indicates a problem with the ATM service, specifically related to a failed transaction. Among the provided intents, **at",0,0.1162,63.4,0.5047
+exchange_charge,"The message: ""Would I be charged for exchanging currencies?"" indicates a **transaction-related intent**. Among the list of intents, the most relevant one is:",0,0.1805,64.14,0.4989
+card_payment_fee_charged,"The message ""There is an unauthorized fee."" indicates a **card payment fee** or **card payment not recognised**. Among the list of intents, the most",0,0.1286,51.53,0.621
+verify_top_up,"The message indicates that the user is asking why a verification is required for a top-up. Based on the list of intents, the most appropriate classification is:",0,0.1137,58.56,0.5464
+transaction_charged_twice,declined_card_payment,0,0.1198,66.02,0.4393
+transfer_not_received_by_recipient,card_payment_not_recognised,0,0.1165,50.68,0.3749
+exchange_via_app,"The message ""How do I exchange currency?"" does not match any of the provided intent options. However, if we must choose from the list, the closest and",0,0.1179,44.92,0.7124
+exchange_rate,"The message ""what is the exchange rate?"" does not match any of the provided intents. However, if we must choose from the list, the closest intent would",0,0.1765,78.87,0.4058
+getting_spare_card,"The message: ""What is the procedure for getting another card?"" is **not** in the list of intents provided. However, if you meant to ask about",0,0.1774,55.21,0.5796
+card_about_to_expire,"The message indicates the customer needs to order a new card, which is a request for a card. The most appropriate intent from the list is: **card_link",0,0.1247,74.63,0.4288
+verify_my_identity,"The message: ""do the details of my profile have to match my documents"" is not directly related to a banking intent. However, if we consider the intent",0,0.1232,54.87,0.5832
+card_linking,"The message ""How do I link my card"" is an inquiry about linking a card, which is a common banking intent related to card operations. Among the provided",0,0.2114,52.49,0.6096
+fiat_currency_support,"The message **""Can I exchange currencies?""** does not match any of the provided intent options. However, based on the list of intents, the closest one",0,0.1112,47.61,0.6721
+Refund_not_showing_up,declined_card_payment,0,0.0854,80.24,0.1745
+top_up_by_cash_or_cheque,"The message ""How do I pay by check?"" does not match any of the provided intents. However, if we must choose from the list, the closest intent",0,0.0895,74.62,0.4288
+exchange_charge,"The message: ""How much does it cost to exchange currencies?"" does not match any of the provided intents. However, if we must choose from the list,",0,0.125,60.41,0.5297
+pending_cash_withdrawal,"The message: ""How long does the cash withdrawal take to pend?"" does not match any of the provided intents. However, if we must choose from the list",0,0.165,50.83,0.6296
+cash_withdrawal_not_recognised,cash_withdrawal_not_recognised,1,0.146,45.88,0.2398
+supported_cards_and_currencies,card_payment_not_recognised,0,0.214,55.72,0.5384
+card_not_working,card_not_working,1,0.0923,80.07,0.3872
+visa_or_mastercard,"The customer message ""I would prefer a visa card"" indicates a preference for a **visa card**. None of the other intents listed in the list match this",0,0.1418,62.56,0.5115
+extra_charge_on_statement,"The customer message indicates that there is a charge on their statement, which is likely related to a card payment. The most appropriate intent from the list is:",0,0.1323,59.58,0.5371
+card_not_working,"The customer message ""I can't use my card."" indicates a **card not working** intent.",0,0.1525,66.89,0.3139
+top_up_failed,top_up_failed,1,0.1137,54.56,0.4582
+Refund_not_showing_up,declined_card_payment,0,0.1533,54.95,0.5278
+pending_transfer,"The customer message ""My transfer is still coming up as pending"" indicates a **pending transfer** intent.",0,0.1061,61.7,0.3566
+verify_source_of_funds,verify_source_of_funds,1,0.1396,65.98,0.4395
+transfer_timing,"The message: ""What is the fastest that I can make a transfer?"" does not match any of the provided intents. However, if we must choose from the",0,0.0908,69.66,0.4594
+cash_withdrawal_not_recognised,cash_withdrawal_not_recognised,1,0.1222,66.09,0.4842
+transfer_timing,"The message: ""How long does a transfer take from the point it's sent, to the point it arrives in my account?"" is **intent** to **",0,0.109,55.59,0.5756
+exchange_rate,"The message: **""Can you explain your exchange rate policy to me?""** does not match any of the provided intents. However, if you are referring to",0,0.1634,49.3,0.6491
+direct_debit_payment_not_recognised,cancel_transfer,0,0.1257,72.87,0.0686
+lost_or_stolen_phone,lost_or_stolen_card,0,0.1032,83.1,0.3851
+lost_or_stolen_card,lost_or_stolen_card,1,0.0938,71.37,0.3363
+exchange_charge,card_not_working,0,0.1194,60.95,0.525
+receiving_money,card_payment_not_recognised,0,0.1208,60.82,0.444
+declined_cash_withdrawal,card_not_working,0,0.1231,70.57,0.2267
+wrong_exchange_rate_for_cash_withdrawal,"The message: *""Can I make a withdraw if I am out of country from with out any fees at an ATM?""*",0,0.1231,68.72,0.4657
+automatic_top_up,activate_my_card,0,0.1145,72.2,0.3185
+transfer_into_account,card_payment_not_recognised,0,0.1237,72.56,0.441
+lost_or_stolen_phone,The message indicates that the user is trying to regain access to the app after being mugged and lost access. This is related to the **lost_or_stolen,0,0.1071,67.98,0.4707
+transaction_charged_twice,"The message ""I didn't buy this twice"" does not match any of the listed intents. However, based on the options provided, the closest intent that could",0,0.1613,44.02,0.727
+top_up_by_card_charge,top_up_failed,0,0.1002,58.06,0.4133
+declined_card_payment,"The customer message ""My card payment didn't work, can you help?"" indicates a **problem with the card payment**. Based on the list of intents,",0,0.1415,60.24,0.5312
+card_arrival,card_not_working,0,0.2047,27.81,0.2158
+balance_not_updated_after_cheque_or_cash_deposit,card_payment_not_recognised,0,0.2312,58.72,0.1873
+change_pin,"The message: **""May I receive a different card pin""** indicates a request to change the card pin. Among the provided intents, **""card_not",0,0.7699,81.24,0.3939
+top_up_by_cash_or_cheque,top_up_by_cash_or_cheque,1,0.0658,87.99,0.3296
+disposable_card_limits,"The message: **""Are you able to explain the restrictions of the disposable cards?""**",0,0.0788,65.49,0.4733
+lost_or_stolen_card,lost_or_stolen_card,1,0.103,43.36,0.4844
+getting_spare_card,card_delivery_estimate,0,0.1285,66.23,0.3624
+cash_withdrawal_charge,declined_card_payment,0,0.3849,50.69,0.1184
+topping_up_by_card,top_up_by_card_charge,0,0.1359,77.76,0.4115
+card_not_working,card_not_working,1,0.0928,84.86,0.2239
+virtual_card_not_working,card_not_working,0,0.116,33.46,0.2391
+card_payment_fee_charged,"The message: **""Why was I charged for card payment?""** indicates a **card payment fee or charge**. Among the intents provided, the most relevant",0,0.1002,75.01,0.4266
+failed_transfer,"The customer message ""My transfer will not go through."" indicates a **failure to process a transfer**. Among the list of intents, the most relevant one is",0,0.0877,78.41,0.4081
+get_physical_card,"The customer message ""I still don't have my pin."" indicates a **pin-related issue**, which is not directly related to banking transactions or card functionality. However",0,0.1081,59.0,0.5424
+pending_top_up,"The customer message ""The top-up is pending"" indicates that the customer is awaiting a top-up operation. Among the list of intents, the most relevant one is",0,0.1307,61.58,0.5196
+wrong_amount_of_cash_received,"The message: **""Why did I not get all the cash I asked for?""** indicates a **request for clarification** or **inquiry about the transaction",0,0.1132,53.8,0.5948
+card_payment_not_recognised,"The customer message ""I have an unauthorized transaction on my statement"" indicates a **card payment failure** or **unauthorized transaction**. Among the list of intents",0,0.1109,74.3,0.4307
+lost_or_stolen_phone,lost_or_stolen_card,0,0.0901,83.24,0.3604
+virtual_card_not_working,"The customer message indicates that their disposable virtual card was rejected for a gym subscription. This is related to card payment and transaction issues, which aligns with the intent",0,0.0946,75.68,0.4228
+top_up_failed,"The customer message ""My top up failed"" indicates a failure in a card transaction, specifically a top-up. The most appropriate intent from the list is:",0,0.1114,61.51,0.5203
+lost_or_stolen_phone,"The customer message is about **lost or stolen phone**, which does not directly relate to a banking transaction or account activity. However, the intent to **freeze accounts",0,0.1791,64.1,0.4992
+supported_cards_and_currencies,apple_pay_or_google_pay,0,0.1036,61.92,0.4845
+card_acceptance,"The customer message ""places i can use the card"" indicates that the customer is able to use the card, which aligns with the intent **card_usage**",0,0.0948,74.0,0.4325
+visa_or_mastercard,card_linking,0,0.0968,81.06,0.3948
+virtual_card_not_working,card_not_working,0,0.0992,81.52,0.3926
+pending_card_payment,request_refund,0,0.1046,83.82,0.0716
+passcode_forgotten,"The customer message ""Something is wrong with my passcode"" indicates a **passcode issue**, which is related to **card payment** or **account security**",0,0.1108,70.88,0.4514
+age_limit,"The message: **""Can my children have their own account?""** does not match any of the provided intents. However, if we must choose from the list",0,0.124,67.11,0.4768
+change_pin,"The message ""I need to change my PIN. Can I do that at a cash machine?"" indicates a **PIN change** intent.",0,0.1464,64.92,0.4313
+exchange_via_app,"The message: ""How do I change GBP to AUD?"" does not match any of the provided intent lists. However, if we must choose from the list,",0,0.1019,57.11,0.5604
+transaction_charged_twice,declined_card_payment,0,0.097,89.33,0.0672
+card_swallowed,"The customer message indicates they are unable to retrieve their card after getting cash, which is related to a **lost or stolen card**.",0,0.0884,87.03,0.3677
+unable_to_verify_identity,verify_my_identity,0,0.0958,85.71,0.2684
+top_up_by_card_charge,"The message: ""Will I get charged for topping off my card?"" indicates that the customer is asking about a fee associated with a topping up of their card.",0,0.1126,64.88,0.4932
+top_up_by_card_charge,card_payment_not_recognised,0,0.119,63.07,0.5074
+card_payment_not_recognised,card_payment_not_recognised,1,0.1154,60.57,0.1486
+declined_cash_withdrawal,atm_support,0,0.1131,62.61,0.3673
+change_pin,card_linking,0,0.0994,71.76,0.3902
+card_swallowed,card_swallowed,1,0.2177,73.71,0.4341
+declined_cash_withdrawal,declined_card_payment,0,0.1057,91.8,0.0654
+transaction_charged_twice,card_payment_not_recognised,0,0.0988,84.57,0.3311
+verify_source_of_funds,visa_or_mastercard,0,0.1114,21.37,1.2635
+pending_cash_withdrawal,pending_transfer,0,0.24,56.08,0.428
+contactless_not_working,contactless_not_working,1,0.1559,81.56,0.2697
+disposable_card_limits,disposable_card_limits,1,0.0838,87.18,0.3326
+card_payment_fee_charged,"The message is asking how to know when fees are charged, which is related to **card payment fees**. The correct intent is: **card_payment_fee_ch",0,0.0916,74.14,0.4316
+transfer_fee_charged,"The message: **""Why was a charged just for transferring?""** indicates a **card payment fee or charge**. Among the intents provided, the most relevant",0,0.1251,72.08,0.444
+age_limit,"The message does **not** match any of the provided intents. However, if you're looking for a match based on the list, **none of the intents",0,0.1379,56.67,0.5647
+verify_source_of_funds,verify_my_identity,0,0.1474,75.73,0.3697
+top_up_reverted,The customer message is: **My top-up was cancelled; will I receive a refund?**,0,0.0994,85.54,0.3741
+balance_not_updated_after_bank_transfer,pending_card_payment,0,0.1191,83.74,0.0717
+card_linking,"The message: ""How do I link a new card?"" indicates the intent to **link a new card**.",0,0.0928,54.57,0.5864
+pin_blocked,"The customer message ""I've exhausted all the of times I can try my PIN"" indicates that the customer is unable to proceed with a PIN-based transaction. The",0,0.1549,63.74,0.5021
+supported_cards_and_currencies,"The message ""Will you accept my other card?"" indicates that the customer is asking to accept a new card, which is likely related to card linking or card acceptance",0,0.1559,53.51,0.598
+verify_top_up,card_payment_not_recognised,0,0.1751,50.35,0.6157
+pending_cash_withdrawal,pending_transfer,0,0.1196,54.84,0.0912
+transfer_not_received_by_recipient,declined_card_payment,0,0.1577,34.8,0.9196
+transfer_into_account,card_payment_not_recognised,0,0.0761,82.39,0.1335
+beneficiary_not_allowed,"The customer message ""I had a transfer blocked"" indicates a **blocked transfer**. Therefore, the correct classification is:",0,0.094,72.05,0.4441
+apple_pay_or_google_pay,"The message: ""is apple pay eligible for top up"" indicates the intent to check if Apple Pay is eligible for a top-up.",0,0.1046,80.65,0.3968
+top_up_failed,"The customer message ""My funding to my card didn't go through."" indicates a **failure to process a card payment**. Among the list of intents, the",0,0.1052,58.69,0.5453
+top_up_failed,top_up_failed,1,0.1078,66.87,0.0897
+lost_or_stolen_card,lost_or_stolen_card,1,0.1353,72.21,0.1108
+balance_not_updated_after_bank_transfer,pending_transfer,0,0.1108,71.27,0.3508
+age_limit,"The message: ""I am only 17. Can I make an account?"" indicates the intent to **make an account**.",0,0.108,76.13,0.3678
+lost_or_stolen_phone,"The message indicates that the customer is concerned about a lost or stolen phone, not a banking transaction or card-related issue. Therefore, the correct classification is:",0,0.1017,72.13,0.4436
+cancel_transfer,cancel_transfer,1,0.0884,85.65,0.2685
+passcode_forgotten,lost_or_stolen_card,0,0.0956,76.38,0.3142
+disposable_card_limits,disposable_card_limits,1,0.1017,74.47,0.4297
+terminate_account,The customer message indicates dissatisfaction with the company and wants to delete their account. The most appropriate intent from the list is: **delete_account**.,0,0.1068,81.02,0.3703
+reverted_card_payment?,cancel_transfer,0,0.1018,83.12,0.3369
+lost_or_stolen_card,"The customer message ""My card got lost"" does not match any of the listed intents. However, based on the options provided, the closest intent that might be",0,0.1023,81.6,0.3922
+transfer_not_received_by_recipient,request_refund,0,0.1027,88.48,0.0678
+cancel_transfer,"The customer message ""I need help cancelling a transaction"" indicates the intent to **cancel a transfer**.",0,0.0979,81.1,0.2713
+card_arrival,"The message: ""How long does a card delivery take?"" does not match any of the provided intents. However, if we must choose from the list, the",0,0.0989,81.65,0.3919
+automatic_top_up,"The customer message: **""can you assist me with the auto top up?""**",0,0.0935,83.11,0.3249
+transfer_not_received_by_recipient,pending_transfer,0,0.0975,82.13,0.3287
+reverted_card_payment?,"The message indicates a problem with a transaction, specifically that the money was returned to the account, and the user is unsure why. This is most closely related to",0,0.1016,66.24,0.4831
+extra_charge_on_statement,"The customer message is about a **charge on their statement**, which is a **statement-related** issue. Among the list of intents, the most relevant one is",0,0.1492,65.72,0.4869
+top_up_reverted,Intent: revert_card_payment,0,0.0928,90.5,0.0663
+activate_my_card,activate_my_card,1,0.0954,87.45,0.0686
+verify_my_identity,"The message: ""I need to verify my identity, but how do I do that?"" indicates a need to confirm the identity of the customer, which is related",0,0.0914,70.06,0.4568
+activate_my_card,activate_my_card,1,0.0913,82.79,0.2657
+order_physical_card,"The message ""What is the charge for a physical card?"" is asking about the charge associated with a physical card. Among the list of intents, **card_payment",0,0.1129,67.25,0.4758
+balance_not_updated_after_bank_transfer,declined_card_payment,0,0.1018,80.09,0.2622
+country_support,"The message does **not** match any of the provided intents. However, if you're looking for a match based on the list, **none of the intents",0,0.0964,70.61,0.4532
+unable_to_verify_identity,"The customer message indicates they are having issues with identity verification, which is a common concern related to banking transactions. However, the intent listed in the options does not",0,0.1283,62.53,0.5117
+verify_my_identity,"The message ""Where do I verify my identity?"" does not match any of the provided intents. However, if we must choose from the list, the closest intent",0,0.1084,78.82,0.406
+top_up_reverted,card_payment_not_recognised,0,0.1072,71.7,0.1255
+card_payment_not_recognised,"The message indicates that there's a recent charge on the customer's card that they believe they didn't make, and they're asking to investigate. This is related",0,0.1181,67.92,0.4711
+card_about_to_expire,"The message ""What do I do when my card expires?"" indicates a **card expiration** intent.",0,0.0952,78.41,0.2678
+fiat_currency_support,"The message: ""What options do I have for holding currencies?"" does not match any of the provided intents. However, if we must choose from the list,",0,0.0918,77.48,0.413
+automatic_top_up,card_not_working,0,0.0907,71.99,0.3056
+edit_personal_details,"The message ""How to change my address"" does not match any of the provided intent options. However, if we must choose from the list, the closest and",0,0.1086,64.55,0.4957
+card_swallowed,"The message is asking what to do if an ATM ""stole"" the card. Based on the list of intents provided, the most appropriate classification is:",0,0.1085,80.77,0.3962
+lost_or_stolen_card,"The message indicates that the customer is in Spain and has a stolen card, needing a new one shipped and the old one frozen. This suggests a **lost_or",0,0.0983,55.56,0.5759
+beneficiary_not_allowed,card_payment_not_recognised,0,0.0955,84.05,0.3688
+getting_virtual_card,"The message ""what is the virtual card"" does not match any of the provided intent options. However, based on the list of intents, the closest one that",0,0.0924,87.05,0.3676
+cash_withdrawal_charge,The customer message is asking for the reason for a fee after a simple cash withdrawal. This is related to **card payment fees** or **cash withdrawal fees**,0,0.0978,86.39,0.3704
+change_pin,change_pin,1,0.1168,72.42,0.3176
+fiat_currency_support,"The message: ""What kind of currency can I hold money in?"" does not match any of the provided intents. However, if we must choose from the list",0,0.1042,72.8,0.4396
+pending_cash_withdrawal,cash_withdrawal_not_recognised,0,0.1095,72.33,0.1521
+card_linking,card_payment_not_recognised,0,0.1026,70.94,0.437
+unable_to_verify_identity,unable_to_verify_identity,1,0.0948,70.39,0.3267
+apple_pay_or_google_pay,"The message: ""How can I top-ff my account using my Apple Watch?"" does not match any of the provided intents. However, if we must choose",0,0.0996,81.99,0.3903
+top_up_by_cash_or_cheque,"The message is asking about how to top up with cash, which is a direct request for a transaction. Among the list of intents, the most relevant one is",0,0.1583,81.46,0.3928
+beneficiary_not_allowed,request_refund,0,0.1228,57.1,0.1051
+card_payment_not_recognised,card_not_working,0,0.1595,79.43,0.3147
+card_arrival,"The message: ""How long should my new card take to arrive?"" is **not** related to a banking intent. It is more about the delivery time of",0,0.0958,62.72,0.5102
+get_disposable_virtual_card,card_linking,0,0.0928,78.43,0.3315
+pending_top_up,card_payment_not_recognised,0,0.0885,90.81,0.0991
+visa_or_mastercard,"The message: **""Are both Visa and Mastercard offered?""** does not match any of the provided intents. However, if we must choose from the list",0,0.1059,87.45,0.3659
+transfer_into_account,transfer_into_account,1,0.0919,89.83,0.0668
+wrong_amount_of_cash_received,cash_withdrawal_not_recognised,0,0.0924,84.38,0.3318
+card_arrival,"The message: ""Does the card you sent have a way to track to it?"" does not match any of the provided intents. However, based on the list",0,0.0978,80.27,0.3987
+extra_charge_on_statement,declined_card_payment,0,0.1014,84.34,0.3676
+card_swallowed,lost_or_stolen_card,0,0.1077,82.71,0.2902
+card_payment_fee_charged,declined_card_payment,0,0.0946,83.27,0.3122
+card_acceptance,card_acceptance,1,0.1095,80.81,0.0743
+automatic_top_up,"The customer message ""How can I top up automatically?"" aligns with the intent **card_top_up**.",0,0.1041,50.24,0.4578
+lost_or_stolen_phone,"The message ""My phone was stolen"" does not match any of the listed intents. However, if we must choose from the provided list, the closest intent would",0,0.4892,64.89,0.4931
+automatic_top_up,card_arrival,0,0.0692,91.6,0.0655
+disposable_card_limits,"The message: ""How do I make more than one disposable card in a day?"" does **not** match any of the provided intents.",0,0.0734,87.49,0.3658
+request_refund,"The customer message ""I want a refund for my purchase"" indicates a **request for a refund**. Among the provided intents, **Refund_not_showing",0,0.0743,89.18,0.3588
+card_payment_wrong_exchange_rate,exchange_rate,0,0.0754,87.65,0.2282
+getting_virtual_card,"The customer message is asking where they can obtain their virtual card, which is a direct request for information about the card's availability. Among the list of intents,",0,0.0823,75.66,0.4229
+card_arrival,"The message: *""Is it normal to have to wait over a week for my new card?""* indicates a concern about the card's processing time, which is",0,0.1583,56.59,0.5655
+request_refund,"The message indicates a request for a refund, which is related to resolving a transaction issue. The most appropriate intent from the list is: **Refund_not_show",0,0.133,65.98,0.485
+edit_personal_details,"The customer message ""I need to change my account details"" does not match any of the provided intent options. However, based on the list of intents, the",0,0.0925,78.52,0.4075
+activate_my_card,activate_my_card,1,0.0844,91.66,0.0655
+top_up_failed,"The customer message ""My top up was denied in the app."" indicates a **denial of card payment**. Therefore, the correct classification is:",0,0.0824,88.36,0.3621
+direct_debit_payment_not_recognised,"The message: **""why does the app show a direct debit payment that I did not authorize""** indicates a **card payment not recognized**.",0,0.0819,87.29,0.3666
+top_up_by_card_charge,card_payment_fee_charged,0,0.0817,90.07,0.3442
+compromised_card,"The customer message ""My card was used without my permission"" indicates a **conflict with the card's usage**. Among the provided intents, the most relevant",0,0.0841,87.85,0.3643
+transaction_charged_twice,"The message ""I see what looks like duplicate charges on account"" indicates a **duplicate charge** issue, which is related to **card payment** or **transaction",0,0.0883,82.89,0.386
+passcode_forgotten,passcode_forgotten,1,0.0936,81.95,0.3783
+top_up_limits,"The message ""What is the limit to top-up?"" is related to the **top-up** intent.",0,0.1098,81.5,0.27
+cash_withdrawal_charge,"The customer message is asking why the account was charged for taking out cash, which is a direct inquiry about the transaction. Based on the list of intents, the",0,0.0923,85.35,0.3749
+get_physical_card,"The message: ""Does my PIN come with my card?"" does not match any of the provided intents. However, if we must choose from the list, the",0,0.0878,86.16,0.3714
+wrong_exchange_rate_for_cash_withdrawal,The customer message indicates that they did not receive the correct amount of money when using a different country's currency. This is related to **exchange rate** and **,0,0.0903,86.65,0.3693
+transfer_not_received_by_recipient,"The message: *""Where is the transaction I made to a friend?""* does not match any of the provided intents. However, if we must choose from the",0,0.0883,76.68,0.4173
+card_delivery_estimate,"The message ""I need it delivered by Saturday."" indicates a request for delivery, which is related to a card or payment transaction. However, the intent listed does",0,0.1004,84.86,0.3771
+cash_withdrawal_charge,"The message: **""Why did I have to pay a fee when I got cash?""** indicates a **payment-related issue**. Among the intents provided,",0,0.1274,77.58,0.4125
+get_disposable_virtual_card,"The message: ""how do VR cards work"" does not match any of the provided intents. However, if we must choose from the list, the closest intent",0,0.0946,85.13,0.3759
+compromised_card,card_payment_not_recognised,0,0.0827,91.48,0.0984
+atm_support,"The message ""What ATMs can I withdraw money from?"" indicates the intent to **ask about ATM support**.",0,0.0832,90.09,0.3552
+verify_top_up,"The customer message: **""Can I verify a top up?""**",0,0.0823,89.46,0.2795
+exchange_charge,exchange_charge,1,0.0839,87.24,0.2636
+wrong_amount_of_cash_received,"The message: **""Why did I get less money than I asked for?""** indicates a **request for refund**.",0,0.0927,86.47,0.3701
+balance_not_updated_after_bank_transfer,card_payment_not_recognised,0,0.0942,85.07,0.3644
+card_linking,card_linking,1,0.0928,82.02,0.3902
+pending_card_payment,declined_card_payment,0,0.0952,88.28,0.068
+change_pin,"The message: ""Which cash machines will allow me to change my PIN?"" does not match any of the provided intents. However, if we must choose from the",0,0.0916,84.95,0.3767
+change_pin,card_payment_not_recognised,0,0.0864,88.89,0.3375
+receiving_money,card_payment_not_recognised,0,0.083,89.59,0.3572
+Refund_not_showing_up,declined_card_payment,0,0.0826,90.29,0.3433
+pending_top_up,card_payment_not_recognised,0,0.0833,90.92,0.099
+apple_pay_or_google_pay,"The message: ""How do I use the top up app with my apple watch?"" does not match any of the provided intents. However, if we must choose",0,0.0827,87.65,0.3651
+age_limit,"The message: ""I would like an account for my children, how do I go about doing this?"" indicates a request to set up a new account for a",0,0.0857,87.75,0.3647
+exchange_via_app,exchange_rate,0,0.0887,85.58,0.2921
+transfer_fee_charged,card_payment_fee_charged,0,0.0918,84.75,0.3304
+transaction_charged_twice,"The message: **""Why have I been charged twice for the same transaction?""** indicates a **card payment fee** or **charge** issue. Among the",0,0.0956,84.21,0.38
+verify_top_up,card_payment_not_recognised,0,0.0933,84.83,0.3537
+beneficiary_not_allowed,"The message: ""How do I do a successful transfer to an account?"" does not match any of the provided intents. However, if we must choose from the",0,0.0933,88.09,0.3633
+verify_source_of_funds,card_payment_not_recognised,0,0.0884,87.41,0.3203
+declined_transfer,declined_card_payment,0,0.0879,93.09,0.0645
+why_verify_identity,why_verify_identity,1,0.0894,87.4,0.2975
+cash_withdrawal_charge,"The customer message ""I was charged extra for a withdrawal"" indicates a **card payment fee** or **charge**. Among the list of intents, the most",0,0.0874,87.79,0.3645
+virtual_card_not_working,card_payment_not_recognised,0,0.0859,88.16,0.3516
+virtual_card_not_working,card_not_working,0,0.0887,88.41,0.3054
+visa_or_mastercard,visa_or_mastercard,1,0.0898,83.75,0.2985
+atm_support,"The message: ""Do you know the closest ATM?"" does not match any of the provided intents. However, if we must choose from the list, the closest",0,0.0922,86.94,0.3681
+extra_charge_on_statement,exchange_charge,0,0.1012,84.84,0.3772
+fiat_currency_support,"The message: ""I want to make a currency exchange to EU.""",0,0.0928,87.89,0.2389
+why_verify_identity,"The message: ""Do I have to verify my identity?"" does not match any of the provided intents. However, if we must choose from the list, the",0,0.0913,88.17,0.363
+verify_top_up,"The message: ""Where's the verification code for the top-up card?"" indicates a request to locate or check the verification code for a top-up card. This",0,0.0927,89.34,0.3582
+pending_card_payment,"The customer message ""My payment still hasn't processed!"" indicates a **pending card payment**.",0,0.0845,89.04,0.2246
+top_up_by_bank_transfer_charge,"The message: ""What'll it charge me for a SEPA transfer?"" indicates the intent to **request a fee for a SEPA transfer**.",0,0.0901,86.82,0.3686
+lost_or_stolen_card,"The message ""My card is lost! What can I do?"" indicates a **lost or stolen card** intent.",0,0.0881,83.82,0.3818
+lost_or_stolen_phone,lost_or_stolen_phone,1,0.0889,89.71,0.1561
+beneficiary_not_allowed,"The message: **""Why would I not be able to do a transfer to a beneficiary?""** indicates a **banking intent** related to **transfer to",0,0.1188,56.01,0.5713
+top_up_by_cash_or_cheque,top_up_by_cash_or_cheque,1,0.0927,54.63,0.5858
+transfer_fee_charged,request_refund,0,0.0694,92.11,0.0651
+card_acceptance,"The message ""Who accepts my card?"" does not match any of the provided intents. However, if we must choose from the list, the closest intent would be",0,0.0752,88.19,0.3628
+transfer_into_account,"The message: ""I don't understand the money transfer process.""",0,0.077,86.22,0.3712
+balance_not_updated_after_cheque_or_cash_deposit,cash_withdrawal_not_recognised,0,0.0924,82.98,0.3856
+visa_or_mastercard,"The message: ""I like Mastercard better."" does not match any of the provided intent options. However, if we must choose from the list, the closest",0,0.0936,70.61,0.4532
+card_delivery_estimate,"The message: ""can I choose a date for delivery?"" does not match any of the provided intents. However, if we must choose from the list, the",0,0.1241,56.73,0.5641
+card_linking,card_linking,1,0.1357,84.13,0.2972
+declined_transfer,declined_card_payment,0,0.0854,90.97,0.066
+card_payment_fee_charged,"The message: ""I was charged a fee for a card payment. Why?"" indicates that the customer is asking for clarification on the reason for a fee. This",0,0.0822,88.19,0.3629
+getting_spare_card,activate_my_card,0,0.0841,87.78,0.3645
+transfer_not_received_by_recipient,card_arrival,0,0.0843,86.08,0.2672
+country_support,"The message ""Are your cards available in Europe?"" does not match any of the provided intents. However, if we must choose from the list, the closest intent",0,0.0906,86.66,0.3693
+extra_charge_on_statement,"The message is about a customer who is unsure about a transaction (specifically, a 1£ amount on their statement) and is asking for clarification. This",0,0.1051,83.21,0.3846
+transfer_fee_charged,card_payment_not_recognised,0,0.1163,83.4,0.0839
+transfer_not_received_by_recipient,pending_card_payment,0,0.101,80.86,0.3339
+Refund_not_showing_up,declined_card_payment,0,0.101,84.24,0.0712
+transfer_into_account,"The message is about transferring from accounts to top up, which indicates the intent to perform a **card payment** or **transfer**. Among the list of intents",0,0.0989,81.47,0.3928
+direct_debit_payment_not_recognised,card_payment_not_recognised,0,0.0911,87.96,0.1251
+transfer_fee_charged,card_payment_fee_charged,0,0.0888,86.48,0.3353
+pending_transfer,pending_transfer,1,0.087,87.98,0.3637
+country_support,"The message ""What countries do you support?"" does not match any of the provided intents. However, if we must choose from the list, the closest intent would",0,0.0876,88.94,0.3598
+failed_transfer,declined_card_payment,0,0.0874,87.66,0.3651
+pin_blocked,pin_blocked,1,0.0908,88.39,0.0566
+declined_cash_withdrawal,card_payment_not_recognised,0,0.0986,81.29,0.2337
+virtual_card_not_working,card_not_working,0,0.1094,81.03,0.0864
+request_refund,"The message: **""Can I have an item refunded?""** does not match any of the provided intents. However, if we must choose from the list,",0,0.1072,84.96,0.3766
+request_refund,"The message: **""Can you cancel my purchase?""** does not match any of the provided intents. However, if we must choose from the list, the",0,0.0946,86.3,0.3708
+getting_virtual_card,"The customer message ""I need to reorder my virtual card!"" indicates a **card_reordering** intent.",0,0.0903,87.15,0.2525
+card_payment_wrong_exchange_rate,"The message ""Why am I being charged more?"" indicates a **payment-related issue**. Among the list of intents, the most relevant one is:",0,0.0914,71.08,0.4502
+verify_top_up,verify_top_up,1,0.0829,87.63,0.3309
+card_payment_wrong_exchange_rate,"The message indicates a problem with the exchange rate, specifically mentioning that the rate was wrong when purchasing something. This is related to **card payment** and **exchange",0,0.0924,87.28,0.3666
+receiving_money,"The customer message is asking what they need to do to transfer their paycheck to their account. Based on the list of intents provided, the most appropriate classification is:",0,0.0886,87.92,0.364
+why_verify_identity,"The message ""What is the need to verify my identity?"" does not match any of the provided intents. However, if we must choose from the list, the",0,0.0912,73.46,0.4356
+top_up_by_bank_transfer_charge,"The message: ""How much am I charged to receive money?"" indicates a request for information about the amount of charge associated with a transaction. This is most closely",0,0.1314,74.41,0.4301
+card_about_to_expire,card_about_to_expire,1,0.1026,90.6,0.0773
+receiving_money,"The message: **""Can I use this account to receive my salary?""** indicates a **request for access to the account** or **a request to use",0,0.0873,89.26,0.3585
+declined_transfer,declined_card_payment,0,0.0861,88.57,0.3613
+card_acceptance,"The message: ""Where am I able to use the card?"" is asking about the available options for using the card, which is related to card functionality. Among",0,0.0826,88.62,0.3611
+pending_card_payment,"The message ""what does pending mean?"" does not directly identify a specific intent from the list provided. However, based on the context and the possible intent, the",0,0.082,89.25,0.3585
+top_up_reverted,"The customer message indicates that the card was topped up, but the application reverted it. This suggests a **reverted card payment** intent.",0,0.0845,87.81,0.3644
+wrong_amount_of_cash_received,card_payment_not_recognised,0,0.0884,84.43,0.379
+verify_source_of_funds,"The message: *""Where can I see the source of my money?""* is asking about the source of the money, which is related to **card payment**",0,0.152,78.02,0.4102
+card_about_to_expire,card_not_working,0,0.0991,85.73,0.3733
+top_up_by_bank_transfer_charge,"The message: ""What is the fee to receive money?"" does not match any of the provided intents. However, if we must choose from the list, the",0,0.0923,87.59,0.3653
+apple_pay_or_google_pay,apple_pay_or_google_pay,1,0.0912,85.82,0.3379
+direct_debit_payment_not_recognised,declined_card_payment,0,0.107,89.27,0.1008
+unable_to_verify_identity,verify_my_identity,0,0.0906,85.24,0.3168
+reverted_card_payment?,declined_card_payment,0,0.1754,86.26,0.3014
+card_arrival,card_not_working,0,0.0888,89.01,0.0674
+unable_to_verify_identity,"The customer message indicates that they do not have the required identity proof to complete a transaction. This is most closely related to the intent **""card_payment_not_rec",0,0.0942,76.8,0.4166
+declined_card_payment,"The customer message ""They declined my card payment"" indicates a **declined card payment** intent.",0,0.0832,89.23,0.2353
+card_not_working,card_not_working,1,0.0817,87.33,0.3664
+country_support,"The message ""What countries are supported?"" does not match any of the provided intents. However, if we must choose from the list, the closest intent would be",0,0.0848,87.74,0.3647
+reverted_card_payment?,"The message: **""why did the app refuse to make an approved payment""** indicates a **payment refusal** intent.",0,0.0858,87.5,0.3657
+compromised_card,The customer message indicates that the child used their card while the customer was away. This is a **lost or stolen card** intent.,0,0.0939,85.0,0.3765
+contactless_not_working,"The message ""what is the charges for new card?"" is asking about the charges for a new card. Among the list of intents, the most relevant one is",0,0.0883,84.17,0.3802
+automatic_top_up,"The customer message: **""I'm running out of money, can I auto top up?""**",0,0.0911,85.78,0.3614
+topping_up_by_card,top_up_by_card_charge,0,0.0882,86.39,0.3357
+automatic_top_up,"The message ""What is the auto top up function and where can I find that at?"" is indicating a request for information about the auto top-up feature. Among",0,0.0897,87.69,0.3649
+cash_withdrawal_not_recognised,The customer message indicates that the app is showing an ATM withdrawal that the user did not make. This is related to a **card payment** and **ATM,0,0.0859,88.81,0.3603
+virtual_card_not_working,"The customer message is indicating that their **disposable virtual card is not working**. Based on the list of intents provided, the most appropriate classification is:",0,0.0822,88.42,0.3619
+edit_personal_details,"The customer message is about changing personal details, which is a common action related to banking. Among the list of intents, the most relevant one is:",0,0.084,86.29,0.3708
+Refund_not_showing_up,The customer message indicates that they returned an item and the money from the return isn't in their account. This is a **cash_withdrawal_not_recogn,0,0.0888,86.29,0.3709
+visa_or_mastercard,"The message ""Do you do Visa or Mastercard?"" does not match any of the provided intent categories. However, based on the list of intents, the closest",0,0.0883,86.05,0.3719
+visa_or_mastercard,visa_or_mastercard,1,0.0892,86.1,0.3601
+pending_top_up,"The customer message ""My top up is pending"" indicates that the card is currently being processed or waiting for a transaction. Among the list of intents, the most",0,0.0855,87.36,0.3663
+request_refund,"The message ""I want to return an item"" does not match any of the provided intent options. However, if we must choose from the list, the closest",0,0.0874,87.7,0.3649
+pending_card_payment,"The message: **""Why is my card payment showing as pending?""** indicates a **card payment issue**. Among the list of intents, the most relevant",0,0.0963,87.27,0.3667
+visa_or_mastercard,"The message: ""What steps must I follow to get a Visa credit card?"" does not match any of the provided intents. However, if you are referring to",0,0.089,88.01,0.3636
+pending_card_payment,pending_transfer,0,0.0899,88.58,0.0564
+transaction_charged_twice,"The message indicates that the customer had a duplicate card and was charged twice. This is related to resolving a duplicate card issue, which is a common banking concern.",0,0.089,85.51,0.3742
+exchange_rate,"The message: ""What do you base your exchange rates on?"" does not match any of the provided intents. However, if we must choose from the list,",0,0.0876,86.86,0.3684
+cancel_transfer,"The customer message ""Help me cancel my transaction"" indicates the intent to **cancel a transaction**.",0,0.0855,88.17,0.2382
+card_delivery_estimate,"The message: ""How long will it take to deliver something to US?"" does not match any of the provided intents. However, if we must choose from the",0,0.0859,88.48,0.3617
+card_payment_wrong_exchange_rate,"The customer message indicates a **problem with the exchange rate** for a transaction, which is related to **card payment**. The most appropriate intent from the list",0,0.0871,86.52,0.3699
+get_physical_card,"The customer message ""What is my card's PIN?"" does not match any of the provided intents. However, based on the list of intents, the closest match",0,0.088,82.07,0.3899
+verify_top_up,"The message: ""The top-up verification code is missing"" indicates a **missing verification code** for a top-up.",0,0.0905,74.58,0.4291
+Refund_not_showing_up,request_refund,0,0.0894,87.83,0.0683
+supported_cards_and_currencies,"The message ""What credit cards are supported?"" does not match any of the provided intents. However, if we must choose from the list, the closest intent would",0,0.0888,86.95,0.368
+top_up_failed,pending_top_up,0,0.0886,88.7,0.0676

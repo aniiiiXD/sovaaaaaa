@@ -1,0 +1,23 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::passkarwado-useast1/sova/fin-o1-14b/bd4b97b8e5f6954c2c6d92da75b6ba4cb948b56d/*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::passkarwado-useast1",
+      "Condition": {
+        "StringLike": {
+          "s3:prefix": [
+            "sova/fin-o1-14b/bd4b97b8e5f6954c2c6d92da75b6ba4cb948b56d/",
+            "sova/fin-o1-14b/bd4b97b8e5f6954c2c6d92da75b6ba4cb948b56d/*"
+          ]
+        }
+      }
+    }
+  ]
+}

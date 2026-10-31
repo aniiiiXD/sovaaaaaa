@@ -1,0 +1,316 @@
+{
+ "summary": {
+  "base-qwen": {
+   "n": 12,
+   "accuracy": 0.6667,
+   "hallucination_rate": 0.3333,
+   "p50_ttft_ms": 37.4,
+   "p50_latency_s": 0.28,
+   "p50_tok_s": 76.7,
+   "cost_per_1k_tasks": 0.654
+  },
+  "sova-qwen": {
+   "n": 12,
+   "accuracy": 0.3333,
+   "hallucination_rate": 0.6667,
+   "p50_ttft_ms": 55.5,
+   "p50_latency_s": 0.14,
+   "p50_tok_s": 50.6,
+   "cost_per_1k_tasks": 0.293
+  }
+ },
+ "cases": {
+  "base-qwen": [
+   {
+    "id": "meridian_logistics_2022",
+    "answer": "166 / 591 = 0.283 = 28.3%",
+    "truth": 28.1,
+    "correct": true,
+    "hallucinated": false,
+    "ttft_s": 0.4344317500072066,
+    "latency_s": 0.681844667007681,
+    "tokens": 23,
+    "tok_s": 33.73202301476812,
+    "cost_usd": 0.0
+   },
+   {
+    "id": "meridian_logistics_2023",
+    "answer": "1,140 / 4,945 = 0.2345 or 23.45%",
+    "truth": 23.1,
+    "correct": false,
+    "hallucinated": true,
+    "ttft_s": 0.03700300000491552,
+    "latency_s": 0.35224787500919774,
+    "tokens": 29,
+    "tok_s": 82.32838877805229,
+    "cost_usd": 0.0
+   },
+   {
+    "id": "meridian_logistics_2024",
+    "answer": "$957.",
+    "truth": 957.0,
+    "correct": true,
+    "hallucinated": false,
+    "ttft_s": 0.03693604201544076,
+    "latency_s": 0.09974908400909044,
+    "tokens": 6,
+    "tok_s": 60.15092829777967,
+    "cost_usd": 0.0
+   },
+   {
+    "id": "calderon_foods_2022",
+    "answer": "$419.00",
+    "truth": 419.0,
+    "correct": true,
+    "hallucinated": false,
+    "ttft_s": 0.0367982080206275,
+    "latency_s": 0.12136162500246428,
+    "tokens": 8,
+    "tok_s": 65.91869546767818,
+    "cost_usd": 0.0
+   },
+   {
+    "id": "calderon_foods_2023",
+    "answer": "Operating margin = Operating income / Revenue \u00d7 100 = 2,442 / 7,087 \u00d7 100 \u2248 34.3%",
+    "truth": 34.5,
+    "correct": true,
+    "hallucinated": false,
+    "ttft_s": 0.03736045799450949,
+    "latency_s": 0.47171733298455365,
+    "tokens": 40,
+    "tok_s": 84.7965448861507,
+    "cost_usd": 0.0
+   },
+   {
+    "id": "calderon_foods_2024",
+    "answer": "$1,923.",
+    "truth": 1923.0,
+    "correct": true,
+    "hallucinated": false,
+    "ttft_s": 0.03750833298545331,
+    "latency_s": 0.12150458298856393,
+    "tokens": 8,
+    "tok_s": 65.84113786681581,
+    "cost_usd": 0.0
+   },
+   {
+    "id": "aster_textiles_2022",
+    "answer": "The opex ratio (in %) is 328/1229 \u2248 26.6%.",
+    "truth": 26.7,
+    "correct": true,
+    "hallucinated": false,
+    "ttft_s": 0.03728991697425954,
+    "latency_s": 0.32957233299384825,
+    "tokens": 27,
+    "tok_s": 81.92435255329512,
+    "cost_usd": 0.0
+   },
+   {
+    "id": "aster_textiles_2023",
+    "answer": "1,316 / 4,820 = 0.2745 = 27.45%",
+    "truth": 27.3,
+    "correct": true,
+    "hallucinated": false,
+    "ttft_s": 0.03742249999777414,
+    "latency_s": 0.35856391600100324,
+    "tokens": 29,
+    "tok_s": 80.87818853450625,
+    "cost_usd": 0.0
+   },
+   {
+    "id": "aster_textiles_2024",
+    "answer": "The YoY growth rate (in %) is 1.65.",
+    "truth": 3.1,
+    "correct": false,
+    "hallucinated": true,
+    "ttft_s": 0.03779245901387185,
+    "latency_s": 0.22089287501876242,
+    "tokens": 17,
+    "tok_s": 76.96038180749848,
+    "cost_usd": 0.0
+   },
+   {
+    "id": "nobal_tools_2022",
+    "answer": "The YoY growth rate (in %) is 10.5.",
+    "truth": 7.1,
+    "correct": false,
+    "hallucinated": true,
+    "ttft_s": 0.03765104099875316,
+    "latency_s": 0.22234516599564813,
+    "tokens": 17,
+    "tok_s": 76.4577000083408,
+    "cost_usd": 0.0
+   },
+   {
+    "id": "nobal_tools_2023",
+    "answer": "1,011 (1,011 / 6,480) \u00d7 100 = 15.75% growth rate.",
+    "truth": 16.7,
+    "correct": false,
+    "hallucinated": true,
+    "ttft_s": 0.03772183301043697,
+    "latency_s": 0.428406624996569,
+    "tokens": 36,
+    "tok_s": 84.03231392672397,
+    "cost_usd": 0.0
+   },
+   {
+    "id": "nobal_tools_2024",
+    "answer": "$2,462.",
+    "truth": 2462.0,
+    "correct": true,
+    "hallucinated": false,
+    "ttft_s": 0.03728045799653046,
+    "latency_s": 0.1214456669986248,
+    "tokens": 8,
+    "tok_s": 65.87307886489346,
+    "cost_usd": 0.0
+   }
+  ],
+  "sova-qwen": [
+   {
+    "id": "meridian_logistics_2022",
+    "answer": "166",
+    "truth": 28.1,
+    "correct": false,
+    "hallucinated": true,
+    "ttft_s": 0.0547444169933442,
+    "latency_s": 0.10971033299574628,
+    "tokens": 5,
+    "tok_s": 45.57455859872252,
+    "cost_usd": 0.0
+   },
+   {
+    "id": "meridian_logistics_2023",
+    "answer": "1,140",
+    "truth": 23.1,
+    "correct": false,
+    "hallucinated": true,
+    "ttft_s": 0.057188292004866526,
+    "latency_s": 0.1376307500177063,
+    "tokens": 7,
+    "tok_s": 50.860726974890746,
+    "cost_usd": 0.0
+   },
+   {
+    "id": "meridian_logistics_2024",
+    "answer": "957",
+    "truth": 957.0,
+    "correct": true,
+    "hallucinated": false,
+    "ttft_s": 0.05396212500636466,
+    "latency_s": 0.10930524999275804,
+    "tokens": 5,
+    "tok_s": 45.743456973304326,
+    "cost_usd": 0.0
+   },
+   {
+    "id": "calderon_foods_2022",
+    "answer": "419",
+    "truth": 419.0,
+    "correct": true,
+    "hallucinated": false,
+    "ttft_s": 0.05468633401324041,
+    "latency_s": 0.11012629201286472,
+    "tokens": 5,
+    "tok_s": 45.40241851978373,
+    "cost_usd": 0.0
+   },
+   {
+    "id": "calderon_foods_2023",
+    "answer": "operating income: 2,442",
+    "truth": 34.5,
+    "correct": false,
+    "hallucinated": true,
+    "ttft_s": 0.06243116600671783,
+    "latency_s": 0.17987720799283125,
+    "tokens": 10,
+    "tok_s": 55.593480194547695,
+    "cost_usd": 0.0
+   },
+   {
+    "id": "calderon_foods_2024",
+    "answer": "1,923",
+    "truth": 1923.0,
+    "correct": true,
+    "hallucinated": false,
+    "ttft_s": 0.05368366700713523,
+    "latency_s": 0.13392016701982357,
+    "tokens": 7,
+    "tok_s": 52.26994675838347,
+    "cost_usd": 0.0
+   },
+   {
+    "id": "aster_textiles_2022",
+    "answer": "328",
+    "truth": 26.7,
+    "correct": false,
+    "hallucinated": true,
+    "ttft_s": 0.05751195800257847,
+    "latency_s": 0.11292195800342597,
+    "tokens": 5,
+    "tok_s": 44.278367895890575,
+    "cost_usd": 0.0
+   },
+   {
+    "id": "aster_textiles_2023",
+    "answer": "1,316",
+    "truth": 27.3,
+    "correct": false,
+    "hallucinated": true,
+    "ttft_s": 0.05560737499035895,
+    "latency_s": 0.1357750839961227,
+    "tokens": 7,
+    "tok_s": 51.55585099987784,
+    "cost_usd": 0.0
+   },
+   {
+    "id": "aster_textiles_2024",
+    "answer": "7,923",
+    "truth": 3.1,
+    "correct": false,
+    "hallucinated": true,
+    "ttft_s": 0.055296917009400204,
+    "latency_s": 0.13489375001518056,
+    "tokens": 7,
+    "tok_s": 51.89269331760916,
+    "cost_usd": 0.0
+   },
+   {
+    "id": "nobal_tools_2022",
+    "answer": "1,688",
+    "truth": 7.1,
+    "correct": false,
+    "hallucinated": true,
+    "ttft_s": 0.05645037500653416,
+    "latency_s": 0.13896999999997206,
+    "tokens": 7,
+    "tok_s": 50.37058357919988,
+    "cost_usd": 0.0
+   },
+   {
+    "id": "nobal_tools_2023",
+    "answer": "1,368",
+    "truth": 16.7,
+    "correct": false,
+    "hallucinated": true,
+    "ttft_s": 0.059068749978905544,
+    "latency_s": 0.14340383297530934,
+    "tokens": 7,
+    "tok_s": 48.8132001409281,
+    "cost_usd": 0.0
+   },
+   {
+    "id": "nobal_tools_2024",
+    "answer": "2,462",
+    "truth": 2462.0,
+    "correct": true,
+    "hallucinated": false,
+    "ttft_s": 0.05374141701031476,
+    "latency_s": 0.1369059999997262,
+    "tokens": 7,
+    "tok_s": 51.12997238991717,
+    "cost_usd": 0.0
+   }
+  ]
+ }
+}

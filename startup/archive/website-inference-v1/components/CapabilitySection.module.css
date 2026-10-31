@@ -1,0 +1,194 @@
+.section {
+  padding: 92px 0 104px;
+  background: var(--surface-sky);
+}
+
+.container {
+  min-width: 0;
+}
+
+.sectionLabel {
+  margin-bottom: 42px;
+}
+
+.heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(370px, .92fr);
+  align-items: center;
+  gap: clamp(44px, 8vw, 118px);
+  margin-bottom: 54px;
+}
+
+.heading h2 {
+  margin: 0;
+  font-size: clamp(48px, 5.2vw, 72px);
+  font-weight: 450;
+  line-height: 1.02;
+  letter-spacing: -.07em;
+  text-wrap: balance;
+}
+
+.headingSide {
+  min-width: 0;
+}
+
+.headingSide > p {
+  max-width: 510px;
+  margin: 0;
+  color: var(--copy);
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.capabilities {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.capabilityCard {
+  display: flex;
+  min-width: 0;
+  min-height: 232px;
+  align-items: center;
+  padding: 34px 38px;
+  border: 1px solid #c7d6dd;
+  border-radius: 13px;
+  background: var(--paper-bright);
+  box-shadow: 0 12px 34px rgb(47 81 103 / 4%);
+}
+
+.capabilityCard:nth-child(3) {
+  background: rgb(248 250 245 / 82%);
+}
+
+.capabilityCopy {
+  width: 100%;
+  max-width: 610px;
+}
+
+.index {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent);
+  font: 10px/1.4 var(--font-mono);
+  letter-spacing: .08em;
+}
+
+.index span {
+  color: var(--copy-muted);
+  letter-spacing: .1em;
+}
+
+.capabilityCopy h3 {
+  max-width: 520px;
+  margin: 24px 0 12px;
+  font-size: clamp(23px, 2.2vw, 30px);
+  font-weight: 500;
+  line-height: 1.14;
+  letter-spacing: -.05em;
+  text-wrap: balance;
+}
+
+.capabilityCopy p {
+  max-width: 570px;
+  margin: 0;
+  color: var(--copy);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+@media (max-width: 1100px) {
+  .heading {
+    grid-template-columns: minmax(0, 1fr) minmax(320px, .9fr);
+    gap: 48px;
+  }
+
+  .capabilityCard {
+    min-height: 220px;
+    padding: 30px;
+  }
+
+  .capabilityCopy h3 {
+    font-size: clamp(21px, 2.5vw, 27px);
+  }
+}
+
+@media (max-width: 850px) {
+  .section {
+    padding: 72px 0 82px;
+  }
+
+  .sectionLabel {
+    margin-bottom: 30px;
+  }
+
+  .heading {
+    grid-template-columns: 1fr;
+    gap: 21px;
+    margin-bottom: 34px;
+  }
+
+  .heading h2 {
+    font-size: clamp(44px, 8vw, 62px);
+  }
+
+  .headingSide > p {
+    max-width: 560px;
+    font-size: 15px;
+  }
+
+  .capabilities {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .capabilityCard {
+    min-height: 200px;
+    padding: 30px 32px;
+  }
+
+  .capabilityCopy h3 {
+    font-size: clamp(23px, 3.3vw, 28px);
+  }
+}
+
+@media (max-width: 560px) {
+  .section {
+    padding: 58px 0 68px;
+  }
+
+  .sectionLabel {
+    margin-bottom: 25px;
+  }
+
+  .heading {
+    gap: 17px;
+    margin-bottom: 27px;
+  }
+
+  .heading h2 {
+    font-size: clamp(40px, 11vw, 52px);
+  }
+
+  .headingSide > p {
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .capabilityCard {
+    min-height: 0;
+    padding: 24px 22px 26px;
+  }
+
+  .capabilityCopy h3 {
+    margin: 17px 0 9px;
+    font-size: 23px;
+  }
+
+  .capabilityCopy p {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+}

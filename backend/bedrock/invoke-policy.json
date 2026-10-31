@@ -1,0 +1,18 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "bedrock:InvokeModel",
+        "bedrock:InvokeModelWithResponseStream"
+      ],
+      "Resource": "arn:aws:bedrock:us-east-1:169970912263:imported-model/*",
+      "Condition": {
+        "StringEquals": {
+          "aws:ResourceTag/SovaService": "fin-o1-14b"
+        }
+      }
+    }
+  ]
+}
