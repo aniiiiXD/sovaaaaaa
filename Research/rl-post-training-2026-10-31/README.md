@@ -6,6 +6,9 @@ The page includes:
 
 - Dvar, Hyde and Isoquant reference models.
 - Five selectable customer profiles and a recommended first segment.
+- Eight target sectors with buyer roles, prospecting channels and pilot gates.
+- A 30-day acquisition plan, editable outreach draft, qualification questions and onboarding steps.
+- A blank prospect-tracker CSV; no messages have been sent.
 - Editable TAM, SAM and year-three active-customer capacity scenarios.
 - A customer-payback calculator with a twelve-month net-savings chart.
 - A proposed pilot offer, selected financing announcements and primary-source links.
@@ -17,4 +20,4 @@ The payback model is independent of the TAM model. Its default inputs yield five
 
 Research cutoff: 31 October 2026. Numbers from company announcements are not independently audited. See `DEEP_DIVE.md`, `COMPANIES.md` and `facts.csv` for supporting details.
 
-Validation: local checks passed for syntax, links, selected interaction handlers and calculations. The browser tool blocked local-file access; visual rendering, printing and downloads have not been inspected in a browser.
+Validation: local checks passed for syntax, internal links, selected interaction handlers and calculations. The page was inspected in Chrome through a loopback-only preview. Sector filtering, expansion and navigation were verified; customer-plan-preview.png records the desktop layout. Mobile rendering, printing and clipboard/download behavior have not been browser-tested.

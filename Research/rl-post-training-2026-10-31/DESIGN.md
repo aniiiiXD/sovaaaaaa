@@ -13,3 +13,9 @@ Inspection: open the standalone file in Chrome, inspect desktop and narrow layou
 ## Validation result
 
 The browser security policy rejected the local file URL. No alternate browser route was used, and no visual inspection is claimed. Local Node checks passed for JavaScript syntax, unique IDs and internal anchors, market default/preset calculations, the SAM capacity cap, all customer-profile handlers, and payback handling for positive savings, equal costs, higher costs and invalid input. A numeric-input step mismatch was corrected before the final check. These checks do not validate rendering or browser downloads.
+
+## Sector and acquisition update
+
+Added eight expandable sector profiles with a 3/3/2 priority filter, a four-week acquisition plan, an editable first-message draft, six qualification questions, kickoff/delivery/acceptance steps and a blank prospect tracker. Recommendations are hypotheses and targets, not observed conversion rates. No outreach was sent.
+
+The loopback preview was visually inspected in Chrome. Start-here and domain-partner filters returned three and two sectors; all restored eight. Expanded buyer details and acquisition navigation worked. Saved customer-plan-preview.png. The original local-file access limitation does not apply to the narrowly served HTTP preview.
