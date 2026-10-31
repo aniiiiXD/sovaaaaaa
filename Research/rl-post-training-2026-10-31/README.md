@@ -8,6 +8,7 @@ The page includes:
 - Five selectable customer profiles and a recommended first segment.
 - Eight target sectors with buyer roles, prospecting channels and pilot gates.
 - A 30-day acquisition plan, editable outreach draft, qualification questions and onboarding steps.
+- A 60–90 second video storyboard, read-aloud script, three sourced company examples and an `OUTREACH.md` playbook.
 - A blank prospect-tracker CSV; no messages have been sent.
 - Editable TAM, SAM and year-three active-customer capacity scenarios.
 - A customer-payback calculator with a twelve-month net-savings chart.
@@ -21,3 +22,5 @@ The payback model is independent of the TAM model. Its default inputs yield five
 Research cutoff: 31 October 2026. Numbers from company announcements are not independently audited. See `DEEP_DIVE.md`, `COMPANIES.md` and `facts.csv` for supporting details.
 
 Validation: local checks passed for syntax, internal links, selected interaction handlers and calculations. The page was inspected in Chrome through a loopback-only preview. Sector filtering, expansion and navigation were verified; customer-plan-preview.png records the desktop layout. Mobile rendering, printing and clipboard/download behavior have not been browser-tested.
+
+Video outreach addition: checked internal anchors and credential patterns; inspected the desktop storyboard in Chrome. `video-outreach-preview.png` records the view. Outreach scripts and company examples are in `OUTREACH.md`; prospect need and budget remain unverified.
