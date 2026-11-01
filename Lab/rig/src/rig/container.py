@@ -2,12 +2,15 @@ from rig.backends import build_backend
 from rig.config import Settings
 from rig.data.service import DatasetService
 from rig.evaluation.service import EvaluationService
+from rig.feedback.service import FeedbackService
 from rig.optimization.service import OptimizationService
 from rig.pipeline.service import PipelineService
 from rig.serving.service import ServingService
 from rig.storage.artifacts import Artifacts
 from rig.storage.repository import Repository
+from rig.training.imports import ModelImportService
 from rig.training.service import CandidateService, TrainingService
+from rig.workflows.service import WorkflowService
 
 
 class Container:
@@ -20,6 +23,7 @@ class Container:
         self.backend = backend if backend is not None else build_backend("mlx", settings, self.artifacts)
         self.datasets = DatasetService(self.repository, self.artifacts)
         self.candidates = CandidateService(self.repository, self.artifacts)
+        self.model_imports = ModelImportService(settings, self.artifacts, self.candidates)
         self.training = TrainingService(self.datasets, self.candidates, self.backend, self.artifacts)
         self.evaluations = EvaluationService(self.repository, self.artifacts, self.datasets,
                                              self.candidates, self.backend)
@@ -28,6 +32,9 @@ class Container:
         self.pipeline = PipelineService(self.training, self.evaluations, self.optimization)
         self.serving = ServingService(settings, self.repository, self.candidates,
                                       self.evaluations, self.backend)
+        self.feedback = FeedbackService(self.repository)
+        self.workflows = WorkflowService(self.repository, self.datasets, self.candidates,
+                                         self.pipeline, self.evaluations, self.feedback)
 
     def initialize(self) -> None:
         self.repository.initialize()

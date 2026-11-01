@@ -1,5 +1,6 @@
 from rig.domain.models import DatasetCreate, EvalRequest, IterationRequest, OptimizeRequest, PipelineRequest
 from rig.errors import RigError
+from rig.evaluation.service import comparison_failures
 
 
 class PipelineService:
@@ -8,7 +9,8 @@ class PipelineService:
 
     def validate(self, request: PipelineRequest) -> None:
         self.training.validate(request.training)
-        self.evaluations.validate(EvalRequest(candidate_id=request.training.base_candidate_id,
+        self.evaluations.validate(EvalRequest(candidate_id=(request.baseline_candidate_id
+                                                           or request.training.base_candidate_id),
                                               **request.evaluation.model_dump()))
 
     def prepare_iteration(self, request: IterationRequest):
@@ -31,16 +33,22 @@ class PipelineService:
 
     def run(self, request: PipelineRequest, context) -> dict:
         self.validate(request)
-        baseline = self.evaluations.run(EvalRequest(candidate_id=request.training.base_candidate_id,
+        context.event("baseline_started")
+        baseline = self.evaluations.run(EvalRequest(candidate_id=(request.baseline_candidate_id
+                                                                or request.training.base_candidate_id),
                                                    **request.evaluation.model_dump()), context)
+        context.event("baseline_completed", {"report_id": baseline.id})
         candidate = self.training.run(request.training, context)
         tuned = self.evaluations.run(EvalRequest(candidate_id=candidate.id,
-                                                **request.evaluation.model_dump()), context)
+                                                **request.evaluation.model_dump()), context,
+                                      baseline=baseline)
         result = {"baseline_report_id": baseline.id, "candidate_id": candidate.id,
                   "report_id": tuned.id, "accepted": tuned.passed,
-                  "score_delta": tuned.score - baseline.score}
+                  "score_delta": tuned.score - baseline.score,
+                  "gate_failures": tuned.gate_failures}
         if not tuned.passed:
             result["stopped_at"] = "quality_gate"
+            context.event("pipeline_completed", result)
             return result
         if request.optimization is not None:
             optimized = self.optimization.run(OptimizeRequest(
@@ -48,6 +56,21 @@ class PipelineService:
             result["optimization"] = optimized
             # Keep the tuned, passing candidate if the optimized candidate fails.
             if optimized["accepted"]:
-                result.update(candidate_id=optimized["candidate_id"], report_id=optimized["report_id"])
+                final = self.evaluations.get(optimized["report_id"])
+                failures = comparison_failures(baseline, final.score, final.p95_latency_ms,
+                                               final.estimated_usd_per_1k, request.comparison)
+                # A small regression from the tuned model must not erase the win over the incumbent.
+                if failures:
+                    optimized.update(accepted=False, incumbent_gate_failures=failures)
+                else:
+                    result.update(candidate_id=final.candidate_id, report_id=final.id,
+                                  score_delta=final.score - baseline.score)
+        selected = self.evaluations.get(result["report_id"])
+        failures = comparison_failures(baseline, selected.score, selected.p95_latency_ms,
+                                       selected.estimated_usd_per_1k, request.comparison)
+        result.update(accepted=selected.passed and not failures,
+                      gate_failures=[*selected.gate_failures, *failures])
+        if not result["accepted"]:
+            result["stopped_at"] = "incumbent_comparison"
         context.event("pipeline_completed", result)
         return result

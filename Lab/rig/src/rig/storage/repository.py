@@ -66,6 +66,23 @@ class Repository:
         with self.connection() as db:
             self._insert(db, kind, body)
 
+    def put_unique(self, kind: str, body: dict, field: str, value: str) -> None:
+        """Used for immutable human reviews; one decision per feedback submission."""
+        with self.connection() as db:
+            db.execute("BEGIN IMMEDIATE")
+            if db.execute("SELECT 1 FROM records WHERE kind=? AND json_extract(body, ?)=?",
+                          (kind, f"$.{field}", value)).fetchone():
+                raise Conflict("A decision already exists; submit new feedback to supersede it")
+            self._insert(db, kind, body)
+
+    def related(self, kind: str, field: str, value: str,
+                limit: int = 50, offset: int = 0) -> list[dict]:
+        with self.connection() as db:
+            rows = db.execute("SELECT body FROM records WHERE kind=? AND json_extract(body, ?)=? "
+                              "ORDER BY created_at, id LIMIT ? OFFSET ?",
+                              (kind, f"$.{field}", value, limit, offset)).fetchall()
+        return [json.loads(row["body"]) for row in rows]
+
     def get(self, kind: str, identifier: str) -> dict:
         with self.connection() as db:
             row = db.execute("SELECT body FROM records WHERE kind=? AND id=?",
@@ -97,9 +114,46 @@ class Repository:
 
     def enqueue(self, job: Job) -> Job:
         with self.connection() as db:
-            db.execute("INSERT INTO jobs VALUES (?, ?, ?, ?, ?, 0, ?, NULL, NULL)",
-                       (job.id, job.created_at, job.updated_at, job.kind, job.state,
-                        json.dumps(job.payload, allow_nan=False)))
+            self._insert_job(db, job)
+        return job
+
+    @staticmethod
+    def _insert_job(db, job: Job) -> None:
+        db.execute("INSERT INTO jobs VALUES (?, ?, ?, ?, ?, 0, ?, NULL, NULL)",
+                   (job.id, job.created_at, job.updated_at, job.kind, job.state,
+                    json.dumps(job.payload, allow_nan=False)))
+
+    def enqueue_cycle(self, cycle: dict, job: Job, max_cycles: int) -> Job:
+        with self.connection() as db:
+            db.execute("BEGIN IMMEDIATE")
+            self._workflow_idle(db, cycle["workflow_id"])
+            rows = db.execute("SELECT id FROM records WHERE kind='cycle' "
+                              "AND json_extract(body, '$.workflow_id')=? ORDER BY rowid",
+                              (cycle["workflow_id"],)).fetchall()
+            if len(rows) >= max_cycles:
+                raise Conflict("Workflow cycle budget exhausted; create a reviewed workflow version")
+            latest = rows[-1]["id"] if rows else None
+            if cycle.get("parent_cycle_id") != latest:
+                raise Conflict("Extend the latest cycle; concurrent branches are not supported")
+            self._insert(db, "cycle", cycle)
+            self._insert_job(db, job)
+        return job
+
+    @staticmethod
+    def _workflow_idle(db, workflow_id: str) -> None:
+        if db.execute("SELECT 1 FROM jobs WHERE state IN ('queued', 'running') "
+                      "AND json_extract(payload, '$.workflow_id')=?", (workflow_id,)).fetchone():
+            raise Conflict("This workflow already has an active cycle or release audit")
+
+    def enqueue_release(self, job: Job) -> Job:
+        with self.connection() as db:
+            db.execute("BEGIN IMMEDIATE")
+            self._workflow_idle(db, job.payload["workflow_id"])
+            if db.execute("SELECT 1 FROM jobs WHERE kind='workflow_release' "
+                          "AND json_extract(payload, '$.cycle_id')=?",
+                          (job.payload["cycle_id"],)).fetchone():
+                raise Conflict("This cycle already has a release audit; audits are not retried silently")
+            self._insert_job(db, job)
         return job
 
     @staticmethod

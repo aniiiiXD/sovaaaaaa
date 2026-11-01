@@ -50,6 +50,7 @@ class ServingService:
                 check()
         duration_ms = (time.monotonic() - started) * 1000
         trace = {"id": request_id, "created_at": now(), "deployment_id": deployment["id"],
+                 "workflow_id": deployment.get("workflow_id"), "cycle_id": deployment.get("cycle_id"),
                  "candidate_id": candidate.id, "config": config.model_dump(),
                  "latency_ms": result.latency_ms, "request_duration_ms": duration_ms,
                  "prompt_tokens": result.prompt_tokens, "completion_tokens": result.completion_tokens,
@@ -65,7 +66,8 @@ class ServingService:
                           "total_tokens": result.prompt_tokens + result.completion_tokens}}
 
     def feedback(self, request: FeedbackCreate) -> dict:
-        self.repository.get("trace", request.request_id)
-        item = {"id": new_id(), "created_at": now(), **request.model_dump()}
+        trace = self.repository.get("trace", request.request_id)
+        item = {"id": new_id(), "created_at": now(), "workflow_id": trace.get("workflow_id"),
+                "cycle_id": trace.get("cycle_id"), **request.model_dump()}
         self.repository.put("feedback", item)
         return item

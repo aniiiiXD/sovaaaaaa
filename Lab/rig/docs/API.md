@@ -6,6 +6,29 @@ Every resource request uses `Authorization: Bearer <RIG_API_TOKEN>`. IDs are 32-
 
 Error envelope: `{"error":{"code":"...","message":"...","request_id":"..."}}`. Validation failures return 422, missing resources 404, state/leakage conflicts 409, disabled/busy execution 503, and oversized bodies 413. Requests reject unknown fields. A default maximum 20 MB request body is enforced even without Content-Length.
 
+## Customer workflow API
+
+Use [WORKFLOW.md](WORKFLOW.md) and [workflow.http](../examples/workflow.http) for the
+complete loop. These endpoints compose the low-level stage APIs. Submission only queues work.
+
+| Method | Path under `/api/v1` | Result |
+|---|---|---|
+| POST | `/candidates/import-local` | 202 local model import job |
+| POST / GET | `/workflows` | Create/list immutable workflow definitions |
+| GET | `/workflows/{id}` | Task, owner, policy and pipeline template |
+| POST / GET | `/workflows/{id}/cycles` | Queue/list cycles and jobs |
+| GET | `/workflows/{id}/cycles/{cycle}` | Cycle configuration and job result |
+| GET | `/workflows/{id}/cycles/{cycle}/failures` | Validation errors |
+| POST | `/workflows/{id}/cycles/{cycle}/release` | 202 test-split audit |
+| POST | `/workflows/{id}/cycles/{cycle}/promote` | Promote an accepted release |
+| GET | `/workflows/{id}/feedback` | Workflow-scoped production feedback |
+| POST | `/feedback/{id}/review` | Immutable approval/rejection |
+| GET | `/feedback/{id}/reviews` | Review records |
+
+Pipelines also accept `baseline_candidate_id` and `comparison` with `min_score_gain`,
+`max_latency_ratio` and `max_estimated_cost_ratio`. Both candidates use the same
+configuration and dataset. See WORKFLOW.md for measurement and cost limitations.
+
 ## Endpoint inventory
 
 | Method | Path | Result |

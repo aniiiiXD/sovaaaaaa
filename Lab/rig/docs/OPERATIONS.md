@@ -70,3 +70,22 @@ After offline tests, real integration verification still needs a small compatibl
 ## Deployment boundary
 
 This is local, single-owner infrastructure with a shared bearer token. It has no tenant isolation, billing, per-user roles, rate limiter, distributed scheduler, encrypted storage layer or horizontally scaled model workers. Keep the default loopback binding for the local lab. A public service should place a dedicated inference backend and appropriate operational controls in front of this workflow.
+
+
+## Workflow lifecycle and local model staging
+
+See [WORKFLOW.md](WORKFLOW.md) before using the lifecycle API. Source and tests have
+been written but not executed. Existing environments have not been changed.
+
+Set `RIG_MODEL_IMPORT_ROOT` only to an operator-managed model staging directory.
+Imports require regular files and respect `RIG_MAX_MODEL_IMPORT_BYTES` (default 100 GB,
+decimal). The worker copies files into Rig storage; allow disk space for the source,
+copy, adapters, optimization intermediates and reports. No generic cleanup runs.
+Keep staging stable during import; source hashes are recorded from the copied artifact.
+
+For on-prem deployment, keep `RIG_ALLOW_DOWNLOADS=false`, pre-stage dependencies and
+models, and enforce network egress policy outside Python. The current MLX backend
+requires Apple Silicon; a Linux/NVIDIA server needs an additional execution adapter.
+Workflow reviewer names are operator-supplied audit annotations, not separate identities.
+Input retention remains opt-in. A missing retained input cannot be reconstructed from
+feedback alone. Use workflow promotion to preserve workflow identity through serving.

@@ -6,6 +6,8 @@ from rig.domain.models import EvalRequest, OptimizeRequest, PipelineRequest, Tra
 from rig.errors import Cancelled, RigError
 from rig.jobs.context import JobContext
 from rig.storage.locking import process_lock
+from rig.training.imports import LocalModelImport
+from rig.workflows.models import CycleJob, ReleaseJob
 
 logger = logging.getLogger(__name__)
 
@@ -26,6 +28,9 @@ def run_worker(container, once: bool = False) -> None:
         "evaluate": (EvalRequest, container.evaluations.run),
         "optimize": (OptimizeRequest, container.optimization.run),
         "pipeline": (PipelineRequest, container.pipeline.run),
+        "workflow_cycle": (CycleJob, container.workflows.run_cycle),
+        "workflow_release": (ReleaseJob, container.workflows.run_release),
+        "import_model": (LocalModelImport, container.model_imports.run),
     }
     try:
         with process_lock(settings.home / "worker.lock"):

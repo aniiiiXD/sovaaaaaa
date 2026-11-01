@@ -9,7 +9,7 @@ from starlette.exceptions import HTTPException
 from rig import __version__
 from rig.api.dependencies import authenticate
 from rig.api.middleware import RequestBoundary
-from rig.api.routes import candidates, datasets, deployments, evaluations, feedback, jobs, serving
+from rig.api.routes import candidates, datasets, deployments, evaluations, feedback, jobs, serving, workflows
 from rig.config import Settings
 from rig.container import Container
 from rig.errors import RigError
@@ -62,6 +62,6 @@ def create_app(settings: Settings | None = None, container: Container | None = N
         return {"status": "ok", "version": __version__, "execution_enabled": settings.execution_enabled}
 
     for router in (datasets.router, candidates.router, jobs.router, evaluations.router,
-                   deployments.router, feedback.router, serving.router):
+                   deployments.router, feedback.router, serving.router, workflows.router):
         app.include_router(router, dependencies=[Depends(authenticate)])
     return app

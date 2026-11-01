@@ -2,6 +2,20 @@
 
 A modular Python lab for **data → post-training → evaluation → iteration → performance engineering → serving**.
 
+The customer workflow now owns the loop: **workflow + data → baseline → post-train →
+evaluate → improve → optimize → release audit → serve → review failures → repeat**.
+Start with [the workflow guide](docs/WORKFLOW.md), the
+[workflow definition](examples/workflow.json) and [API sequence](examples/workflow.http).
+
+Workflow definitions capture the task, owner, acceptance criteria and comparison gates.
+Cycles snapshot configuration and dataset lineage. Reviewed production feedback can
+become new training examples while validation/test splits remain fixed. Workflow
+promotion requires a separate release audit. Local model imports use operator-staged
+files without hub downloads.
+
+Current execution remains MLX LoRA SFT on Apple Silicon. RL and NVIDIA/server-serving
+adapters are still extension work. This is not a production or air-gap qualification.
+
 **Delivery status:** source, API contracts, examples and tests have been written. Nothing has been installed, executed, trained, benchmarked, downloaded or deployed. Tests have not been run. Existing `arena/.venv` and `triage/.venv` have not been changed.
 
 ## Implemented path
@@ -29,6 +43,8 @@ rig/
 │   ├── evaluation/      Exact/numeric scoring, per-case results, quality/cost gates
 │   ├── optimization/    Fusion/quantization orchestration and regression checks
 │   ├── pipeline/        Full workflow and iterative dataset versions
+│   ├── workflows/       Customer tasks, bounded cycles and explicit release audits
+│   ├── feedback/        Immutable human review of production corrections
 │   ├── serving/         Deployment aliases, inference traces, feedback
 │   ├── backends/        MLX implementation and cancellable subprocess runner
 │   ├── jobs/            Persistent queue, cancellation, worker, stage events

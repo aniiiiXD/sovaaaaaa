@@ -48,7 +48,7 @@ class FakeBackend:
 @pytest.fixture
 def services(tmp_path):
     settings = Settings(home=tmp_path, api_token="test-token-only", execution_enabled=True,
-                        store_content=False, _env_file=None)
+                        store_content=False, model_import_root=None, _env_file=None)
     container = Container(settings, backend=FakeBackend())
     container.initialize()
     return container

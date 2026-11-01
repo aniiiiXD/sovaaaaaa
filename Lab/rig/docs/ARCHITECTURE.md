@@ -1,5 +1,12 @@
 # Architecture
 
+The [customer workflow layer](WORKFLOW.md) composes these modules. `workflows/` owns
+definitions, cycles and releases; `feedback/` owns human decisions; `training/imports.py`
+handles operator-staged local models. Cycle creation and job enqueueing share a SQLite
+transaction enforcing the latest parent, cycle budget and no active workflow job.
+Release submission is also serialized and limited to one audit per cycle.
+
+
 ## Direction of dependencies
 
 ```mermaid

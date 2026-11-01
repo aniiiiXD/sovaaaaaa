@@ -12,6 +12,8 @@ class Settings(BaseSettings):
     api_token: SecretStr | None = None
     execution_enabled: bool = False
     allow_downloads: bool = False
+    model_import_root: Path | None = None
+    max_model_import_bytes: int = Field(default=100_000_000_000, ge=1)
     store_content: bool = False
     host: str = "127.0.0.1"
     port: int = Field(default=8787, ge=1, le=65535)

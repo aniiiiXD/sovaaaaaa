@@ -3,7 +3,7 @@ import platform
 import sys
 
 from rig.data.service import DatasetService, messages
-from rig.domain.models import CaseResult, EvalConfig, Evaluation, EvalRequest
+from rig.domain.models import CaseResult, ComparisonGate, EvalConfig, Evaluation, EvalRequest
 from rig.domain.ports import ModelBackend
 from rig.errors import Conflict, RigError
 from rig.evaluation.metrics import gate_failures, percentile, score
@@ -38,7 +38,8 @@ class EvaluationService:
             raise RigError(f"Dataset has no {request.split} records")
 
     def run(self, request: EvalRequest, context, *, baseline: Evaluation | None = None,
-            max_score_drop: float = 0, max_latency_ratio: float | None = None) -> Evaluation:
+            max_score_drop: float = 0, max_latency_ratio: float | None = None,
+            comparison: ComparisonGate | None = None) -> Evaluation:
         self.validate(request)
         config = EvalConfig.model_validate(request.model_dump(exclude={"candidate_id"}))
         dataset = self.datasets.get(request.dataset_id)
@@ -76,6 +77,8 @@ class EvaluationService:
                 failures.append("quality_regression_exceeds_budget")
             if max_latency_ratio is not None and p95 > baseline.p95_latency_ms * max_latency_ratio:
                 failures.append("latency_regression_exceeds_budget")
+            if comparison is not None:
+                failures.extend(comparison_failures(baseline, quality, p95, estimated_cost, comparison))
         report = Evaluation(candidate_id=candidate.id, config=config, dataset_sha256=dataset.sha256,
                             count=count, score=quality, p50_latency_ms=percentile(latencies, 0.5),
                             p95_latency_ms=p95, p50_ttft_ms=percentile(ttfts, 0.5) if ttfts else None,
@@ -100,3 +103,18 @@ class EvaluationService:
         records = {row.id: row for row in self.datasets.records(report.config.dataset_id, "valid")}
         return [{"record": records[case["record_id"]].model_dump(), "result": case}
                 for case in self.artifacts.read_jsonl(report.cases_artifact) if case["score"] < 1]
+
+
+def comparison_failures(baseline: Evaluation, quality: float, p95: float,
+                        estimated_cost: float | None, gate: ComparisonGate) -> list[str]:
+    failures = []
+    if quality + 1e-12 < baseline.score + gate.min_score_gain:
+        failures.append("required_quality_gain_not_met")
+    if gate.max_latency_ratio is not None and p95 > baseline.p95_latency_ms * gate.max_latency_ratio:
+        failures.append("required_latency_ratio_not_met")
+    if gate.max_estimated_cost_ratio is not None:
+        if estimated_cost is None or baseline.estimated_usd_per_1k is None:
+            failures.append("comparison_cost_estimate_missing")
+        elif estimated_cost > baseline.estimated_usd_per_1k * gate.max_estimated_cost_ratio:
+            failures.append("required_estimated_cost_ratio_not_met")
+    return failures

@@ -16,7 +16,8 @@ def now() -> str:
 Id = Annotated[str, Field(pattern=r"^[a-f0-9]{32}$")]
 Name = Annotated[str, Field(min_length=1, max_length=120)]
 Split = Literal["train", "valid", "test"]
-JobKind = Literal["train", "evaluate", "optimize", "pipeline"]
+JobKind = Literal["train", "evaluate", "optimize", "pipeline", "workflow_cycle",
+                  "workflow_release", "import_model"]
 
 
 class Contract(BaseModel):
@@ -137,10 +138,20 @@ class OptimizeConfig(Contract):
     max_latency_ratio: float | None = Field(default=None, gt=0)
 
 
+class ComparisonGate(Contract):
+    """Compare with an incumbent; ratios below one require an improvement."""
+
+    min_score_gain: float = Field(default=0, ge=0, le=1)
+    max_latency_ratio: float | None = Field(default=None, gt=0)
+    max_estimated_cost_ratio: float | None = Field(default=None, ge=0)
+
+
 class PipelineRequest(Contract):
     training: TrainRequest
     evaluation: EvalConfig
     optimization: OptimizeConfig | None = Field(default_factory=OptimizeConfig)
+    baseline_candidate_id: Id | None = None
+    comparison: ComparisonGate = Field(default_factory=ComparisonGate)
 
     @model_validator(mode="after")
     def validation_only(self):
@@ -207,6 +218,8 @@ class Deployment(Contract):
     name: str
     candidate_id: Id
     report_id: Id
+    workflow_id: Id | None = None
+    cycle_id: Id | None = None
 
 
 class Message(Contract):

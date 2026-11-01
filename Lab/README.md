@@ -1,13 +1,14 @@
 # Lab
 
 All ML work: models, training kernels, eval harnesses, datasets, adapters.
-Two self-contained labs; nothing imports across folders — each is a complete
-data → train → eval → report pipeline.
+Two self-contained experiment labs and the modular Rig. Nothing imports across
+these folders; Rig orchestrates its own workflow → data → train → eval → serve loop.
 
 ```
 Lab/
 ├── triage/   Banking77 specialist (done)  → numbers on the website
-└── arena/    FinQA benchmark (active)     → /arena scoreboard JSON
+├── arena/    FinQA benchmark (active)     → /arena scoreboard JSON
+└── rig/      Customer workflow lifecycle (written; not executed)
 ```
 
 ## `triage/` — first real specialist (done)
@@ -25,6 +26,13 @@ FinQA: Base Qwen vs SOVA specialist vs Fino1-8B vs frontier, scored on
 the website's `/arena` page. Plan and gates: `arena/PLAN.md`; serving
 design: `arena/SERVING_PLAN.md`. The eval harness reuses the pattern proven
 in `triage/eval.py` (deliberately copied, not imported — labs stay decoupled).
+
+## `rig/` — Sova's customer workflow loop
+
+Named workflows, versioned data, incumbent baselines, SFT, evaluation, optimization,
+explicit release audits, local serving and reviewed production-feedback cycles.
+The current backend is MLX; RL and NVIDIA execution are extension work. No Rig
+training, serving or tests have been run. Start with [the workflow guide](rig/docs/WORKFLOW.md).
 
 ## Conventions
 
