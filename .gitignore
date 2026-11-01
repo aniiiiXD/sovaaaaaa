@@ -4,6 +4,7 @@
 
 # Local tooling
 .firecrawl/
+.claude/
 
 # OS / Python
 .DS_Store
