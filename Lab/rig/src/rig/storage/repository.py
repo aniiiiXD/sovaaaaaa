@@ -102,15 +102,19 @@ class Repository:
         # One transaction protects split assignments even for concurrent imports.
         with self.connection() as db:
             db.execute("BEGIN IMMEDIATE")
-            for fingerprint, split in fingerprints:
-                row = db.execute("SELECT split FROM prompt_splits WHERE fingerprint=?",
-                                 (fingerprint,)).fetchone()
-                if row is not None and row["split"] != split:
-                    raise Conflict("An input already belongs to another split in this Rig "
-                                   "workspace; held-out inputs cannot become training data")
-                db.execute("INSERT OR IGNORE INTO prompt_splits VALUES (?, ?)",
-                           (fingerprint, split))
-            self._insert(db, "dataset", body)
+            self._register_dataset(db, body, fingerprints)
+
+    @classmethod
+    def _register_dataset(cls, db, body: dict, fingerprints: list[tuple[str, str]]) -> None:
+        for fingerprint, split in fingerprints:
+            row = db.execute("SELECT split FROM prompt_splits WHERE fingerprint=?",
+                             (fingerprint,)).fetchone()
+            if row is not None and row["split"] != split:
+                raise Conflict("An input already belongs to another split in this Rig "
+                               "workspace; held-out inputs cannot become training data")
+            db.execute("INSERT OR IGNORE INTO prompt_splits VALUES (?, ?)",
+                       (fingerprint, split))
+        cls._insert(db, "dataset", body)
 
     def enqueue(self, job: Job) -> Job:
         with self.connection() as db:
@@ -123,7 +127,11 @@ class Repository:
                    (job.id, job.created_at, job.updated_at, job.kind, job.state,
                     json.dumps(job.payload, allow_nan=False)))
 
-    def enqueue_cycle(self, cycle: dict, job: Job, max_cycles: int) -> Job:
+    def enqueue_cycle(self, cycle: dict, job: Job, max_cycles: int, *,
+                      dataset: dict | None = None,
+                      fingerprints: list[tuple[str, str]] | None = None) -> Job:
+        if (dataset is None) != (fingerprints is None):
+            raise ValueError("A prepared dataset and its split fingerprints must be supplied together")
         with self.connection() as db:
             db.execute("BEGIN IMMEDIATE")
             self._workflow_idle(db, cycle["workflow_id"])
@@ -135,6 +143,9 @@ class Repository:
             latest = rows[-1]["id"] if rows else None
             if cycle.get("parent_cycle_id") != latest:
                 raise Conflict("Extend the latest cycle; concurrent branches are not supported")
+            if dataset is not None:
+                assert fingerprints is not None
+                self._register_dataset(db, dataset, fingerprints)
             self._insert(db, "cycle", cycle)
             self._insert_job(db, job)
         return job

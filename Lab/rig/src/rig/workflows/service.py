@@ -40,6 +40,7 @@ class WorkflowService:
     def start_cycle(self, workflow_id: str, request: CycleCreate) -> tuple[Cycle, Job]:
         workflow = self.get(workflow_id)
         pipeline = workflow.pipeline.model_copy(deep=True)
+        prepared = None
         if request.parent_cycle_id:
             parent = self.cycle(workflow_id, request.parent_cycle_id)
             parent_job = self.repository.job(parent.id)
@@ -51,24 +52,37 @@ class WorkflowService:
                 review = self.repository.get("feedback_review", identifier)
                 additions.append(self.feedback.record(review, workflow_id))
             if additions:
+                # Validate the registered parent before preparing an unpublished child.
+                # Appending train-only records preserves its validation counts and all gates.
+                self.pipeline.validate(pipeline)
                 parent_dataset_id = pipeline.training.dataset_id
                 records = self.datasets.records(parent_dataset_id)
                 if len(records) + len(additions) > 100_000:
                     raise RigError("A workflow dataset cannot exceed 100,000 records")
-                dataset = self.datasets.create(DatasetCreate(
+                prepared = self.datasets.prepare(DatasetCreate(
                     name=workflow.name, parent_id=parent_dataset_id,
                     records=[*records, *additions],
                     description="Workflow cycle: reviewed additions; original holdouts unchanged"))
-                pipeline.training.dataset_id = dataset.id
-                pipeline.evaluation.dataset_id = dataset.id
+                pipeline.training.dataset_id = prepared.dataset.id
+                pipeline.evaluation.dataset_id = prepared.dataset.id
             elif parent_job.state == "succeeded":
                 raise RigError("A completed cycle needs new examples; unchanged retries are for failed jobs")
-        self.pipeline.validate(pipeline)
-        cycle = Cycle(workflow_id=workflow_id, parent_cycle_id=request.parent_cycle_id,
-                      pipeline=pipeline, feedback_review_ids=request.feedback_review_ids)
-        job = Job(id=cycle.id, kind="workflow_cycle",
-                  payload=CycleJob(cycle_id=cycle.id, workflow_id=workflow_id).model_dump())
-        self.repository.enqueue_cycle(cycle.model_dump(mode="json"), job, workflow.max_cycles)
+        try:
+            if prepared is None:
+                self.pipeline.validate(pipeline)
+            cycle = Cycle(workflow_id=workflow_id, parent_cycle_id=request.parent_cycle_id,
+                          pipeline=pipeline, feedback_review_ids=request.feedback_review_ids)
+            job = Job(id=cycle.id, kind="workflow_cycle",
+                      payload=CycleJob(cycle_id=cycle.id, workflow_id=workflow_id).model_dump())
+            # Registration, split assignment and queue insertion either all commit or all roll back.
+            self.repository.enqueue_cycle(
+                cycle.model_dump(mode="json"), job, workflow.max_cycles,
+                dataset=prepared.dataset.model_dump(mode="json") if prepared else None,
+                fingerprints=prepared.fingerprints if prepared else None)
+        except Exception:
+            if prepared is not None:
+                self.datasets.discard_prepared(prepared)
+            raise
         return cycle, job
 
     def run_cycle(self, request: CycleJob, context) -> dict:

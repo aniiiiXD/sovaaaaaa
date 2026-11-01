@@ -162,9 +162,11 @@ Their adapters belong behind the existing training, optimization and inference p
 unsupported methods must not return fabricated success. Scorers currently cover exact,
 normalized-exact and numeric outputs; other acceptance rules require additional scorers.
 
-Filesystem artifacts and database writes are not atomic together. Failed imports can
-leave partial unregistered directories; rejected cycle submissions can leave an
-unreferenced dataset. No deployment is changed by those failures.
+Dataset registration, split reservations, cycle creation and job insertion commit in
+one transaction. Rejected cycle submissions roll them all back and remove the prepared
+dataset file. Filesystem writes remain outside the database transaction: process crashes
+can leave unregistered files, and failed model imports can leave partial directories.
+No deployment is changed by those failures.
 
 ## Verification
 

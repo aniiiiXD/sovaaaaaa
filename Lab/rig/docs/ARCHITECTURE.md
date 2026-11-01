@@ -2,8 +2,11 @@
 
 The [customer workflow layer](WORKFLOW.md) composes these modules. `workflows/` owns
 definitions, cycles and releases; `feedback/` owns human decisions; `training/imports.py`
-handles operator-staged local models. Cycle creation and job enqueueing share a SQLite
-transaction enforcing the latest parent, cycle budget and no active workflow job.
+handles operator-staged local models. Child dataset registration, split assignments,
+cycle creation and job enqueueing share a SQLite transaction enforcing the latest
+parent, cycle budget and no active workflow job. A rejected submission rolls back all
+database changes and discards its prepared dataset file. A process crash can still
+leave an unregistered artifact because filesystem writes are outside the transaction.
 Release submission is also serialized and limited to one audit per cycle.
 
 

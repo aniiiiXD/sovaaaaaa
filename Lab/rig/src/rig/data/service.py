@@ -1,4 +1,5 @@
 from collections import Counter
+from dataclasses import dataclass
 from hashlib import sha256
 import unicodedata
 
@@ -24,6 +25,14 @@ def messages(record: Record, include_answer: bool = False) -> list[dict[str, str
     return output
 
 
+@dataclass(frozen=True)
+class PreparedDataset:
+    """An immutable artifact awaiting registration in a database transaction."""
+
+    dataset: Dataset
+    fingerprints: list[tuple[str, str]]
+
+
 class DatasetService:
     def __init__(self, repository: Repository, artifacts: Artifacts):
         self.repository = repository
@@ -38,7 +47,7 @@ class DatasetService:
                    self.artifacts.read_jsonl(dataset.artifact, dataset.sha256)]
         return [row for row in records if split is None or row.split == split]
 
-    def create(self, request: DatasetCreate) -> Dataset:
+    def prepare(self, request: DatasetCreate) -> PreparedDataset:
         if request.parent_id:
             self.get(request.parent_id)
         seen_ids, seen_prompts = set(), set()
@@ -58,13 +67,22 @@ class DatasetService:
         dataset.artifact = f"datasets/{dataset.id}/records.jsonl"
         dataset.sha256 = self.artifacts.write_jsonl(
             dataset.artifact, [row.model_dump(mode="json") for row in request.records])
+        return PreparedDataset(dataset, fingerprints)
+
+    def discard_prepared(self, prepared: PreparedDataset) -> None:
+        """Call only after registration failed/rolled back, never after a commit."""
+        self.artifacts.path(prepared.dataset.artifact).unlink(missing_ok=True)
+
+    def create(self, request: DatasetCreate) -> Dataset:
+        prepared = self.prepare(request)
         try:
-            self.repository.register_dataset(dataset.model_dump(mode="json"), fingerprints)
+            self.repository.register_dataset(prepared.dataset.model_dump(mode="json"),
+                                             prepared.fingerprints)
         except Exception:
             # Only the new, unregistered dataset artifact is removed on transaction failure.
-            self.artifacts.path(dataset.artifact).unlink(missing_ok=True)
+            self.discard_prepared(prepared)
             raise
-        return dataset
+        return prepared.dataset
 
     def export_training(self, identifier: str, relative: str):
         dataset = self.get(identifier)
