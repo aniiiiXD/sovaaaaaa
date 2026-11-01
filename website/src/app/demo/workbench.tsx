@@ -72,12 +72,17 @@ export default function DemoWorkbench({ baselineConnected, liveEnabled }: { base
   const [runWarmAt, setRunWarmAt] = useState<string>();
   const [referenceOpen, setReferenceOpen] = useState(false);
   const controller = useRef<AbortController | null>(null);
+  const generation = useRef(0);
+  const [pendingRun, setPendingRun] = useState<boolean | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const selected = demoCases.find(item => item.id === caseId);
   const document = selected?.document ?? custom;
   const running = busy.length > 0;
 
-  useEffect(() => () => controller.current?.abort(), []);
+  useEffect(() => {
+    const runGeneration = generation;
+    return () => { runGeneration.current++; controller.current?.abort(); };
+  }, []);
   useEffect(() => {
     if (!running) return;
     const start = Date.now();
@@ -86,54 +91,66 @@ export default function DemoWorkbench({ baselineConnected, liveEnabled }: { base
   }, [running]);
   useEffect(() => { if (accessOpen) inputRef.current?.focus(); }, [accessOpen]);
 
-  function selectCase(value: string) { setCaseId(value); const result = recordedResult(value); setResults(result ? { specialist: result } : {}); setRecorded(Boolean(result)); setErrors({}); setReferenceOpen(false); setRunWarmAt(undefined); }
-  function ensureAccess() {
-    if (!code) { setAccessOpen(true); return false; }
-    return true;
-  }
+  function selectCase(value: string) { setPendingRun(null); setCaseId(value); const result = recordedResult(value); setResults(result ? { specialist: result } : {}); setRecorded(Boolean(result)); setErrors({}); setReferenceOpen(false); setRunWarmAt(undefined); }
   async function run(warmup = false) {
-    if (!ensureAccess() || running) return;
+    if (!liveEnabled || running || controller.current) return;
+    if (!code.trim()) { setPendingRun(warmup); setAccessOpen(true); return; }
+    if (!warmup && (document.trim().length < 40 || new TextEncoder().encode(document.trim()).length > 10000)) return;
+    setAccessOpen(false); setPendingRun(null);
     setElapsed(0); setErrors({}); setWarmMessage("");
     if (!warmup) { setResults({}); setRecorded(false); setRunWarmAt(warmAt); }
-    const kinds: ("specialist" | "baseline")[] = compare && !warmup ? ["specialist", "baseline"] : ["specialist"];
+    const kinds: ("specialist" | "baseline")[] = compare && baselineConnected && !warmup ? ["specialist", "baseline"] : ["specialist"];
     setBusy(warmup ? ["warmup"] : kinds);
     const abort = new AbortController(); controller.current = abort;
+    const id = ++generation.current;
+    const timeout = window.setTimeout(() => abort.abort(), 245000);
     await Promise.all(kinds.map(async kind => {
       try {
         const response = await fetch("/api/demo/run", { method: "POST", signal: abort.signal,
-          headers: { "Content-Type": "application/json", Authorization: `Bearer ${code}` },
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${code.trim()}` },
           body: JSON.stringify({ kind, caseId, document: selected ? undefined : custom, warmup }),
         });
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.error ?? "The request failed.");
-        if (abort.signal.aborted) return;
+        const data = await response.json().catch(() => null);
+        if (generation.current !== id) return;
+        abort.signal.throwIfAborted();
+        if (response.status === 401) { setAccessOpen(true); setPendingRun(warmup); }
+        if (!response.ok || !data) throw new Error(typeof data?.error === "string" ? data.error : "The server could not complete this request. Try again.");
         if (warmup) { setWarmAt(data.createdAt); setWarmMessage("Model responded. Run your brief now; idle models can sleep after five minutes."); }
         else setResults(previous => ({ ...previous, [kind]: data }));
       } catch (error) {
-        const message = abort.signal.aborted ? "Run stopped. Any inference already performed may still be billed." : error instanceof Error ? error.message : "Could not reach the model.";
+        if (generation.current !== id) return;
+        const message = abort.signal.aborted ? "The request timed out. Try again; any inference already performed may still be billed." : error instanceof Error ? error.message : "Could not reach the model.";
         if (warmup) setWarmMessage(message);
         else setErrors(previous => ({ ...previous, [kind]: message }));
-      } finally { setBusy(previous => previous.filter(item => item !== (warmup ? "warmup" : kind))); }
+      } finally { if (generation.current === id) setBusy(previous => previous.filter(item => item !== (warmup ? "warmup" : kind))); }
     }));
-    controller.current = null;
+    window.clearTimeout(timeout);
+    if (generation.current === id) controller.current = null;
+  }
+  function stop() {
+    generation.current++; controller.current?.abort(); controller.current = null;
+    const message = "Run stopped. Any inference already performed may still be billed.";
+    if (busy.includes("warmup")) setWarmMessage(message);
+    else setErrors(previous => ({ ...previous, ...Object.fromEntries(busy.map(kind => [kind, message])) }));
+    setBusy([]);
   }
   function download() {
     const payload = { workflow: "Financial brief", source: selected ? { company: selected.company, synthetic: true } : { company: "Custom document", synthetic: false },
       document, instruction: demoInstruction, maxOutputTokens: 2048, specialistWarmupAt: runWarmAt ?? null,
       results, errors, mode: recorded ? "recorded" : "live", notes: ["Single demonstration, not a benchmark. Numerical checks do not validate every summary claim.", "Server duration includes provider and network time; no first-token measurement.", "No customer-specific post-training has been performed for this demo.", "Cost savings are not calculated from capacity billing."] };
     const url = URL.createObjectURL(new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" }));
-    const anchor = window.document.createElement("a"); anchor.href = url; anchor.download = `sova-${caseId}-run.json`; anchor.click(); URL.revokeObjectURL(url);
+    const anchor = window.document.createElement("a"); anchor.href = url; anchor.download = `sova-${caseId}-run.json`; anchor.click(); window.setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
 
   return <main className={s.shell}>
-    <header className={s.header}><Link href="/" className={s.logo}>Sova<span>Studio</span></Link><div className={s.headerRight}><span className={s.previewBadge}>Finance workflow demo</span><button className={s.accessButton} onClick={() => setAccessOpen(value => !value)} aria-expanded={accessOpen}>Presenter access</button></div></header>
-    {accessOpen && <section className={s.accessPanel} aria-label="Presenter access"><div><h2>Run the live models</h2><p>Use your demo access code. It stays in this tab’s memory.</p></div><form onSubmit={event => { event.preventDefault(); setAccessOpen(false); }}><label className={s.srOnly} htmlFor="access-code">Presenter access code</label><input id="access-code" ref={inputRef} type="password" value={code} onChange={event => setCode(event.target.value)} placeholder="Demo access code" autoComplete="off" /><button type="submit">Use code</button>{code && <button type="button" onClick={() => setCode("")}>Clear</button>}</form></section>}
+    <header className={s.header}><Link href="/" className={s.logo}>Sova<span>Studio</span></Link><div className={s.headerRight}><span className={s.previewBadge}>Finance workflow demo</span><button className={s.accessButton} onClick={() => { setPendingRun(null); setAccessOpen(value => !value); }} aria-expanded={accessOpen}>Presenter access</button></div></header>
+    {accessOpen && <section className={s.accessPanel} aria-label="Presenter access"><div><h2>Run the live models</h2><p>Use your demo access code. It stays in this tab’s memory.</p></div><form onSubmit={event => { event.preventDefault(); if (!code.trim()) return; if (pendingRun !== null) void run(pendingRun); else setAccessOpen(false); }}><label className={s.srOnly} htmlFor="access-code">Presenter access code</label><input id="access-code" ref={inputRef} type="password" value={code} onChange={event => setCode(event.target.value)} placeholder="Demo access code" autoComplete="off" required /><button type="submit" disabled={!code.trim() || running}>{pendingRun === null ? "Use code" : pendingRun ? "Prepare model" : "Run financial brief"}</button>{code && <button type="button" onClick={() => setCode("")}>Clear</button>}</form></section>}
     <div className={s.intro}><div><p className={s.introLabel}><span /> A workflow you can inspect</p><h1>Give your financial report<br className={s.desktopBreak} /> a specialist’s attention.</h1><p className={s.lead}>From source figures to a concise brief. Run the model, check the numbers, and see what a pilot on your data could look like.</p></div><div className={s.introNote}><Glyph name="document" size={24} /><p>One excerpt.<br />Four calculations.<br /><strong>Every result open to review.</strong></p></div></div>
     <section className={s.workspace} aria-label="Finance workflow workbench">
-      <div className={s.toolbar}><div className={s.caseTabs} role="group" aria-label="Choose a financial excerpt">{demoCases.map(item => <button key={item.id} className={caseId === item.id ? s.selectedTab : ""} aria-pressed={caseId === item.id} disabled={running} onClick={() => selectCase(item.id)}>{item.company}</button>)}<button className={caseId === "custom" ? s.selectedTab : ""} aria-pressed={caseId === "custom"} disabled={running} onClick={() => selectCase("custom")}>Your excerpt</button></div><button className={s.exportButton} disabled={running || !Object.keys(results).length} onClick={download}><Glyph name="download" size={16} /> Export run</button></div>
+      <div className={s.toolbar}><div className={s.caseTabs} role="group" aria-label="Choose a financial excerpt">{demoCases.map(item => <button key={item.id} className={caseId === item.id ? s.selectedTab : ""} aria-pressed={caseId === item.id} disabled={running} onClick={() => selectCase(item.id)}>{item.company}</button>)}<button className={caseId === "custom" ? s.selectedTab : ""} aria-pressed={caseId === "custom"} disabled={running} onClick={() => selectCase("custom")}>Your excerpt</button></div><button className={s.exportButton} disabled={running || !Object.values(results).some(Boolean)} onClick={download}><Glyph name="download" size={16} /> Export run</button></div>
       <div className={s.workGrid}>
         <section className={s.sourcePanel} aria-label="Source excerpt"><div className={s.sourceHeading}><Glyph name="document" /><span>{selected ? "Example report" : "Your financial excerpt"}</span><span className={s.pageCount}>1 page</span></div>
-          <div className={s.paper}>{selected ? <><div className={s.paperMasthead}><span>{selected.company}</span><small>FY2025</small></div><h2>{selected.title}</h2><p className={s.paperCaption}>Illustrative financial report · Fictional data</p><div className={s.documentText}>{selected.document.split("\n\n").slice(1).map((section, index) => <div key={index}><h3>{section.split("\n")[0]}</h3>{section.split("\n").slice(1).map((line, lineIndex) => <p key={lineIndex}>{line}</p>)}</div>)}</div><div className={s.paperFoot}>All amounts in USD millions</div></> : <><h2>Bring a prospect’s workflow.</h2><p className={s.paperCaption}>Paste a text excerpt with revenue, operating income, cash flow, debt and cash. Add [S1], [S2] labels for source references.</p><label className={s.srOnly} htmlFor="document">Financial excerpt</label><textarea id="document" value={custom} disabled={running} onChange={event => { setCustom(event.target.value); setResults({}); setErrors({}); }} maxLength={10000} placeholder="[S1] Income statement…" /><small>{new TextEncoder().encode(custom).length.toLocaleString()} / 10,000 bytes</small><p className={s.paperCaption}>Live runs send this excerpt to AWS Bedrock. This demo does not save your document to an application database.</p></>}</div>
+          <div className={s.paper}>{selected ? <><div className={s.paperMasthead}><span>{selected.company}</span><small>FY2025</small></div><h2>{selected.title}</h2><p className={s.paperCaption}>Illustrative financial report · Fictional data</p><div className={s.documentText}>{selected.document.split("\n\n").slice(1).map((section, index) => <div key={index}><h3>{section.split("\n")[0]}</h3>{section.split("\n").slice(1).map((line, lineIndex) => <p key={lineIndex}>{line}</p>)}</div>)}</div><div className={s.paperFoot}>All amounts in USD millions</div></> : <><h2>Bring a prospect’s workflow.</h2><p className={s.paperCaption}>Paste a text excerpt with revenue, operating income, cash flow, debt and cash. Add [S1], [S2] labels for source references.</p><label className={s.srOnly} htmlFor="document">Financial excerpt</label><textarea id="document" value={custom} disabled={running} onChange={event => { setPendingRun(null); setCustom(event.target.value); setResults({}); setRecorded(false); setRunWarmAt(undefined); setErrors({}); }} maxLength={10000} placeholder="[S1] Income statement…" /><small>{new TextEncoder().encode(custom).length.toLocaleString()} / 10,000 bytes</small><p className={s.paperCaption}>Live runs send this excerpt to AWS Bedrock. This demo does not save your document to an application database.</p></>}</div>
           <div className={s.task}><h3>The assignment</h3><p>Calculate revenue growth, operating margin, free cash flow and net debt. Write a short brief with source references and one supported risk or limitation.</p></div>
         </section>
         <div className={s.outputColumn}><ResultPanel result={results.specialist} recorded={recorded} loading={busy.includes("specialist")} error={errors.specialist} elapsed={elapsed} />
@@ -141,7 +158,7 @@ export default function DemoWorkbench({ baselineConnected, liveEnabled }: { base
           {selected && <section className={s.reference}><button className={s.referenceToggle} onClick={() => setReferenceOpen(value => !value)} aria-expanded={referenceOpen}><span><Glyph name="check" size={17} /> Reference brief <small>Prepared reference</small></span><span>{referenceOpen ? "Hide" : "Inspect"}</span></button>{referenceOpen && <div className={s.referenceBody}><MetricGrid brief={selected.expected} /><p>{selected.expected.summary}</p><p className={s.small}>Used to check the four numerical fields. This reference answer is not sent to the model.</p></div>}</section>}
         </div>
       </div>
-      <div className={s.runBar}><div className={s.runOptions}><label><input type="checkbox" checked={compare} onChange={event => { setCompare(event.target.checked); setResults({}); setErrors({}); }} disabled={!baselineConnected || running} /> Compare with frontier</label><p>{baselineConnected ? "Both models receive the same source and task." : "Baseline connection pending. Reference checks are available now."}</p></div><div className={s.runActions}><button className={s.prepareButton} disabled={running || !liveEnabled} onClick={() => run(true)}>{busy.includes("warmup") ? `Preparing · ${elapsed.toFixed(0)}s` : "Prepare model"}</button>{running ? <button className={s.runButton} onClick={() => controller.current?.abort()}>Stop run</button> : <button className={s.runButton} disabled={!liveEnabled || (!selected && (custom.trim().length < 40 || new TextEncoder().encode(custom).length > 10000))} onClick={() => run()}><Glyph name="play" size={17} /> Run financial brief</button>}</div></div>
+      <div className={s.runBar}><div className={s.runOptions}><label><input type="checkbox" checked={compare} onChange={event => { setCompare(event.target.checked); setResults(previous => previous.specialist ? { specialist: previous.specialist } : {}); setErrors(previous => previous.specialist ? { specialist: previous.specialist } : {}); }} disabled={!baselineConnected || running} /> Compare with frontier</label><p>{baselineConnected ? "Both models receive the same source and task." : "Baseline connection pending. Reference checks are available now."}</p></div><div className={s.runActions}><button className={s.prepareButton} disabled={running || !liveEnabled} onClick={() => run(true)}>{busy.includes("warmup") ? `Preparing · ${elapsed.toFixed(0)}s` : "Prepare model"}</button>{running ? <button className={s.runButton} onClick={stop}>Stop run</button> : <button className={s.runButton} disabled={!liveEnabled || (!selected && (custom.trim().length < 40 || new TextEncoder().encode(custom).length > 10000))} onClick={() => run()}><Glyph name="play" size={17} /> Run financial brief</button>}</div></div>
       {(warmMessage || !liveEnabled) && <p className={s.runMessage} role="status">{!liveEnabled ? "Live access is being configured. You can inspect the example reports and reference briefs." : warmMessage}</p>}
     </section>
     <div className={s.method}><p><strong>What this demonstrates</strong> A finance-tuned model on a specific workflow. These are single-run measurements, not a benchmark or a claim of customer-specific training.</p><p><strong>How to read the timings</strong> Full server response time includes model and network time. Reasoning tokens count toward output. Prepare the model before a warm run; cold starts can take minutes.</p></div>

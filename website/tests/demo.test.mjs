@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { demoCases, parseBrief, evaluateBrief } from "../src/lib/demo.ts";
+import { demoCases, demoInstruction, parseBrief, evaluateBrief } from "../src/lib/demo.ts";
+import { demoAvailability, inferenceConfigured, baselineConfigured } from "../src/lib/serving-config.ts";
 import { demoAuthorized, readDemoBody, readDemoQuestion } from "../src/lib/demo-server.ts";
 import { readFileSync } from "node:fs";
 
@@ -9,6 +10,7 @@ test("published recordings match the exact sample source and pass independently 
   for (const sample of demoCases) {
     const recording = recordings[sample.id];
     assert.equal(recording.document, sample.document);
+    assert.equal(recording.instruction, demoInstruction);
     assert.equal(recording.result.complete, true);
     assert.equal(recording.result.warmup, false);
     assert.ok(recording.result.durationMs > 0);
@@ -17,6 +19,43 @@ test("published recordings match the exact sample source and pass independently 
     assert.deepEqual(parsed, recording.result.brief);
     assert.equal(evaluateBrief(parsed, sample.expected, sample.document).checks.filter(c => c.passed).length, 4);
   }
+});
+
+test("live controls stay unavailable for disabled, incomplete or mismatched serving configurations", () => {
+  const env = {
+    SOVA_DEMO_ACCESS_CODE: "d".repeat(32), SOVA_API_KEY: "a".repeat(32),
+    SOVA_INFERENCE_ENABLED: "true", SOVA_INFERENCE_PROVIDER: "bedrock", AWS_REGION: "us-east-1",
+    BEDROCK_MODEL_ARN: "arn:aws:bedrock:us-east-1:123456789012:imported-model/example123",
+  };
+  assert.equal(demoAvailability(env).liveEnabled, true);
+  for (const change of [
+    { SOVA_DEMO_ACCESS_CODE: "short" }, { SOVA_API_KEY: undefined },
+    { SOVA_INFERENCE_ENABLED: "false" }, { BEDROCK_MODEL_ARN: undefined },
+    { AWS_REGION: "us-west-2" }, { SOVA_INFERENCE_PROVIDER: "unknown" },
+  ]) assert.equal(demoAvailability({ ...env, ...change }).liveEnabled, false);
+  assert.deepEqual(Object.keys(demoAvailability(env)).sort(), ["baselineConnected", "baselineLabel", "liveEnabled"]);
+});
+
+test("comparison controls use the same allowlist as the API and identify the configured provider", () => {
+  for (const model of [undefined, "", "gpt", "us.openai.unapproved", "us.anthropic.unapproved"]) {
+    assert.equal(baselineConfigured(model), false);
+    assert.equal(demoAvailability({ BEDROCK_DEMO_BASELINE_ID: model }).baselineConnected, false);
+  }
+  for (const prefix of ["us", "global"]) {
+    const gpt = demoAvailability({ BEDROCK_DEMO_BASELINE_ID: `${prefix}.openai.gpt-6.1-sol` });
+    assert.equal(gpt.baselineConnected, true);
+    assert.equal(gpt.baselineLabel, "GPT");
+    const claude = demoAvailability({ BEDROCK_DEMO_BASELINE_ID: `${prefix}.anthropic.claude-opus-5-5` });
+    assert.equal(claude.baselineConnected, true);
+    assert.equal(claude.baselineLabel, "Claude");
+  }
+});
+
+test("configuration checks preserve Fireworks and SageMaker deployment validation", () => {
+  assert.equal(inferenceConfigured({ FIREWORKS_API_KEY: "test", FIREWORKS_DEPLOYMENT: "accounts/test/deployments/test" }), true);
+  assert.equal(inferenceConfigured({ FIREWORKS_API_KEY: "test", FIREWORKS_DEPLOYMENT: "accounts/test/models/test" }), false);
+  assert.equal(inferenceConfigured({ SOVA_INFERENCE_PROVIDER: "sagemaker", AWS_REGION: "us-east-1", SAGEMAKER_ENDPOINT: "sova-test" }), true);
+  assert.equal(inferenceConfigured({ SOVA_INFERENCE_PROVIDER: "sagemaker", AWS_REGION: "us-east-1", SAGEMAKER_ENDPOINT: "bad/endpoint" }), false);
 });
 
 test("extracts the final structured brief without treating reasoning as the answer", () => {

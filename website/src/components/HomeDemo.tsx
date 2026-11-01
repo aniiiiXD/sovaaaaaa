@@ -43,7 +43,7 @@ function Answer({ text, skip }: { text: string; skip: boolean }) {
   return <><p className={s.answer} aria-hidden="true">{words.map((word, i) => <span key={i} className={i < count ? s.word : s.hiddenWord}>{word}{i === words.length - 1 ? "" : " "}</span>)}</p><p className={s.srOnly}>{text}</p></>;
 }
 
-export default function HomeDemo({ liveEnabled, baselineConnected }: { liveEnabled: boolean; baselineConnected: boolean }) {
+export default function HomeDemo({ liveEnabled, baselineConnected, baselineLabel }: { liveEnabled: boolean; baselineConnected: boolean; baselineLabel: string }) {
   const [question, setQuestion] = useState(QUESTION);
   const [submitted, setSubmitted] = useState(QUESTION);
   const [results, setResults] = useState<Outputs>({});
@@ -73,7 +73,7 @@ export default function HomeDemo({ liveEnabled, baselineConnected }: { liveEnabl
   useEffect(() => {
     const observer = new IntersectionObserver(entries => {
       if (!played.current && entries.some(entry => entry.isIntersecting)) replay();
-    }, { threshold: 0.25 });
+    }, { threshold: 0 });
     if (section.current) observer.observe(section.current);
     const runGeneration = generation;
     return () => { observer.disconnect(); runGeneration.current++; controller.current?.abort(); };
@@ -103,7 +103,10 @@ export default function HomeDemo({ liveEnabled, baselineConnected }: { liveEnabl
           body: JSON.stringify({ kind, caseId: "aster", question: prompt }),
         });
         const data = await response.json().catch(() => null);
-        if (!response.ok || !data) throw new Error(data?.error || "This model could not respond. Try again.");
+        if (generation.current !== id) return;
+        abort.signal.throwIfAborted();
+        if (response.status === 401) setAccessOpen(true);
+        if (!response.ok || !data) throw new Error(typeof data?.error === "string" ? data.error : "This model could not respond. Try again.");
         if (generation.current === id && !abort.signal.aborted) setResults(previous => ({ ...previous, [kind]: data as DemoResult }));
       } catch (error) {
         if (generation.current === id) setErrors(previous => ({ ...previous, [kind]: abort.signal.aborted ? "The request timed out. Try again." : error instanceof Error ? error.message : "This model could not respond." }));
@@ -131,9 +134,7 @@ export default function HomeDemo({ liveEnabled, baselineConnected }: { liveEnabl
   function value(kind: Kind, metric: "speed" | "time" | "accuracy") {
     const result = shown[kind];
     if (!result) return <span className={s.unmeasured}>—</span>;
-    if (metric === "speed") return recorded && kind === "specialist"
-      ? <><strong>120 <small>tok/s</small></strong><span className={s.target}>Target · not measured</span></>
-      : <><strong>{result.outputTokens !== null && result.durationMs > 0 ? (result.outputTokens / (result.durationMs / 1000)).toFixed(1) : "—"} <small>tok/s</small></strong><span>Effective output rate</span></>;
+    if (metric === "speed") return <><strong>{result.outputTokens !== null && result.durationMs > 0 ? (result.outputTokens / (result.durationMs / 1000)).toFixed(1) : "—"} <small>tok/s</small></strong><span>Effective output rate</span></>;
     if (metric === "time") return <><strong>{(result.durationMs / 1000).toFixed(1)} <small>seconds</small></strong><span>{recorded ? "Recorded response" : "Server response"}</span></>;
     return <><strong>{result.checks.length ? `${result.checks.filter(check => check.passed).length}/${result.checks.length}` : "—"}</strong><span>{result.checks.length ? "Calculation checks passed" : "Not evaluated"}</span></>;
   }
@@ -145,7 +146,7 @@ export default function HomeDemo({ liveEnabled, baselineConnected }: { liveEnabl
         <form className={s.prompt} onSubmit={event => { event.preventDefault(); run(); }}>
           <label htmlFor="comparison-question" className={s.srOnly}>Ask both models about Aster’s financial results</label>
           <textarea id="comparison-question" rows={2} maxLength={1000} required value={question} disabled={running} onChange={event => { played.current = true; setQuestion(event.target.value); }} placeholder="Ask a question about Aster’s financial results…" onKeyDown={event => { if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); if (question.trim()) run(); } }} />
-          <button type="submit" className="btn btn-primary" disabled={!question.trim()}>{running ? "Stop" : "Run"}<span aria-hidden="true">{running ? "□" : "↑"}</span></button>
+          <button type="submit" className="btn btn-primary" disabled={!question.trim()}>{running ? "Stop" : question.trim() === QUESTION && !code.trim() ? "Replay" : "Run"}<span aria-hidden="true">{running ? "□" : "↑"}</span></button>
         </form>
         <div className={s.context}><details><summary>Aster FY2025 · sample financials</summary><p>{saved.document}</p></details><span>{dirty ? "New question" : recorded ? "Recorded example" : "Live request"}</span></div>
         <div className={s.panels}>
@@ -153,13 +154,14 @@ export default function HomeDemo({ liveEnabled, baselineConnected }: { liveEnabl
             const result = shown[kind];
             const loading = busy.includes(kind);
             const error = dirty ? undefined : errors[kind];
-            return <section key={kind} aria-label={kind === "specialist" ? "Sova answer" : "GPT answer"} className={s.panel}>
-              <header className={s.panelHeader}><span className={kind === "specialist" ? s.sovaMark : s.gptMark} aria-hidden="true">{kind === "specialist" ? "S" : "G"}</span><div><h3>{kind === "specialist" ? "Sova" : "GPT"}</h3><p>{kind === "specialist" ? "Post-trained Qwen" : baselineName}</p></div><span className={s.panelStatus}>{loading ? "Answering" : result ? recorded ? "Recorded" : "Complete" : ""}</span></header>
+            return <section key={kind} aria-label={kind === "specialist" ? "Sova answer" : `${baselineLabel} answer`} className={s.panel}>
+              <header className={s.panelHeader}><span className={kind === "specialist" ? s.sovaMark : s.gptMark} aria-hidden="true">{kind === "specialist" ? "S" : "G"}</span><div><h3>{kind === "specialist" ? "Sova" : baselineLabel}</h3><p>{kind === "specialist" ? "Post-trained Qwen" : baselineName}</p></div><span className={s.panelStatus}>{loading ? "Answering" : result ? recorded ? "Recorded" : "Complete" : ""}</span></header>
               <div className={s.answerBody} aria-busy={loading}>
                 {error ? <p className={s.error} role="alert">{error}</p> : result ? <>
-                  <Answer key={`${kind}-${revision}`} text={result.brief?.summary ?? "No complete brief was returned. Please retry this question."} skip={skip} />
+                  <Answer key={`${kind}-${revision}`} text={result.brief?.summary ?? "The model did not return a structured brief. Open the response below to inspect it."} skip={skip} />
+                  <details><summary>Full model response</summary><pre style={{ whiteSpace: "pre-wrap", overflowWrap: "anywhere" }}>{result.text}</pre></details>
                   {!result.complete && <p className={s.error}>Response incomplete. These results need review.</p>}
-                </> : <div className={s.empty}><span className={s.emptyIcon} aria-hidden="true">{loading ? "···" : kind === "specialist" ? "↳" : "↔"}</span><p>{loading ? "Reading the same question and source…" : dirty ? "Run your question to see the answer." : kind === "baseline" ? baselineConnected ? "Run live to see GPT’s answer." : "GPT is not connected yet." : "Ask once. See both answers here."}</p>{!loading && !dirty && kind === "baseline" && <span>{baselineConnected ? "The same question and source go to both models." : "Its answer and measurements will appear here when connected."}</span>}</div>}
+                </> : <div className={s.empty}><span className={s.emptyIcon} aria-hidden="true">{loading ? "···" : kind === "specialist" ? "↳" : "↔"}</span><p>{loading ? "Reading the same question and source…" : dirty ? "Run your question to see the answer." : kind === "baseline" ? baselineConnected ? `Run live to see ${baselineLabel}’s answer.` : "The comparison model is not connected yet." : "Ask once. See both answers here."}</p>{!loading && !dirty && kind === "baseline" && <span>{baselineConnected ? "The same question and source go to both models." : "Its answer and measurements will appear here when connected."}</span>}</div>}
               </div>
             </section>;
           })}
@@ -167,17 +169,17 @@ export default function HomeDemo({ liveEnabled, baselineConnected }: { liveEnabl
         <div className={s.playback}><span>Answer animation is a visual replay.</span>{Object.keys(shown).length > 0 && <button type="button" onClick={() => setSkip(true)}>Show full answers</button>}</div>
         <table className={s.comparison}>
           <caption className={s.srOnly}>Speed, response time and calculation accuracy comparison</caption>
-          <thead><tr><th scope="col">Results</th><th scope="col">Sova</th><th scope="col">GPT</th></tr></thead>
+          <thead><tr><th scope="col">Results</th><th scope="col">Sova</th><th scope="col">{baselineLabel}</th></tr></thead>
           <tbody><tr><th scope="row">Speed</th><td>{value("specialist", "speed")}</td><td>{value("baseline", "speed")}</td></tr><tr><th scope="row">Time to answer</th><td>{value("specialist", "time")}</td><td>{value("baseline", "time")}</td></tr><tr><th scope="row">Accuracy on task</th><td>{value("specialist", "accuracy")}</td><td>{value("baseline", "accuracy")}</td></tr></tbody>
         </table>
-        <div className={s.footnotes}><details><summary>How we measure</summary><p>Checks cover four calculations in this fictional source, not overall accuracy. Effective speed is output tokens divided by full response time, including reasoning and waiting. The recorded Sova run took 11.083 seconds for 659 output tokens. 120 tok/s is a target, not a measured result. GPT has no recorded baseline yet. No comparative advantage has been established. Answer animations do not represent original token arrival times.</p></details><button type="button" onClick={() => setAccessOpen(true)}>Run live models ↗</button></div>
+        <div className={s.footnotes}><details><summary>How we measure</summary><p>Checks cover four calculations in this fictional source, not overall accuracy. Effective speed is output tokens divided by full response time, including reasoning and waiting. The recorded Sova run took 11.083 seconds for 659 output tokens. There is no recorded frontier baseline yet. No comparative advantage has been established. Answer animations do not represent original token arrival times.</p></details><button type="button" onClick={() => setAccessOpen(true)}>Run live models ↗</button></div>
       </div>
       <div className={s.cta}><a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn btn-primary">Talk to us <span aria-hidden="true">↗</span></a></div>
     </div>
     <dialog ref={dialog} className={s.dialog} aria-labelledby="comparison-access-title" onCancel={() => setAccessOpen(false)} onClose={() => setAccessOpen(false)}>
       <button type="button" className={s.close} aria-label="Close live access" onClick={() => setAccessOpen(false)}>×</button>
       <h3 id="comparison-access-title">Run your question live.</h3>
-      {liveEnabled ? <><p>Use your presenter code to send this question to the connected models.</p><form onSubmit={event => { event.preventDefault(); void runLive(); }}><label htmlFor="comparison-code">Presenter access code</label><input id="comparison-code" type="password" autoComplete="off" required value={code} onChange={event => setCode(event.target.value)} /><button type="submit" className="btn btn-primary">Run question</button></form></> : <><p>This design preview replays the saved example. Live questions are available in the presenter demo.</p><a className="btn btn-primary" href="https://sova-native.vercel.app/demo" target="_blank" rel="noopener noreferrer">Open live demo ↗</a></>}
+      {liveEnabled ? <><p>Use your presenter code to send this question to the connected models.</p><form onSubmit={event => { event.preventDefault(); void runLive(); }}><label htmlFor="comparison-code">Presenter access code</label><input id="comparison-code" type="password" autoComplete="off" required value={code} onChange={event => setCode(event.target.value)} /><button type="submit" className="btn btn-primary">Run question</button></form></> : <><p>Live inference is not configured for this deployment. You can still inspect saved model outputs and reference calculations in the demo.</p><a className="btn btn-primary" href="/demo">Inspect demo ↗</a></>}
     </dialog>
   </section>;
 }

@@ -6,6 +6,9 @@ import Image from "next/image";
 import ContactForm from "@/components/ContactForm";
 import HomeDemo, { DemoScrollCue } from "@/components/HomeDemo";
 import { BOOKING_URL } from "@/lib/site";
+import { demoAvailability } from "@/lib/serving-config";
+
+export const dynamic = "force-dynamic";
 
 /* ------------------------------ data ------------------------------ */
 
@@ -173,7 +176,7 @@ export default function Home() {
         </div>
       </section>
 
-      <HomeDemo liveEnabled={Boolean(process.env.SOVA_DEMO_ACCESS_CODE) && process.env.SOVA_INFERENCE_ENABLED === "true"} baselineConnected={Boolean(process.env.BEDROCK_DEMO_BASELINE_ID?.includes("openai."))} />
+      <HomeDemo {...demoAvailability(process.env)} />
 
       {/* ========================= THE THREE CALLS ========================= */}
       <section id="calls" className="section border-t border-[var(--line)]">
@@ -245,7 +248,7 @@ export default function Home() {
           <div className="mt-14 grid gap-5 md:grid-cols-3">
             {SERVICES.map((s, i) => (
               <Reveal key={s.name} delay={i * 90}>
-                <article id={s.name.toLowerCase()} className="card group h-full p-7 transition-transform duration-300 hover:-translate-y-1">
+                <article id={["inference", "specialist-models", "evals-routing"][i]} className="card group h-full p-7 transition-transform duration-300 hover:-translate-y-1">
                   <div className="flex items-center justify-between">
                     <span
                       className="mono text-xs tracking-[0.16em]"

@@ -1,4 +1,5 @@
 import { createHash, timingSafeEqual, randomUUID } from "node:crypto";
+import { inferenceConfigured } from "./serving-config.ts";
 
 const MODEL = "fin-o1-14b";
 const UPSTREAM = "https://api.fireworks.ai/inference/v1/chat/completions";
@@ -146,13 +147,8 @@ export function createInferenceHandlers(deps: Dependencies = {}) {
     const env = environment();
     if (!authorized(request, env)) return error("Invalid API key.", 401, id);
     const provider = env.SOVA_INFERENCE_PROVIDER ?? "fireworks";
-    const configured = provider === "fireworks"
-      ? Boolean(env.FIREWORKS_API_KEY && /^accounts\/[^/]+\/deployments\/[^/]+$/.test(env.FIREWORKS_DEPLOYMENT ?? ""))
-      : provider === "sagemaker" ? Boolean(deps.sagemaker && env.AWS_REGION
-        && /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?$/.test(env.SAGEMAKER_ENDPOINT ?? ""))
-      : provider === "bedrock" && Boolean(deps.bedrock && env.AWS_REGION
-        && /^arn:aws:bedrock:[a-z0-9-]+:\d{12}:imported-model\/[a-zA-Z0-9]+$/.test(env.BEDROCK_MODEL_ARN ?? "")
-        && env.BEDROCK_MODEL_ARN?.split(":")[3] === env.AWS_REGION);
+    const configured = inferenceConfigured(env)
+      && (provider === "fireworks" || (provider === "sagemaker" ? Boolean(deps.sagemaker) : Boolean(deps.bedrock)));
     if (env.SOVA_INFERENCE_ENABLED !== "true" || !configured) {
       return error("Inference is not enabled. Contact the Sova administrator.", 503, id);
     }

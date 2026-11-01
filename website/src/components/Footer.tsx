@@ -12,10 +12,10 @@ const COLS: [string, [string, string][]][] = [
   [
     "Services",
     [
-      ["Advise", "/#advise"],
-      ["Build", "/#build"],
-      ["Run", "/#run"],
-      ["Capabilities", "/#capabilities"],
+      ["Inference", "/#inference"],
+      ["Specialist models", "/#specialist-models"],
+      ["Evals & routing", "/#evals-routing"],
+      ["Capabilities", "/#services"],
       ["Engagements", "/#engagements"],
     ],
   ],
@@ -23,7 +23,7 @@ const COLS: [string, [string, string][]][] = [
     "Firm",
     [
       ["How we work", "/#approach"],
-      ["Why Sova", "/#why"],
+      ["Why Sova", "/#calls"],
       ["About", "/about"],
       ["Careers", "/careers"],
     ],
