@@ -1,5 +1,5 @@
-# Source from the nested working trees is included in this root snapshot.
-# Their local Git metadata and histories remain separate.
+# HeavyWork is a single repository. Nested source folders are ordinary files.
+# Exclude accidentally copied Git metadata; do not initialize nested repositories.
 **/.git/
 
 # Local tooling

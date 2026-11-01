@@ -16,7 +16,7 @@ have and the next three actions. This is the working action list.
 | `yc-rfs/` | YC RFS knowledge source: `top-3.html` (the go-to list), `yc-rfs.html` (raw source), `yc-rfs.md` (readable twin), `README.md` (full mapping) |
 | `sova-distribution-20261024/` | Distribution proofs: pipeline xlsx, google-sheet proof, preview |
 | `sova-workflow-live.png` | Workflow screenshot |
-| `archive/` | Superseded material — `website-inference-v1/` (old site, own git repo, source restorable via `npm install`) |
+| `archive/` | Superseded material — `website-inference-v1/` (old site tracked in the root monorepo; dependencies restorable via `npm install`) |
 
 ## Rule
 
