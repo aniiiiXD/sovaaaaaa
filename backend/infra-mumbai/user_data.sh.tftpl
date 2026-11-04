@@ -21,6 +21,14 @@ fi
 echo "=== disk after growth ==="
 df -h / || true
 
+# The DL AMI carries ~49GB of preloaded content at boot, and the vLLM image
+# is ~35GB extracted. Drop unused preloaded docker images and cap journald so
+# the model download never fights for the last gigabytes again.
+docker image prune -a -f >/dev/null 2>&1 || true
+mkdir -p /etc/systemd/journald.conf.d
+printf '[Journal]\nSystemMaxUse=200M\n' > /etc/systemd/journald.conf.d/size.conf
+systemctl restart systemd-journald || true
+
 # Keep the container alive across reboots and spot replacements.
 systemctl enable --now docker
 

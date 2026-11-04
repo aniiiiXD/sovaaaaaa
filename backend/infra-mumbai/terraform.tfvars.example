@@ -1,0 +1,19 @@
+# Copy to terraform.tfvars (gitignored) and fill in before apply.
+# Everything here can be left default except model_revision and alert_email.
+
+aws_region        = "us-east-2"
+instance_type     = "g5.2xlarge"
+use_spot          = true
+
+model             = "Qwen/Qwen3-4B"
+# Pinned: sha 1cfa9a7208912126459214e8b04321603b3df60c (fetched 2026-11-04)
+model_revision    = "1cfa9a7208912126459214e8b04321603b3df60c"
+served_model_name = "qwen3-4b"
+max_model_len     = 8192
+
+# Only needed for gated repos:
+hf_token          = ""
+
+# Cost control:
+monthly_budget_usd = "50"
+alert_email        = "you@example.com"
