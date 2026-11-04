@@ -80,6 +80,12 @@ variable "hf_token" {
   sensitive   = true
 }
 
+variable "hf_endpoint" {
+  description = "HF API endpoint override (e.g. https://hf-mirror.com to dodge anonymous rate limits). Empty = official HF."
+  type        = string
+  default     = ""
+}
+
 variable "monthly_budget_usd" {
   type    = string
   default = "50"

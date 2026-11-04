@@ -193,6 +193,7 @@ resource "aws_launch_template" "gpu" {
     model_revision   = var.model_revision
     served_model_name = var.served_model_name
     hf_token         = var.hf_token
+    hf_endpoint      = var.hf_endpoint
     max_model_len    = var.max_model_len
   }))
 

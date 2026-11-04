@@ -43,16 +43,33 @@ if [ -n "${model_revision}" ]; then
 fi
 
 # HF cache lands on the root EBS volume; re-pulled after spot replacement (~2 min for 8-9B).
+# Mirror override: anonymous HF pulls get rate-limited into a restart spiral;
+# hf-mirror.com serves the same weights without the throttle. Empty keeps HF.
+HF_ENDPOINT_ENV=""
+if [ -n "${hf_endpoint}" ]; then
+  HF_ENDPOINT_ENV="-e HF_ENDPOINT=${hf_endpoint}"
+fi
+
+# --dtype half: explicit FP16 for T4 (SM75 has no BF16).
+# NOTE: docker logs go to disk, which the EC2 console cannot see. Stream the
+# container's recent logs to /dev/console so GetConsoleOutput always shows
+# live vLLM state (download progress, load, errors) without SSM.
 docker run -d --name vllm --restart unless-stopped \
   --gpus all --ipc=host \
   -p 8000:8000 \
-  -e HF_TOKEN="${hf_token}" \
+  -e HF_TOKEN="${hf_token}" $${HF_ENDPOINT_ENV} \
   -v /srv/hf-cache:/root/.cache/huggingface \
   "${vllm_image}" \
   --model "${model}" $${REVISION_FLAG} \
   --served-model-name "${served_model_name}" \
   --max-model-len "${max_model_len}" \
+  --dtype half \
   --gpu-memory-utilization 0.92
+
+( while true; do
+    sleep 30
+    docker logs --tail 3 vllm 2>&1 | tail -3 > /dev/console || true
+  done ) &
 
 # Boot log goes to the vLLM container; inspect with:
 #   docker logs -f vllm
