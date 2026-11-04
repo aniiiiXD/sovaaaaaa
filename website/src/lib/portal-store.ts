@@ -6,6 +6,7 @@ type Environment = Record<string, string | undefined>;
 export type PortalKeyRow = {
   keyId: string;
   label: string;
+  userId: string | null;
   createdAt: Date;
   revokedAt: Date | null;
   lastUsedAt: Date | null;
@@ -42,15 +43,17 @@ export type UsageRecordInput = {
 
 export type PortalStore = {
   findByKey(key: string): Promise<PortalKeyRow | null>;
-  // Self-serve: generates a new key for an authenticated customer. The
-  // plaintext is returned exactly once; only the fingerprint is stored.
-  generateKey(label: string): Promise<{ key: string; keyId: string }>;
-  listKeys(): Promise<PortalKeyRow[]>;
-  revokeKey(keyId: string): Promise<void>;
+  // Account-scoped key management. The plaintext is returned exactly once;
+  // only the fingerprint is stored. userId = Supabase auth.users id.
+  generateKey(label: string, userId: string): Promise<{ key: string; keyId: string }>;
+  listKeys(userId: string): Promise<PortalKeyRow[]>;
+  // Claim an operator-issued (user-less) key into an account.
+  linkKey(key: string, userId: string): Promise<PortalKeyRow | null>;
+  revokeKey(keyId: string, userId: string): Promise<void>;
   recordUsage(record: UsageRecordInput): Promise<void>;
-  overview(keyId: string, days: number): Promise<UsageSummary>;
-  dailySeries(keyId: string, days: number, model: string | null): Promise<UsagePoint[]>;
-  modelStats(keyId: string, days: number): Promise<ModelStat[]>;
+  overview(userId: string, days: number): Promise<UsageSummary>;
+  dailySeries(userId: string, days: number, model: string | null): Promise<UsagePoint[]>;
+  modelStats(userId: string, days: number): Promise<ModelStat[]>;
 };
 
 const SCHEMA = `
@@ -60,8 +63,10 @@ create table if not exists portal_keys (
   label text not null default 'unnamed',
   created_at timestamptz not null default now(),
   revoked_at timestamptz,
-  last_used_at timestamptz
+  last_used_at timestamptz,
+  user_id uuid references auth.users(id) on delete set null
 );
+create index if not exists portal_keys_user_id_idx on portal_keys (user_id);
 create table if not exists portal_requests (
   id bigint generated always as identity primary key,
   key_id text not null,
@@ -113,48 +118,57 @@ export class PostgresPortalStore implements PortalStore {
 
   async findByKey(key: string): Promise<PortalKeyRow | null> {
     await this.ready();
-    const fingerprint = fingerprintOf(key);
     const rows = await this.sql`
-      select key_id, label, created_at, revoked_at, last_used_at
-      from portal_keys where fingerprint = ${fingerprint} and revoked_at is null`;
+      select key_id, label, user_id, created_at, revoked_at, last_used_at
+      from portal_keys where fingerprint = ${fingerprintOf(key)} and revoked_at is null`;
     if (!rows.length) return null;
     const r = rows[0];
     return {
       keyId: r.key_id,
       label: r.label,
+      userId: r.user_id ?? null,
       createdAt: new Date(r.created_at),
       revokedAt: r.revoked_at ? new Date(r.revoked_at) : null,
       lastUsedAt: r.last_used_at ? new Date(r.last_used_at) : null,
     };
   }
 
-  async generateKey(label: string): Promise<{ key: string; keyId: string }> {
+  async generateKey(label: string, userId: string): Promise<{ key: string; keyId: string }> {
     await this.ready();
     const key = "sk-sova-" + randomBytes(24).toString("hex");
     const fingerprint = fingerprintOf(key);
     const keyId = fingerprint.slice(0, 8);
     await this.sql`
-      insert into portal_keys (key_id, fingerprint, label) values (${keyId}, ${fingerprint}, ${label})`;
+      insert into portal_keys (key_id, fingerprint, label, user_id)
+      values (${keyId}, ${fingerprint}, ${label}, ${userId})`;
     return { key, keyId };
   }
 
-  async listKeys(): Promise<PortalKeyRow[]> {
+  async listKeys(userId: string): Promise<PortalKeyRow[]> {
     await this.ready();
     const rows = await this.sql`
-      select key_id, label, created_at, revoked_at, last_used_at
-      from portal_keys order by created_at desc`;
-    return rows.map((r) => ({
-      keyId: r.key_id,
-      label: r.label,
-      createdAt: new Date(r.created_at),
-      revokedAt: r.revoked_at ? new Date(r.revoked_at) : null,
-      lastUsedAt: r.last_used_at ? new Date(r.last_used_at) : null,
-    }));
+      select key_id, label, user_id, created_at, revoked_at, last_used_at
+      from portal_keys where user_id = ${userId} order by created_at desc`;
+    return rows.map((r) => PortalStoreRow(r as KeyRowSql));
   }
 
-  async revokeKey(keyId: string): Promise<void> {
+  async linkKey(key: string, userId: string): Promise<PortalKeyRow | null> {
     await this.ready();
-    await this.sql`update portal_keys set revoked_at = now() where key_id = ${keyId} and revoked_at is null`;
+    // Only operator-issued keys (user_id null) can be claimed, and only while
+    // they are still active.
+    const rows = await this.sql`
+      update portal_keys set user_id = ${userId}
+      where fingerprint = ${fingerprintOf(key)} and user_id is null and revoked_at is null
+      returning key_id, label, user_id, created_at, revoked_at, last_used_at`;
+    if (!rows.length) return null;
+    return PortalStoreRow(rows[0] as KeyRowSql);
+  }
+
+  async revokeKey(keyId: string, userId: string): Promise<void> {
+    await this.ready();
+    await this.sql`
+      update portal_keys set revoked_at = now()
+      where key_id = ${keyId} and user_id = ${userId} and revoked_at is null`;
   }
 
   // Fire-and-forget by contract: callers must not await it on the hot path.
@@ -173,19 +187,20 @@ export class PostgresPortalStore implements PortalStore {
       delete from portal_requests where ts < now() - interval '30 days'`;
   }
 
-  private windowFilter(keyId: string, days: number, model: string | null) {
+  private windowFilter(userId: string, days: number, model: string | null) {
     if (model) {
       return this.sql`
         from portal_requests
-        where key_id = ${keyId} and ts > now() - (${days} || ' days')::interval
-          and model = ${model}`;
+        where ts > now() - (${days} || ' days')::interval and model = ${model}
+          and key_id in (select key_id from portal_keys where user_id = ${userId})`;
     }
     return this.sql`
       from portal_requests
-      where key_id = ${keyId} and ts > now() - (${days} || ' days')::interval`;
+      where ts > now() - (${days} || ' days')::interval
+        and key_id in (select key_id from portal_keys where user_id = ${userId})`;
   }
 
-  async overview(keyId: string, days: number): Promise<UsageSummary> {
+  async overview(userId: string, days: number): Promise<UsageSummary> {
     await this.ready();
     const rows = await this.sql`
       select count(*)::int as requests,
@@ -193,7 +208,7 @@ export class PostgresPortalStore implements PortalStore {
              count(*) filter (where not ok)::int as fail,
              coalesce(sum(prompt_tokens), 0)::bigint as prompt_tokens,
              coalesce(sum(completion_tokens), 0)::bigint as completion_tokens
-      ${this.windowFilter(keyId, days, null)}`;
+      ${this.windowFilter(userId, days, null)}`;
     const r = rows[0];
     return {
       requests: Number(r.requests),
@@ -204,7 +219,7 @@ export class PostgresPortalStore implements PortalStore {
     };
   }
 
-  async dailySeries(keyId: string, days: number, model: string | null): Promise<UsagePoint[]> {
+  async dailySeries(userId: string, days: number, model: string | null): Promise<UsagePoint[]> {
     await this.ready();
     const rows = await this.sql`
       select date_trunc('day', ts at time zone 'UTC')::date::text as day,
@@ -213,7 +228,7 @@ export class PostgresPortalStore implements PortalStore {
              count(*) filter (where not ok)::int as fail,
              coalesce(sum(prompt_tokens), 0)::bigint as prompt_tokens,
              coalesce(sum(completion_tokens), 0)::bigint as completion_tokens
-      ${this.windowFilter(keyId, days, model)}
+      ${this.windowFilter(userId, days, model)}
       group by 1 order by 1 asc`;
     return rows.map((r) => ({
       day: r.day,
@@ -225,7 +240,7 @@ export class PostgresPortalStore implements PortalStore {
     }));
   }
 
-  async modelStats(keyId: string, days: number): Promise<ModelStat[]> {
+  async modelStats(userId: string, days: number): Promise<ModelStat[]> {
     await this.ready();
     const rows = await this.sql`
       select model,
@@ -234,7 +249,7 @@ export class PostgresPortalStore implements PortalStore {
              count(*) filter (where not ok)::int as fail,
              coalesce(avg(latency_ms), 0) as avg_latency,
              coalesce(percentile_cont(0.5) within group (order by latency_ms), 0) as p50_latency
-      ${this.windowFilter(keyId, days, null)}
+      ${this.windowFilter(userId, days, null)}
       group by model order by requests desc`;
     return rows.map((r) => ({
       model: r.model,
@@ -247,6 +262,22 @@ export class PostgresPortalStore implements PortalStore {
   }
 }
 
+type KeyRowSql = {
+  key_id: string; label: string; user_id: string | null;
+  created_at: Date; revoked_at: Date | null; last_used_at: Date | null;
+};
+
+function PortalStoreRow(r: KeyRowSql): PortalKeyRow {
+  return {
+    keyId: r.key_id,
+    label: r.label,
+    userId: r.user_id ?? null,
+    createdAt: new Date(r.created_at),
+    revokedAt: r.revoked_at ? new Date(r.revoked_at) : null,
+    lastUsedAt: r.last_used_at ? new Date(r.last_used_at) : null,
+  };
+}
+
 // In-memory fallback for running without a database: same behavior, process
 // lifetime only. Records are kept individually so percentiles still work.
 export class InMemoryPortalStore implements PortalStore {
@@ -254,29 +285,47 @@ export class InMemoryPortalStore implements PortalStore {
   private requests: (UsageRecordInput & { ts: Date })[] = [];
 
   async findByKey(key: string): Promise<PortalKeyRow | null> {
-    const row = this.keys.get(fingerprintOf(key).slice(0, 8));
-    if (!row || row.revokedAt) return null;
-    const { fingerprint: _f, ...rest } = row;
-    return rest;
+    const fingerprint = fingerprintOf(key);
+    for (const row of this.keys.values()) {
+      if (row.fingerprint === fingerprint && !row.revokedAt) {
+        const { fingerprint: _f, ...rest } = row;
+        return rest;
+      }
+    }
+    return null;
   }
 
-  async generateKey(label: string): Promise<{ key: string; keyId: string }> {
+  async generateKey(label: string, userId: string): Promise<{ key: string; keyId: string }> {
     const key = "sk-sova-" + randomBytes(24).toString("hex");
     const fingerprint = fingerprintOf(key);
     const keyId = fingerprint.slice(0, 8);
     this.keys.set(keyId, {
-      keyId, label, fingerprint, createdAt: new Date(), revokedAt: null, lastUsedAt: null,
+      keyId, label, userId, fingerprint, createdAt: new Date(), revokedAt: null, lastUsedAt: null,
     });
     return { key, keyId };
   }
 
-  async listKeys(): Promise<PortalKeyRow[]> {
-    return [...this.keys.values()].map(({ fingerprint: _f, ...row }) => row);
+  async listKeys(userId: string): Promise<PortalKeyRow[]> {
+    return [...this.keys.values()]
+      .filter((k) => k.userId === userId)
+      .map(({ fingerprint: _f, ...row }) => row);
   }
 
-  async revokeKey(keyId: string): Promise<void> {
+  async linkKey(key: string, userId: string): Promise<PortalKeyRow | null> {
+    const fingerprint = fingerprintOf(key);
+    for (const row of this.keys.values()) {
+      if (row.fingerprint === fingerprint && row.userId === null && !row.revokedAt) {
+        row.userId = userId;
+        const { fingerprint: _f, ...rest } = row;
+        return rest;
+      }
+    }
+    return null;
+  }
+
+  async revokeKey(keyId: string, userId: string): Promise<void> {
     const row = this.keys.get(keyId);
-    if (row) row.revokedAt = new Date();
+    if (row && row.userId === userId) row.revokedAt = new Date();
   }
 
   async recordUsage(record: UsageRecordInput): Promise<void> {
@@ -286,14 +335,21 @@ export class InMemoryPortalStore implements PortalStore {
     this.requests.push({ ...record, ts: new Date() });
   }
 
-  private inWindow(keyId: string, days: number, model: string | null) {
-    const cutoff = Date.now() - days * 86_400_000;
-    return this.requests.filter((r) =>
-      r.keyId === keyId && r.ts.getTime() > cutoff && (!model || r.model === model));
+  private userKeys(userId: string): Set<string> {
+    const ids = new Set<string>();
+    for (const k of this.keys.values()) if (k.userId === userId) ids.add(k.keyId);
+    return ids;
   }
 
-  async overview(keyId: string, days: number): Promise<UsageSummary> {
-    const rows = this.inWindow(keyId, days, null);
+  private inWindow(userId: string, days: number, model: string | null) {
+    const cutoff = Date.now() - days * 86_400_000;
+    const ids = this.userKeys(userId);
+    return this.requests.filter((r) =>
+      ids.has(r.keyId) && r.ts.getTime() > cutoff && (!model || r.model === model));
+  }
+
+  async overview(userId: string, days: number): Promise<UsageSummary> {
+    const rows = this.inWindow(userId, days, null);
     return {
       requests: rows.length,
       ok: rows.filter((r) => r.ok).length,
@@ -303,8 +359,8 @@ export class InMemoryPortalStore implements PortalStore {
     };
   }
 
-  async dailySeries(keyId: string, days: number, model: string | null): Promise<UsagePoint[]> {
-    const rows = this.inWindow(keyId, days, model);
+  async dailySeries(userId: string, days: number, model: string | null): Promise<UsagePoint[]> {
+    const rows = this.inWindow(userId, days, model);
     const byDay = new Map<string, UsagePoint>();
     for (const r of rows) {
       const day = r.ts.toISOString().slice(0, 10);
@@ -320,8 +376,8 @@ export class InMemoryPortalStore implements PortalStore {
     return [...byDay.values()].sort((a, b) => a.day.localeCompare(b.day));
   }
 
-  async modelStats(keyId: string, days: number): Promise<ModelStat[]> {
-    const rows = this.inWindow(keyId, days, null);
+  async modelStats(userId: string, days: number): Promise<ModelStat[]> {
+    const rows = this.inWindow(userId, days, null);
     const byModel = new Map<string, ModelStat>();
     for (const r of rows) {
       const bucket = byModel.get(r.model) ?? {
@@ -333,8 +389,7 @@ export class InMemoryPortalStore implements PortalStore {
     }
     const stats: ModelStat[] = [];
     for (const [model, bucket] of byModel) {
-      const latencies = this.requests
-        .filter((r) => r.keyId === keyId && r.model === model)
+      const latencies = rows.filter((r) => r.model === model)
         .map((r) => r.latencyMs).sort((a, b) => a - b);
       const avg = latencies.length
         ? Math.round(latencies.reduce((s, v) => s + v, 0) / latencies.length) : 0;
