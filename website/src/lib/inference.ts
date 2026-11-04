@@ -239,10 +239,13 @@ export function createInferenceHandlers(deps: Dependencies = {}) {
       // never touch or delay the response path.
       try {
         const store = getPortalStore(env);
-        store.recordUsage(auth.keyId, usage.prompt_tokens, usage.completion_tokens)
-          .catch((cause) => {
-            console.error(JSON.stringify({ event: "usage_record_failed", keyId: auth.keyId, message: String(cause).slice(0, 300) }));
-          });
+        store.recordUsage({
+          keyId: auth.keyId, model, ok: status === 200,
+          promptTokens: usage.prompt_tokens, completionTokens: usage.completion_tokens,
+          latencyMs: Date.now() - started, ttftMs: firstByteMs ?? null,
+        }).catch((cause) => {
+          console.error(JSON.stringify({ event: "usage_record_failed", keyId: auth.keyId, message: String(cause).slice(0, 300) }));
+        });
       } catch (cause) {
         console.error(JSON.stringify({ event: "usage_record_sync_failed", message: String(cause).slice(0, 300) }));
       }
