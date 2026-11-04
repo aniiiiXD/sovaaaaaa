@@ -226,23 +226,23 @@ resource "aws_autoscaling_group" "gpu" {
         launch_template_id = aws_launch_template.gpu.id
         version            = "$Latest"
       }
+
+      override {
+        instance_type = "g5.2xlarge"
+      }
+
+      override {
+        instance_type = "g5.xlarge" # same A10G 24GB, fewer vCPUs — 4B fits fine
+      }
+
+      override {
+        instance_type = "g6.xlarge" # L4 24GB, newer family, different capacity pool
+      }
     }
 
     instances_distribution {
       on_demand_percentage_above_base_capacity = var.use_spot ? 0 : 100
       spot_allocation_strategy                 = "capacity-optimized"
-    }
-
-    override {
-      instance_type = "g5.2xlarge"
-    }
-
-    override {
-      instance_type = "g5.xlarge" # same A10G 24GB, fewer vCPUs — 4B fits fine
-    }
-
-    override {
-      instance_type = "g6.xlarge" # L4 24GB, newer family, different capacity pool
     }
   }
 
