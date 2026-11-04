@@ -232,6 +232,18 @@ resource "aws_autoscaling_group" "gpu" {
       on_demand_percentage_above_base_capacity = var.use_spot ? 0 : 100
       spot_allocation_strategy                 = "capacity-optimized"
     }
+
+    override {
+      instance_type = "g5.2xlarge"
+    }
+
+    override {
+      instance_type = "g5.xlarge" # same A10G 24GB, fewer vCPUs — 4B fits fine
+    }
+
+    override {
+      instance_type = "g6.xlarge" # L4 24GB, newer family, different capacity pool
+    }
   }
 
   tag {
@@ -258,6 +270,10 @@ resource "aws_lb" "this" {
   subnets            = aws_subnet.public[*].id
 
   drop_invalid_header_fields = true
+
+  # The ALB has no data-flow dependency on the gateway, but a public ALB is
+  # invalid without it: never let its creation race the network setup.
+  depends_on = [aws_route_table_association.public]
 }
 
 resource "aws_lb_target_group" "vllm" {
