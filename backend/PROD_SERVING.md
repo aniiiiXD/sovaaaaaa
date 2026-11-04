@@ -51,6 +51,9 @@ backend/ops/deploy.sh
 # smoke
 curl http://<alb-dns>/v1/models
 
+# the real speed table (tok/s, TTFT, p95 per concurrency level)
+python3 backend/ops/bench.py --url http://<alb-dns> --model qwen3-4b
+
 # keys
 python3 backend/ops/keys.py mint --label acme
 

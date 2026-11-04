@@ -5,10 +5,10 @@ aws_region        = "us-east-2"
 instance_type     = "g5.2xlarge"
 use_spot          = true
 
-model             = "Qwen/Qwen3-8B"
-# Pin the real commit hash from the HF repo before first apply:
-model_revision    = ""
-served_model_name = "qwen3-8b"
+model             = "Qwen/Qwen3-4B"
+# Pinned: sha 1cfa9a7208912126459214e8b04321603b3df60c (fetched 2026-11-04)
+model_revision    = "1cfa9a7208912126459214e8b04321603b3df60c"
+served_model_name = "qwen3-4b"
 max_model_len     = 8192
 
 # Only needed for gated repos:
