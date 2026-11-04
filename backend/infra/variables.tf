@@ -41,7 +41,7 @@ variable "max_size" {
 
 variable "root_volume_size" {
   type    = number
-  default = 60 # OS + docker images
+  default = 100 # DL AMI snapshot demands >=75GB; docker + model cache need headroom
 }
 
 variable "vllm_image" {
