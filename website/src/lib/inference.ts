@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { authenticate } from "./api-auth.ts";
 import { meterUsage, type UsageRecord } from "./usage-meter.ts";
+import { CATALOG_IDS, MODEL_CATALOG, resolveModel } from "./model-catalog.ts";
 import { getPortalStore } from "./portal-store.ts";
 import type { VllmBackend } from "./vllm.ts";
 import { inferenceConfigured } from "./serving-config.ts";
@@ -80,7 +81,11 @@ function validate(value: unknown) {
   if (Object.keys(body).some((key) => !allowed.has(key))) {
     throw new InputError("Unsupported request field. See the Sova inference API documentation.");
   }
-  if (body.model !== MODEL) throw new InputError(`model must be ${MODEL}.`);
+  if (typeof body.model !== "string" || !CATALOG_IDS.has(body.model)) {
+    throw new InputError(`model must be one of: ${[...CATALOG_IDS].join(", ")}.`);
+  }
+  const entry = resolveModel(body.model);
+  if (!entry) throw new InputError(`model must be one of: ${[...CATALOG_IDS].join(", ")}.`);
   if (!Array.isArray(body.messages) || body.messages.length < 1 || body.messages.length > 64) {
     throw new InputError("messages must contain 1–64 text messages.");
   }
@@ -98,6 +103,12 @@ function validate(value: unknown) {
     return { role: m.role, content: m.content };
   });
   if (textBytes > 16000) throw new InputError("Message text exceeds 16,000 UTF-8 bytes.");
+  // Specialists bake their system prompt in server-side, always ahead of any
+  // customer system message, so it can be neither dropped nor weakened. The
+  // prompt does not count against the customer's 16,000-byte budget.
+  if (entry.systemPrompt) {
+    messages.unshift({ role: "system", content: entry.systemPrompt });
+  }
   if (body.stream !== undefined && typeof body.stream !== "boolean") throw new InputError("stream must be a boolean.");
   if (body.n !== undefined && body.n !== 1) throw new InputError("Only n=1 is supported.");
   const maxTokens = body.max_tokens ?? 1024;
@@ -125,7 +136,7 @@ function validate(value: unknown) {
       throw new InputError("stream_options supports only include_usage (boolean), with stream=true.");
     }
   }
-  return { ...body, messages, max_tokens: maxTokens, stream: body.stream ?? false };
+  return { ...body, messages, max_tokens: maxTokens, stream: body.stream ?? false, entry };
 }
 
 // Non-streaming provider responses carry an OpenAI usage block. Parse a
@@ -140,6 +151,16 @@ function parseUsage(chunks: Uint8Array[]) {
       completion_tokens: typeof completion === "number" && Number.isFinite(completion) ? completion : 0,
     };
   } catch { return { prompt_tokens: 0, completion_tokens: 0 }; }
+}
+
+// Non-streaming bodies get the customer-requested catalog id echoed back,
+// regardless of what the serving stack calls the model internally.
+function withModel(chunks: Uint8Array[], id: string): Uint8Array | null {
+  try {
+    const parsed = JSON.parse(Buffer.concat(chunks).toString("utf8")) as Record<string, unknown>;
+    if (!parsed || typeof parsed !== "object") return null;
+    return new TextEncoder().encode(JSON.stringify({ ...parsed, model: id }));
+  } catch { return null; }
 }
 
 export function createInferenceHandlers(deps: Dependencies = {}) {
@@ -159,9 +180,11 @@ export function createInferenceHandlers(deps: Dependencies = {}) {
     const provider = env.SOVA_INFERENCE_PROVIDER ?? "fireworks";
     if (provider === "vllm") return listVllmModels(request, env, id, auth.keyId);
     const started = Date.now();
-    const response = Response.json({ object: "list", data: [{ id: MODEL, object: "model", created: 0, owned_by: "sova" }] },
+    const response = Response.json({ object: "list", data: MODEL_CATALOG.map((entry) => ({
+      id: entry.id, object: "model", created: 0, owned_by: "sova",
+    })) },
       { headers: { "Cache-Control": "no-store", "X-Request-Id": id } });
-    meter({ ts: Date.now(), key_id: auth.keyId, model: MODEL, prompt_tokens: 0, completion_tokens: 0, latency_ms: Date.now() - started, backend: provider });
+    meter({ ts: Date.now(), key_id: auth.keyId, model: "catalog", prompt_tokens: 0, completion_tokens: 0, latency_ms: Date.now() - started, backend: provider });
     return response;
   }
 
@@ -254,7 +277,8 @@ export function createInferenceHandlers(deps: Dependencies = {}) {
     signal.addEventListener("abort", onAbort, { once: true });
     try {
       const body = validate(await readBody(request, signal));
-      model = MODEL;
+      const entry = body.entry;
+      model = entry.id;
       // vLLM forwarding is non-streaming only for now.
       if (provider === "vllm" && body.stream) {
         finish();
@@ -302,14 +326,18 @@ export function createInferenceHandlers(deps: Dependencies = {}) {
             signal.throwIfAborted();
             if (done) {
               // Non-streaming JSON bodies carry an OpenAI usage block; meter from a copy.
-              if (!body.stream && buffered.length) usage = parseUsage(buffered);
+              if (!body.stream && buffered.length) {
+                usage = parseUsage(buffered);
+                const rewritten = withModel(buffered, entry.id);
+                if (rewritten) output.enqueue(rewritten);
+              }
               finish();
               output.close();
             }
             else {
               firstByteMs ??= Date.now() - started;
-              if (!body.stream) buffered.push(value);
-              output.enqueue(value);
+              if (body.stream) output.enqueue(value);
+              else buffered.push(value);
             }
           } catch (cause) {
             status = signal.aborted ? (request.signal.aborted ? 499 : 504) : 502;

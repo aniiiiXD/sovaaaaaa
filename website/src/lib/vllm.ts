@@ -52,7 +52,9 @@ export function createVllmBackend(fetchImpl: typeof fetch = fetch) {
       }
       const result = JSON.parse(await response.text()) as Record<string, unknown>;
       if (!Array.isArray(result.choices)) throw new Error("Invalid vLLM chat response.");
-      return Response.json({ ...result, model: MODEL });
+      // Echo the customer-requested catalog id, not the served model name.
+      const requested = typeof body.model === "string" ? body.model : MODEL;
+      return Response.json({ ...result, model: requested });
     } catch (cause) {
       if (signal.aborted) throw cause;
       return new Response(null, { status: 502 });

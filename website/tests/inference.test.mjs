@@ -26,6 +26,34 @@ function make(overrides = {}) {
   return createInferenceHandlers({ env: () => config, log() {}, fetch: async () => { throw Error("Unexpected upstream call"); }, ...overrides });
 }
 
+test("specialist presets inject their system prompt and echo the catalog id", async () => {
+  let sent;
+  const api = make({ fetch: async (_url, options) => {
+    sent = JSON.parse(options.body);
+    return Response.json({ model: "internal-name", choices: [{ message: { content: "ok" } }], usage: { prompt_tokens: 3, completion_tokens: 2 } });
+  } });
+  const response = await api.chat(request({ model: "sova-finance", messages: [{ role: "user", content: "Analyse UPI growth." }] }));
+  assert.equal(response.status, 200);
+  assert.equal(sent.messages[0].role, "system");
+  assert.match(sent.messages[0].content, /Sova Finance/);
+  assert.deepEqual(sent.messages[1], { role: "user", content: "Analyse UPI growth." });
+  assert.equal((await response.json()).model, "sova-finance");
+});
+
+test("a customer system message is kept and the preset goes ahead of it", async () => {
+  let sent;
+  const api = make({ fetch: async (_url, options) => {
+    sent = JSON.parse(options.body);
+    return Response.json({ model: "x", choices: [{ message: { content: "ok" } }], usage: {} });
+  } });
+  const response = await api.chat(request({ model: "sova-code", messages: [
+    { role: "system", content: "Answer in Hindi." }, { role: "user", content: "Write a for loop." },
+  ] }));
+  assert.equal(response.status, 200);
+  assert.match(sent.messages[0].content, /Sova Code/);
+  assert.deepEqual(sent.messages[1], { role: "system", content: "Answer in Hindi." });
+});
+
 test("missing auth and disabled service never call upstream", async () => {
   assert.equal((await make().chat(request(payload, { headers: {} }))).status, 401);
   assert.equal((await make({ env: () => ({ ...config, SOVA_INFERENCE_ENABLED: "false" }) }).chat(request())).status, 503);
@@ -65,7 +93,9 @@ test("pins upstream destination/model and preserves JSON reasoning and usage", a
   const response = await api.chat(request());
   assert.equal(response.status, 200);
   assert.equal(response.headers.get("cache-control"), "no-store");
-  assert.deepEqual(await response.json(), result);
+  // The gateway echoes the customer-requested catalog id, not the upstream's
+  // internal model name.
+  assert.deepEqual(await response.json(), { ...result, model: "qwen3-4b" });
 });
 
 test("streams chunks before completion and retains SSE framing", async () => {
@@ -133,7 +163,8 @@ test("model discovery is authenticated", async () => {
   const api = make();
   assert.equal(api.models(new Request("http://localhost/api/v1/models")).status, 401);
   const response = api.models(new Request("http://localhost/api/v1/models", { headers: { authorization: `Bearer ${key}` } }));
-  assert.equal((await response.json()).data[0].id, "qwen3-4b");
+  const ids = (await response.json()).data.map((m) => m.id);
+  assert.deepEqual([...ids].sort(), ["qwen3-4b", "sova-code", "sova-finance", "sova-reason"]);
 });
 
 test("SageMaker selection uses its endpoint configuration without Fireworks credentials", async () => {
