@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { authenticate } from "./api-auth.ts";
 import { meterUsage, type UsageRecord } from "./usage-meter.ts";
+import { getPortalStore } from "./portal-store.ts";
 import type { VllmBackend } from "./vllm.ts";
 import { inferenceConfigured } from "./serving-config.ts";
 
@@ -234,6 +235,12 @@ export function createInferenceHandlers(deps: Dependencies = {}) {
         prompt_tokens: usage.prompt_tokens, completion_tokens: usage.completion_tokens,
         latency_ms: Date.now() - started, backend: provider,
       });
+      // Fire-and-forget per-key accounting for the customer portal; must
+      // never touch or delay the response path.
+      try {
+        void getPortalStore(env).recordUsage(auth.keyId, usage.prompt_tokens, usage.completion_tokens)
+          .catch(() => {});
+      } catch { /* Accounting is best-effort. */ }
     };
     const onAbort = () => { status = request.signal.aborted ? 499 : 504; finish(); };
     signal.addEventListener("abort", onAbort, { once: true });
