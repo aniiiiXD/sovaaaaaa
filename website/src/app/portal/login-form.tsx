@@ -36,7 +36,7 @@ export default function PortalLoginForm() {
         disabled={pending}
         className="btn btn-primary mt-1 min-h-[44px] disabled:opacity-60"
       >
-        {pending ? "Checking…" : "View my usage"}
+        {pending ? "Checking…" : "Open the console"}
         {!pending && (
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M5 12h14M13 6l6 6-6 6" />
