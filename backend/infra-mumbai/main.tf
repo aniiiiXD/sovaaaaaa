@@ -236,6 +236,10 @@ resource "aws_autoscaling_group" "gpu" {
       }
 
       override {
+        instance_type = "g4dn.xlarge" # T4 16GB, different family, abundant; fits 4B
+      }
+
+      override {
         instance_type = "g5.2xlarge" # largest, tried last (Mumbai capacity flaps)
       }
     }
