@@ -50,16 +50,23 @@ class DatasetService:
     def prepare(self, request: DatasetCreate) -> PreparedDataset:
         if request.parent_id:
             self.get(request.parent_id)
-        seen_ids, seen_prompts = set(), set()
+        seen_ids: set[str] = set()
+        seen_prompts: dict[str, str] = {}
         fingerprints = []
         for row in request.records:
             if not row.prompt.strip() or not row.completion.strip():
                 raise RigError("Prompts and completions cannot be blank")
             key = fingerprint(row)
-            if row.id in seen_ids or key in seen_prompts:
+            first_split = seen_prompts.get(key)
+            if row.id in seen_ids or first_split is not None:
+                if first_split is not None and first_split != row.split:
+                    # Name the contamination case, not generic duplication: the same
+                    # input under two splits is exactly what the registry forbids.
+                    raise Conflict("An input already belongs to another split in this Rig "
+                                   "workspace; held-out inputs cannot become training data")
                 raise Conflict("Duplicate record ID or normalized input in dataset")
             seen_ids.add(row.id)
-            seen_prompts.add(key)
+            seen_prompts[key] = row.split
             fingerprints.append((key, row.split))
         dataset = Dataset(name=request.name, parent_id=request.parent_id,
                           description=request.description, sha256="", artifact="",
