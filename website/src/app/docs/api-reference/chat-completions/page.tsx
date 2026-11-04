@@ -8,7 +8,7 @@ import Callout from "../../callout";
 export const metadata: Metadata = {
   title: "Chat Completions",
   description:
-    "POST /chat/completions: the complete request field set for qwen3-4b, the 128 KiB body limit, curl and Python examples, and the 200 response shape.",
+    "POST /chat/completions: the complete request field set for the Sova model catalog, the 128 KiB body limit, curl and Python examples, and the 200 response shape.",
 };
 
 // String.raw keeps the shell line continuations literal.
@@ -62,7 +62,11 @@ print(reply.choices[0].message.content)
 print(reply.usage.prompt_tokens, reply.usage.completion_tokens)`;
 
 const REQUEST_FIELDS: [string, string, string][] = [
-  ["model", "string", `Must be "qwen3-4b". Any other value is rejected with 400.`],
+  [
+    "model",
+    "string",
+    `One of sova-finance, sova-code, sova-reason, qwen3-4b. Any other value is rejected with 400 and the message "model must be one of: sova-finance, sova-code, sova-reason, qwen3-4b."`,
+  ],
   [
     "messages",
     "array",
@@ -116,6 +120,18 @@ export default function ChatCompletionsPage() {
           <C>tools</C>, returns 400 with the message &quot;Unsupported request
           field.&quot;
         </Callout>
+        <Callout variant="info" title="Specialists are server-side presets">
+          The specialist ids (<C>sova-finance</C>, <C>sova-code</C>,{" "}
+          <C>sova-reason</C>) prepend a curated system prompt on the server,
+          ahead of any system message you send. It cannot be removed or
+          weakened, and it does not count against the 16,000-byte message
+          budget. Responses echo the catalog id you requested. The full catalog
+          is at{" "}
+          <Link href="/models" className="ulink">
+            /models
+          </Link>
+          .
+        </Callout>
         <P>
           Message rules are strict: 1 to 64 messages, string content only, and
           16,000 UTF-8 bytes of total text across the conversation. The serving
@@ -154,7 +170,7 @@ export default function ChatCompletionsPage() {
           lang="json"
           label="200 response body · representative"
           code={BASIC_RESPONSE}
-          caption="The exact id, created, and model values come from the serving backend."
+          caption="The id and created values come from the serving backend; model echoes the catalog id you requested."
         />
         <P>
           Headers on every response: <C>X-Request-Id</C>, a UUID you can quote

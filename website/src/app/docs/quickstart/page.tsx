@@ -94,9 +94,9 @@ export default function QuickstartPage() {
             <h2 className="display text-[1.5rem]">Send your first request</h2>
             <P>
               Export the key, then POST an OpenAI-shaped body to{" "}
-              <C>/chat/completions</C>. The <C>model</C> must be{" "}
-              <C>qwen3-4b</C>, the Content-Type must be <C>application/json</C>,
-              and the body is capped at 128 KiB.
+              <C>/chat/completions</C>. The <C>model</C> must be one of the
+              four catalog ids, the Content-Type must be{" "}
+              <C>application/json</C>, and the body is capped at 128 KiB.
             </P>
             <CodeBlock
               lang="bash"

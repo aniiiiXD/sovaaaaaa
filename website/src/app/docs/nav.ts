@@ -25,6 +25,7 @@ export const DOC_NAV: readonly DocLink[] = [
   { href: "/docs/errors", title: "Errors", group: "Resources" },
   { href: "/docs/limits", title: "Limits", group: "Resources" },
   { href: "/docs/usage", title: "Usage & Portal", group: "Resources" },
+  { href: "/models", title: "Models", group: "Resources" },
 ];
 
 export function docForPath(pathname: string): DocLink | undefined {

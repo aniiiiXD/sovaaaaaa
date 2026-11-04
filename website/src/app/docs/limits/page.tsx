@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 const LIMITS: [string, string][] = [
-  ["Model", "qwen3-4b, the only accepted value"],
+  ["Model", "One of the catalog ids: sova-finance, sova-code, sova-reason, qwen3-4b"],
   ["Messages", "1 to 64 per request"],
   ["Message text", "Up to 16,000 UTF-8 bytes total, across all messages"],
   ["max_tokens", "Integer, 1 to 4096. Default 1024"],

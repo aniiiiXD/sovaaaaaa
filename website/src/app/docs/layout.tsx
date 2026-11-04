@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     template: "%s · Sova docs",
   },
   description:
-    "The Sova inference API: an OpenAI-shaped chat completions endpoint for qwen3-4b, with per-key usage metering, streaming on the managed lane, and limits enforced server side.",
+    "The Sova inference API: an OpenAI-shaped chat completions endpoint for the Sova model catalog (sova-finance, sova-code, sova-reason, qwen3-4b), with per-key usage metering, streaming on the managed lane, and limits enforced server side.",
 };
 
 export default function DocsLayout({ children }: { children: ReactNode }) {

@@ -7,7 +7,7 @@ import CodeBlock from "./code-block";
 export const metadata: Metadata = {
   title: "Introduction",
   description:
-    "The Sova inference API: an OpenAI-compatible chat completions endpoint serving qwen3-4b over HTTPS, metered per key, with server-side limits and streaming on the managed lane.",
+    "The Sova inference API: an OpenAI-compatible chat completions endpoint serving the Sova model catalog (sova-finance, sova-code, sova-reason, qwen3-4b) over HTTPS, metered per key, with server-side limits and streaming on the managed lane.",
 };
 
 const BASE_URL = "https://sova-native.vercel.app/api/v1";
@@ -34,6 +34,7 @@ const CARDS: [string, string, string, string][] = [
   ["Resources", "Errors", "/docs/errors", "One envelope, nine statuses, and when to retry."],
   ["Resources", "Limits", "/docs/limits", "Every number the API enforces, in one table."],
   ["Resources", "Usage & Portal", "/docs/usage", "Per-key metering and your numbers at /portal."],
+  ["Resources", "Models", "/models", "The Sova model catalog: four ids, one OpenAI-compatible endpoint."],
 ];
 
 const BASE_FACTS: [string, string][] = [
@@ -55,9 +56,11 @@ export default function DocsPage() {
         lead={
           <>
             The Sova inference API is an OpenAI-compatible chat completions
-            endpoint serving <C>qwen3-4b</C> over HTTPS. Every request is metered
-            per key, every response carries a request id, and every limit in
-            these docs is enforced server side.
+            endpoint serving the model catalog: <C>sova-finance</C>,{" "}
+            <C>sova-code</C>, <C>sova-reason</C>, and the raw <C>qwen3-4b</C>{" "}
+            base model. Every request is metered per key, every response
+            carries a request id, and every limit in these docs is enforced
+            server side.
           </>
         }
       />
