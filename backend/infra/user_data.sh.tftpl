@@ -19,7 +19,7 @@ docker run -d --name vllm --restart unless-stopped \
   -e HF_TOKEN="${hf_token}" \
   -v /srv/hf-cache:/root/.cache/huggingface \
   "${vllm_image}" \
-  --model "${model}" ${REVISION_FLAG} \
+  --model "${model}" $${REVISION_FLAG} \
   --served-model-name "${served_model_name}" \
   --max-model-len "${max_model_len}" \
   --gpu-memory-utilization 0.92

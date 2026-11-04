@@ -218,6 +218,7 @@ resource "aws_autoscaling_group" "gpu" {
   vpc_zone_identifier       = aws_subnet.public[*].id
   health_check_type         = "ELB"
   health_check_grace_period = 600 # model load takes minutes before /health is up
+  capacity_rebalance        = true
 
   mixed_instances_policy {
     launch_template {
@@ -230,7 +231,6 @@ resource "aws_autoscaling_group" "gpu" {
     instances_distribution {
       on_demand_percentage_above_base_capacity = var.use_spot ? 0 : 100
       spot_allocation_strategy                 = "capacity-optimized"
-      capacity_rebalance                       = true
     }
   }
 
