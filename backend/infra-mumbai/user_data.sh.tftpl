@@ -1,0 +1,50 @@
+#!/bin/bash
+# Runs once on first boot (DL Base AMI: NVIDIA driver + docker already present).
+set -euxo pipefail
+
+# --- Disk truth + guaranteed filesystem growth ------------------------------
+# The root EBS volume is provisioned large, but the AMI's root partition and
+# filesystem can stay at AMI-default size if cloud-init's growpart races or
+# fails. Docker then fills a tiny filesystem and the model download dies with
+# ENOSPC in a crash loop. Grow explicitly, and log the numbers so the EC2
+# console output always shows the real disk state.
+echo "=== disk at boot (before growth) ==="
+df -h / || true
+lsblk || true
+if ROOT_DEV=$(findmnt -no SOURCE / 2>/dev/null); then
+  PART_NUM=$(echo "$${ROOT_DEV}" | grep -oE '[0-9]+$')
+  ROOT_DISK=$(echo "$${ROOT_DEV}" | sed -E "s/$${PART_NUM}$//")
+  echo "growing $${ROOT_DISK} partition $${PART_NUM} ($${ROOT_DEV})"
+  growpart "$${ROOT_DISK}" "$${PART_NUM}" || echo "WARN: growpart failed"
+  resize2fs "$${ROOT_DEV}" || echo "WARN: resize2fs failed"
+fi
+echo "=== disk after growth ==="
+df -h / || true
+
+# Keep the container alive across reboots and spot replacements.
+systemctl enable --now docker
+
+docker pull "${vllm_image}"
+echo "=== disk after image pull ==="
+df -h / || true
+docker system df || true
+
+REVISION_FLAG=""
+if [ -n "${model_revision}" ]; then
+  REVISION_FLAG="--revision ${model_revision}"
+fi
+
+# HF cache lands on the root EBS volume; re-pulled after spot replacement (~2 min for 8-9B).
+docker run -d --name vllm --restart unless-stopped \
+  --gpus all --ipc=host \
+  -p 8000:8000 \
+  -e HF_TOKEN="${hf_token}" \
+  -v /srv/hf-cache:/root/.cache/huggingface \
+  "${vllm_image}" \
+  --model "${model}" $${REVISION_FLAG} \
+  --served-model-name "${served_model_name}" \
+  --max-model-len "${max_model_len}" \
+  --gpu-memory-utilization 0.92
+
+# Boot log goes to the vLLM container; inspect with:
+#   docker logs -f vllm
