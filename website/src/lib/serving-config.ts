@@ -7,6 +7,7 @@ export function inferenceConfigured(env: Environment) {
     && /^accounts\/[^/]+\/deployments\/[^/]+$/.test(env.FIREWORKS_DEPLOYMENT ?? ""));
   if (provider === "sagemaker") return Boolean(env.AWS_REGION
     && /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?$/.test(env.SAGEMAKER_ENDPOINT ?? ""));
+  if (provider === "vllm") return Boolean(/^https?:\/\/[^\s/]+(?:\/[^\s]*)?$/.test(env.SOVA_VLLM_BASE_URL ?? ""));
   return provider === "bedrock" && Boolean(env.AWS_REGION
     && /^arn:aws:bedrock:[a-z0-9-]+:\d{12}:imported-model\/[a-zA-Z0-9]+$/.test(env.BEDROCK_MODEL_ARN ?? "")
     && env.BEDROCK_MODEL_ARN?.split(":")[3] === env.AWS_REGION);

@@ -1,4 +1,7 @@
-import { createHash, timingSafeEqual, randomUUID } from "node:crypto";
+import { randomUUID } from "node:crypto";
+import { authenticate } from "./api-auth.ts";
+import { meterUsage, type UsageRecord } from "./usage-meter.ts";
+import type { VllmBackend } from "./vllm.ts";
 import { inferenceConfigured } from "./serving-config.ts";
 
 const MODEL = "fin-o1-14b";
@@ -12,8 +15,10 @@ type Dependencies = {
   fetch?: typeof fetch;
   timeoutMs?: number;
   log?: (entry: Record<string, unknown>) => void;
+  meter?: (record: UsageRecord) => void;
   sagemaker?: (body: Record<string, unknown>, signal: AbortSignal, env: Environment) => Promise<Response>;
   bedrock?: (body: Record<string, unknown>, signal: AbortSignal, env: Environment) => Promise<Response>;
+  vllm?: VllmBackend;
 };
 
 class InputError extends Error {
@@ -29,13 +34,6 @@ function error(message: string, status: number, id: string) {
     { error: { message, type: status === 401 ? "authentication_error" : "api_error" } },
     { status, headers: { "Cache-Control": "no-store", "X-Request-Id": id } },
   );
-}
-
-function authorized(request: Request, env: Environment) {
-  if (!env.SOVA_API_KEY || env.SOVA_API_KEY.length < 32) return false;
-  const supplied = request.headers.get("authorization") ?? "";
-  const digest = (value: string) => createHash("sha256").update(value).digest();
-  return timingSafeEqual(digest(supplied), digest(`Bearer ${env.SOVA_API_KEY}`));
 }
 
 async function readBody(request: Request, signal: AbortSignal) {
@@ -129,26 +127,85 @@ function validate(value: unknown) {
   return { ...body, messages, max_tokens: maxTokens, stream: body.stream ?? false };
 }
 
+// Non-streaming provider responses carry an OpenAI usage block. Parse a
+// buffered copy for metering; the bytes streamed to the client are untouched.
+function parseUsage(chunks: Uint8Array[]) {
+  try {
+    const usage = (JSON.parse(Buffer.concat(chunks).toString("utf8")) as { usage?: Record<string, unknown> }).usage;
+    const prompt = usage?.prompt_tokens;
+    const completion = usage?.completion_tokens;
+    return {
+      prompt_tokens: typeof prompt === "number" && Number.isFinite(prompt) ? prompt : 0,
+      completion_tokens: typeof completion === "number" && Number.isFinite(completion) ? completion : 0,
+    };
+  } catch { return { prompt_tokens: 0, completion_tokens: 0 }; }
+}
+
 export function createInferenceHandlers(deps: Dependencies = {}) {
   const environment = deps.env ?? (() => process.env);
   const upstreamFetch = deps.fetch ?? fetch;
   const log = deps.log ?? ((entry) => console.info(JSON.stringify(entry)));
+  const meter = deps.meter ?? meterUsage;
   let active = 0; // Per-process admission control; not a distributed account quota.
 
-  function models(request: Request) {
+  // The static list stays synchronous for the non-vLLM backends; vLLM returns
+  // a promise that proxies the served model list. Route handlers accept both.
+  function models(request: Request): Response | Promise<Response> {
     const id = randomUUID();
-    if (!authorized(request, environment())) return error("Invalid API key.", 401, id);
-    return Response.json({ object: "list", data: [{ id: MODEL, object: "model", created: 0, owned_by: "sova" }] },
+    const env = environment();
+    const auth = authenticate(request, env);
+    if (!auth) return error("Invalid API key.", 401, id);
+    const provider = env.SOVA_INFERENCE_PROVIDER ?? "fireworks";
+    if (provider === "vllm") return listVllmModels(request, env, id, auth.keyId);
+    const started = Date.now();
+    const response = Response.json({ object: "list", data: [{ id: MODEL, object: "model", created: 0, owned_by: "sova" }] },
       { headers: { "Cache-Control": "no-store", "X-Request-Id": id } });
+    meter({ ts: Date.now(), key_id: auth.keyId, model: MODEL, prompt_tokens: 0, completion_tokens: 0, latency_ms: Date.now() - started, backend: provider });
+    return response;
+  }
+
+  // Proxied model discovery for vLLM. One meter line per completed request.
+  async function listVllmModels(request: Request, env: Environment, id: string, keyId: string): Promise<Response> {
+    const started = Date.now();
+    try {
+      if (env.SOVA_INFERENCE_ENABLED !== "true" || !inferenceConfigured(env) || !deps.vllm) {
+        return error("Inference is not enabled. Contact the Sova administrator.", 503, id);
+      }
+      // Bound the proxy hop so a hung vLLM server cannot pin the route.
+      const signal = AbortSignal.any([request.signal, AbortSignal.timeout(10000)]);
+      let upstream: Response;
+      try {
+        upstream = await deps.vllm.models(signal, env);
+      } catch (cause) {
+        const timedOut = (cause as { name?: string }).name === "TimeoutError";
+        return error(timedOut ? "Inference request timed out." : "Inference provider request failed.", timedOut ? 504 : 502, id);
+      }
+      if (!upstream.ok) {
+        await upstream.body?.cancel();
+        const status = [400, 429, 503, 504].includes(upstream.status) ? upstream.status : 502;
+        return error(status === 503 ? "Model is starting or unavailable. Retry shortly." : "Inference provider request failed.", status, id);
+      }
+      if (!upstream.headers.get("content-type")?.includes("application/json")) {
+        await upstream.body?.cancel();
+        return error("Invalid inference provider response.", 502, id);
+      }
+      return new Response(upstream.body, { headers: {
+        "Content-Type": "application/json", "Cache-Control": "no-store", "X-Request-Id": id,
+      } });
+    } finally {
+      meter({ ts: Date.now(), key_id: keyId, model: MODEL, prompt_tokens: 0, completion_tokens: 0, latency_ms: Date.now() - started, backend: "vllm" });
+    }
   }
 
   async function chat(request: Request): Promise<Response> {
     const id = randomUUID();
     const env = environment();
-    if (!authorized(request, env)) return error("Invalid API key.", 401, id);
+    const auth = authenticate(request, env);
+    if (!auth) return error("Invalid API key.", 401, id);
     const provider = env.SOVA_INFERENCE_PROVIDER ?? "fireworks";
     const configured = inferenceConfigured(env)
-      && (provider === "fireworks" || (provider === "sagemaker" ? Boolean(deps.sagemaker) : Boolean(deps.bedrock)));
+      && (provider === "fireworks" || (provider === "sagemaker" ? Boolean(deps.sagemaker)
+        : provider === "vllm" ? Boolean(deps.vllm) : Boolean(deps.bedrock)));
     if (env.SOVA_INFERENCE_ENABLED !== "true" || !configured) {
       return error("Inference is not enabled. Contact the Sova administrator.", 503, id);
     }
@@ -161,6 +218,8 @@ export function createInferenceHandlers(deps: Dependencies = {}) {
     let finished = false;
     let status = 500;
     let firstByteMs: number | undefined;
+    let model = "unknown";
+    let usage = { prompt_tokens: 0, completion_tokens: 0 };
     const finish = () => {
       if (finished) return;
       finished = true;
@@ -168,15 +227,31 @@ export function createInferenceHandlers(deps: Dependencies = {}) {
       clearTimeout(timer);
       signal.removeEventListener("abort", onAbort);
       log({ event: "inference", requestId: id, status, durationMs: Date.now() - started, firstByteMs });
+      // Fire-and-forget usage line; the Vercel log drain is the ledger and
+      // ops/margin.py consumes it later.
+      meter({
+        ts: Date.now(), key_id: auth.keyId, model,
+        prompt_tokens: usage.prompt_tokens, completion_tokens: usage.completion_tokens,
+        latency_ms: Date.now() - started, backend: provider,
+      });
     };
     const onAbort = () => { status = request.signal.aborted ? 499 : 504; finish(); };
     signal.addEventListener("abort", onAbort, { once: true });
     try {
       const body = validate(await readBody(request, signal));
+      model = MODEL;
+      // vLLM forwarding is non-streaming only for now.
+      if (provider === "vllm" && body.stream) {
+        finish();
+        return error("Streaming is not supported by the active inference backend.", 400, id);
+      }
+      const buffered: Uint8Array[] = [];
       const upstream = provider === "bedrock"
         ? await deps.bedrock!(body, signal, env)
         : provider === "sagemaker"
         ? await deps.sagemaker!(body, signal, env)
+        : provider === "vllm"
+        ? await deps.vllm!.chat(body, signal, env)
         : await upstreamFetch(UPSTREAM, {
         method: "POST",
         headers: { Authorization: `Bearer ${env.FIREWORKS_API_KEY}`, "Content-Type": "application/json" },
@@ -210,8 +285,17 @@ export function createInferenceHandlers(deps: Dependencies = {}) {
             signal.throwIfAborted();
             const { value, done } = await reader.read();
             signal.throwIfAborted();
-            if (done) { finish(); output.close(); }
-            else { firstByteMs ??= Date.now() - started; output.enqueue(value); }
+            if (done) {
+              // Non-streaming JSON bodies carry an OpenAI usage block; meter from a copy.
+              if (!body.stream && buffered.length) usage = parseUsage(buffered);
+              finish();
+              output.close();
+            }
+            else {
+              firstByteMs ??= Date.now() - started;
+              if (!body.stream) buffered.push(value);
+              output.enqueue(value);
+            }
           } catch (cause) {
             status = signal.aborted ? (request.signal.aborted ? 499 : 504) : 502;
             finish();

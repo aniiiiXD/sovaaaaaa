@@ -1,0 +1,28 @@
+#!/bin/bash
+# Runs once on first boot (DL Base AMI: NVIDIA driver + docker already present).
+set -euxo pipefail
+
+# Keep the container alive across reboots and spot replacements.
+systemctl enable --now docker
+
+docker pull "${vllm_image}"
+
+REVISION_FLAG=""
+if [ -n "${model_revision}" ]; then
+  REVISION_FLAG="--revision ${model_revision}"
+fi
+
+# HF cache lands on the root EBS volume; re-pulled after spot replacement (~2 min for 8-9B).
+docker run -d --name vllm --restart unless-stopped \
+  --gpus all --ipc=host \
+  -p 8000:8000 \
+  -e HF_TOKEN="${hf_token}" \
+  -v /srv/hf-cache:/root/.cache/huggingface \
+  "${vllm_image}" \
+  --model "${model}" ${REVISION_FLAG} \
+  --served-model-name "${served_model_name}" \
+  --max-model-len "${max_model_len}" \
+  --gpu-memory-utilization 0.92
+
+# Boot log goes to the vLLM container; inspect with:
+#   docker logs -f vllm
