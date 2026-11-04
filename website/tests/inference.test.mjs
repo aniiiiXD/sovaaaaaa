@@ -131,8 +131,8 @@ test("request disconnect aborts an in-flight provider response", async () => {
 
 test("model discovery is authenticated", async () => {
   const api = make();
-  assert.equal(api.models(new Request("http://localhost/api/v1/models")).status, 401);
-  const response = api.models(new Request("http://localhost/api/v1/models", { headers: { authorization: `Bearer ${key}` } }));
+  assert.equal((await api.models(new Request("http://localhost/api/v1/models"))).status, 401);
+  const response = await api.models(new Request("http://localhost/api/v1/models", { headers: { authorization: `Bearer ${key}` } }));
   assert.equal((await response.json()).data[0].id, "fin-o1-14b");
 });
 
