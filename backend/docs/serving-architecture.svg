@@ -1,0 +1,131 @@
+<svg viewBox="0 0 880 480" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e5e5e5" stroke-width="0.5"/>
+    </pattern>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#ccc"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#27ae60"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#e74c3c"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#9b59b6"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="480" fill="#fafafa"/>
+  <rect width="880" height="480" fill="url(#grid)"/>
+
+  <text x="40" y="40" font-family="monospace" font-size="14" fill="#333" font-weight="bold">SOVA SERVING STACK</text>
+  <text x="235" y="40" font-family="monospace" font-size="12" fill="#888">[ PRODUCTION ARCHITECTURE ]</text>
+
+  <!-- ============================ CUSTOMER ============================ -->
+  <circle cx="90" cy="235" r="35" fill="none" stroke="#ccc" stroke-width="2"/>
+  <circle cx="90" cy="235" r="18" fill="#3498db"/>
+  <rect x="50" y="285" width="80" height="24" fill="none" stroke="#ccc" stroke-width="1"/>
+  <text x="90" y="301" font-family="monospace" font-size="11" fill="#666" text-anchor="middle">CUSTOMER</text>
+  <text x="90" y="330" font-family="monospace" font-size="7" fill="#999" text-anchor="middle">curl · openai sdk</text>
+
+  <!-- request / response between customer and gateway -->
+  <path d="M 132 228 L 186 228" stroke="#27ae60" stroke-width="2" fill="none" marker-end="url(#arrowGreen)"/>
+  <text x="159" y="218" font-family="monospace" font-size="7" fill="#27ae60" text-anchor="middle">bearer key</text>
+  <path d="M 186 262 L 134 262" stroke="#999" stroke-width="1" fill="none" opacity="0.5" marker-end="url(#arrow)"/>
+  <text x="159" y="277" font-family="monospace" font-size="7" fill="#999" text-anchor="middle">response</text>
+
+  <!-- ============================ VERCEL GATEWAY ============================ -->
+  <rect x="190" y="150" width="210" height="230" fill="none" stroke="#ccc" stroke-width="2"/>
+  <text x="295" y="140" font-family="monospace" font-size="10" fill="#666" text-anchor="middle">VERCEL GATEWAY</text>
+
+  <rect x="210" y="170" width="170" height="42" fill="#fff" stroke="#27ae60" stroke-width="2"/>
+  <text x="295" y="188" font-family="monospace" font-size="10" fill="#27ae60" text-anchor="middle">api_auth.ts</text>
+  <text x="295" y="203" font-family="monospace" font-size="7" fill="#999" text-anchor="middle">constant-time fingerprints</text>
+
+  <path d="M 295 212 L 295 226" stroke="#ccc" stroke-width="1.5"/>
+  <polygon points="290,224 295,234 300,224" fill="#ccc"/>
+
+  <rect x="210" y="228" width="170" height="42" fill="#fff" stroke="#3498db" stroke-width="2"/>
+  <text x="295" y="246" font-family="monospace" font-size="10" fill="#3498db" text-anchor="middle">vllm.ts</text>
+  <text x="295" y="261" font-family="monospace" font-size="7" fill="#999" text-anchor="middle">serving-config selects · openai shape</text>
+
+  <path d="M 295 270 L 295 284" stroke="#ccc" stroke-width="1.5"/>
+  <polygon points="290,282 295,292 300,282" fill="#ccc"/>
+
+  <rect x="210" y="286" width="170" height="42" fill="#fff" stroke="#9b59b6" stroke-width="2"/>
+  <text x="295" y="304" font-family="monospace" font-size="10" fill="#9b59b6" text-anchor="middle">usage_meter.ts</text>
+  <text x="295" y="319" font-family="monospace" font-size="7" fill="#999" text-anchor="middle">1 jsonl line per request</text>
+
+  <!-- ============================ AWS ============================ -->
+  <rect x="450" y="120" width="390" height="250" fill="none" stroke="#ccc" stroke-width="2"/>
+  <text x="600" y="110" font-family="monospace" font-size="10" fill="#666" text-anchor="start">AWS · US-EAST-2</text>
+  <text x="715" y="110" font-family="monospace" font-size="9" fill="#888" text-anchor="start">[ SPOT ASG ]</text>
+
+  <!-- ALB -->
+  <rect x="475" y="210" width="110" height="44" fill="#fff" stroke="#3498db" stroke-width="2"/>
+  <text x="530" y="228" font-family="monospace" font-size="10" fill="#3498db" text-anchor="middle">ALB :80</text>
+  <text x="530" y="243" font-family="monospace" font-size="7" fill="#999" text-anchor="middle">public entry</text>
+
+  <path d="M 585 226 L 618 226" stroke="#27ae60" stroke-width="2" fill="none" marker-end="url(#arrowGreen)"/>
+  <text x="601" y="216" font-family="monospace" font-size="7" fill="#27ae60" text-anchor="middle">:8000</text>
+  <path d="M 618 244 L 587 244" stroke="#999" stroke-width="1" fill="none" opacity="0.5" marker-end="url(#arrow)"/>
+
+  <!-- GPU ASG box -->
+  <rect x="625" y="155" width="195" height="175" fill="none" stroke="#ccc" stroke-width="2"/>
+  <text x="722" y="147" font-family="monospace" font-size="10" fill="#666" text-anchor="middle">GPU ASG · g5.2xlarge</text>
+
+  <rect x="645" y="170" width="155" height="52" fill="#fff" stroke="#27ae60" stroke-width="2"/>
+  <text x="722" y="190" font-family="monospace" font-size="10" fill="#27ae60" text-anchor="middle">vllm :8000</text>
+  <text x="722" y="206" font-family="monospace" font-size="7" fill="#999" text-anchor="middle">openai api · /health</text>
+
+  <path d="M 722 222 L 722 236" stroke="#ccc" stroke-width="1.5"/>
+  <polygon points="717,234 722,244 727,234" fill="#ccc"/>
+
+  <rect x="645" y="246" width="155" height="40" fill="#fff" stroke="#ccc" stroke-width="1.5"/>
+  <text x="722" y="262" font-family="monospace" font-size="10" fill="#666" text-anchor="middle">qwen3-8b · pinned</text>
+  <text x="722" y="277" font-family="monospace" font-size="7" fill="#999" text-anchor="middle">hf revision lock</text>
+
+  <text x="722" y="304" font-family="monospace" font-size="7" fill="#999" text-anchor="middle">EBS gp3 · hf-cache</text>
+  <text x="722" y="318" font-family="monospace" font-size="7" fill="#999" text-anchor="middle">spot · capacity rebalance</text>
+
+  <!-- cloudwatch alarms -->
+  <rect x="475" y="300" width="110" height="44" fill="#fff" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="530" y="318" font-family="monospace" font-size="10" fill="#e74c3c" text-anchor="middle">cloudwatch</text>
+  <text x="530" y="333" font-family="monospace" font-size="7" fill="#999" text-anchor="middle">budget · 5xx · hosts</text>
+  <path d="M 530 298 L 530 260" stroke="#e74c3c" stroke-width="1" stroke-dasharray="3,3" fill="none" marker-end="url(#arrowRed)"/>
+
+  <!-- ============================ TERRAFORM CONTROL ============================ -->
+  <rect x="625" y="60" width="195" height="38" fill="none" stroke="#f39c12" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="722" y="76" font-family="monospace" font-size="9" fill="#f39c12" text-anchor="middle">terraform apply / destroy</text>
+  <text x="722" y="90" font-family="monospace" font-size="7" fill="#f39c12" text-anchor="middle">creates · kills the whole column</text>
+  <path d="M 805 98 L 805 116" stroke="#f39c12" stroke-width="1" stroke-dasharray="3,3" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- ============================ LOG DRAIN + MARGIN ============================ -->
+  <path d="M 295 382 L 295 414" stroke="#9b59b6" stroke-width="1.5" stroke-dasharray="4,4" fill="none" marker-end="url(#arrowPurple)"/>
+  <text x="350" y="404" font-family="monospace" font-size="8" fill="#9b59b6" text-anchor="middle">vercel log drain</text>
+
+  <rect x="210" y="418" width="170" height="42" fill="#fff" stroke="#9b59b6" stroke-width="2"/>
+  <text x="295" y="436" font-family="monospace" font-size="10" fill="#9b59b6" text-anchor="middle">ops/margin.py</text>
+  <text x="295" y="451" font-family="monospace" font-size="7" fill="#999" text-anchor="middle">revenue − gpu cost · per key</text>
+
+  <!-- keys minting -->
+  <rect x="40" y="418" width="120" height="42" fill="#fff" stroke="#ccc" stroke-width="1.5"/>
+  <text x="100" y="436" font-family="monospace" font-size="10" fill="#666" text-anchor="middle">ops/keys.py</text>
+  <text x="100" y="451" font-family="monospace" font-size="7" fill="#999" text-anchor="middle">mints sk-sova-</text>
+  <path d="M 100 418 L 100 314" stroke="#ccc" stroke-width="1" stroke-dasharray="3,3" fill="none" marker-end="url(#arrow)"/>
+  <text x="66" y="368" font-family="monospace" font-size="7" fill="#999" text-anchor="middle">fingerprint only</text>
+
+  <!-- teardown note -->
+  <text x="722" y="395" font-family="monospace" font-size="8" fill="#f39c12" text-anchor="middle">ops/teardown.sh = kill switch</text>
+  <text x="722" y="410" font-family="monospace" font-size="7" fill="#999" text-anchor="middle">one command · zero orphaned resources</text>
+
+  <!-- forward / return between gateway and aws -->
+  <path d="M 400 228 L 468 228" stroke="#27ae60" stroke-width="2" fill="none" marker-end="url(#arrowGreen)"/>
+  <text x="434" y="218" font-family="monospace" font-size="7" fill="#27ae60" text-anchor="middle">forward</text>
+  <path d="M 468 258 L 402 258" stroke="#999" stroke-width="1" fill="none" opacity="0.5" marker-end="url(#arrow)"/>
+  <text x="434" y="273" font-family="monospace" font-size="7" fill="#999" text-anchor="middle">tokens</text>
+
+  <text x="440" y="472" font-family="monospace" font-size="10" fill="#999" text-anchor="middle">openai contract end-to-end · fingerprints only · one apply, one destroy · $0 spent until deploy.sh says yes</text>
+</svg>
