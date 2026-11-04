@@ -1,7 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { authenticate } from "./api-auth.ts";
 import { meterUsage, type UsageRecord } from "./usage-meter.ts";
-import { getKeyStore, type KeyStore } from "./keys-store.ts";
 import type { VllmBackend } from "./vllm.ts";
 import { inferenceConfigured } from "./serving-config.ts";
 
@@ -17,7 +16,6 @@ type Dependencies = {
   timeoutMs?: number;
   log?: (entry: Record<string, unknown>) => void;
   meter?: (record: UsageRecord) => void;
-  store?: KeyStore;
   sagemaker?: (body: Record<string, unknown>, signal: AbortSignal, env: Environment) => Promise<Response>;
   bedrock?: (body: Record<string, unknown>, signal: AbortSignal, env: Environment) => Promise<Response>;
   vllm?: VllmBackend;
@@ -148,25 +146,14 @@ export function createInferenceHandlers(deps: Dependencies = {}) {
   const upstreamFetch = deps.fetch ?? fetch;
   const log = deps.log ?? ((entry) => console.info(JSON.stringify(entry)));
   const meter = deps.meter ?? meterUsage;
-  const keyStore = deps.store; // resolved per-call against the live env when absent
   let active = 0; // Per-process admission control; not a distributed account quota.
-
-  async function resolveFingerprints(env: Environment): Promise<string[]> {
-    const store = keyStore ?? getKeyStore(env);
-    try {
-      return await store.activeFingerprints();
-    } catch {
-      // Database unavailable: fall back to env fingerprints only, never fail closed.
-      return [];
-    }
-  }
 
   // The static list stays synchronous for the non-vLLM backends; vLLM returns
   // a promise that proxies the served model list. Route handlers accept both.
-  async function models(request: Request): Promise<Response> {
+  function models(request: Request): Response | Promise<Response> {
     const id = randomUUID();
     const env = environment();
-    const auth = authenticate(request, env, await resolveFingerprints(env));
+    const auth = authenticate(request, env);
     if (!auth) return error("Invalid API key.", 401, id);
     const provider = env.SOVA_INFERENCE_PROVIDER ?? "fireworks";
     if (provider === "vllm") return listVllmModels(request, env, id, auth.keyId);
@@ -213,7 +200,7 @@ export function createInferenceHandlers(deps: Dependencies = {}) {
   async function chat(request: Request): Promise<Response> {
     const id = randomUUID();
     const env = environment();
-    const auth = authenticate(request, env, await resolveFingerprints(env));
+    const auth = authenticate(request, env);
     if (!auth) return error("Invalid API key.", 401, id);
     const provider = env.SOVA_INFERENCE_PROVIDER ?? "fireworks";
     const configured = inferenceConfigured(env)
@@ -247,13 +234,6 @@ export function createInferenceHandlers(deps: Dependencies = {}) {
         prompt_tokens: usage.prompt_tokens, completion_tokens: usage.completion_tokens,
         latency_ms: Date.now() - started, backend: provider,
       });
-      // Fire-and-forget per-key accounting in the key store; must never touch
-      // the response path. key_id may come from the legacy shared key.
-      try {
-        const store = keyStore ?? getKeyStore(env);
-        void store.recordUsage(auth.keyId, usage.prompt_tokens, usage.completion_tokens)
-          .catch(() => {});
-      } catch { /* Accounting is best-effort. */ }
     };
     const onAbort = () => { status = request.signal.aborted ? 499 : 504; finish(); };
     signal.addEventListener("abort", onAbort, { once: true });

@@ -27,17 +27,14 @@ function matchesFingerprint(digest: string, stored: string[]) {
 }
 
 // Returns a metering label (first 8 hex chars of the key fingerprint) or null
-// when unauthenticated. Fingerprint sources, in order: the database store
-// (passed in by the caller from a 60s cache), the SOVA_API_KEY_HASHES env
-// fallback, and the legacy single shared key (SOVA_API_KEY), which keeps
-// working unchanged alongside them.
-export function authenticate(request: Request, env: Environment, storeFingerprints?: string[]): ApiKeyAuth | null {
+// when unauthenticated. Per-key fingerprints are checked first; the legacy
+// single shared key (SOVA_API_KEY) keeps working unchanged alongside them.
+export function authenticate(request: Request, env: Environment): ApiKeyAuth | null {
   const header = request.headers.get("authorization");
   if (!header?.startsWith("Bearer ")) return null;
   const token = header.slice("Bearer ".length);
   const digest = fingerprint(token);
-  const stored = [...(storeFingerprints ?? []),
-    ...(env.SOVA_API_KEY_HASHES ?? "").split(",")]
+  const stored = (env.SOVA_API_KEY_HASHES ?? "").split(",")
     .map((value) => value.trim().toLowerCase()).filter((value) => DIGEST_PATTERN.test(value));
   if (KEY_PATTERN.test(token) && matchesFingerprint(digest, stored)) {
     return { keyId: digest.slice(0, 8) };
