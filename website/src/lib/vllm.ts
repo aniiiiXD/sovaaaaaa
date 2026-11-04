@@ -28,7 +28,14 @@ export function createVllmBackend(fetchImpl: typeof fetch = fetch) {
     try {
       signal.throwIfAborted();
       // The served model name is chosen by the server; model routing is not a payload parameter.
-      const payload = { ...body, model: env.SOVA_VLLM_MODEL ?? MODEL };
+      // Qwen3 emits chain-of-thought by default, which burns the customer's
+      // max_tokens budget on hidden reasoning. Answers only, unless an
+      // operator flips SOVA_VLLM_THINKING on.
+      const payload = {
+        ...body,
+        model: env.SOVA_VLLM_MODEL ?? MODEL,
+        chat_template_kwargs: { enable_thinking: env.SOVA_VLLM_THINKING === "1" },
+      };
       const response = await fetchImpl(`${baseUrl(env)}/v1/chat/completions`, {
         method: "POST",
         headers: { "Content-Type": "application/json", ...authHeaders(env) },
