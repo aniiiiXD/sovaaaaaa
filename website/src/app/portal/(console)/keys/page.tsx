@@ -1,29 +1,30 @@
 import type { Metadata } from "next";
 import { getPortalStore } from "@/lib/portal-store";
-import { getPortalAuth } from "../auth";
-import CopyKeyButton from "../copy-key-button";
-import GenerateKey from "../generate-key";
-import RevokeButton from "../revoke-button";
-import { PageHeader } from "../ui";
-import { formatDateUTC, formatDateTimeUTC } from "../state";
+import { getCurrentUser } from "../../auth";
+import CopyKeyButton from "../../copy-key-button";
+import GenerateKey from "../../generate-key";
+import LinkKeyForm from "../../link-key-form";
+import RevokeButton from "../../revoke-button";
+import { PageHeader } from "../../ui";
+import { formatDateUTC, formatDateTimeUTC } from "../../state";
 
 export const metadata: Metadata = {
   title: "SOVA · API keys",
-  description: "Generate and revoke SOVA API keys for this endpoint.",
+  description: "Generate, link, and revoke SOVA API keys on your account.",
 };
 
 export default async function PortalKeysPage() {
-  const { row } = await getPortalAuth();
-  if (!row) return null; // the layout already rendered the auth gate
+  const user = await getCurrentUser();
+  if (!user) return null; // the layout already rendered the auth gate
 
-  const keys = await getPortalStore(process.env).listKeys();
+  const keys = await getPortalStore(process.env).listKeys(user.id);
   const activeCount = keys.filter((k) => !k.revokedAt).length;
 
   return (
     <div>
       <PageHeader title="API keys">
         <p className="mono text-sm text-[var(--muted)]">
-          Generate a key for this endpoint. Secret is shown once.
+          Keys belong to your account. Secret is shown once.
         </p>
       </PageHeader>
 
@@ -40,7 +41,10 @@ export default async function PortalKeysPage() {
           </p>
         </div>
 
-        <GenerateKey />
+        <div className="flex flex-col gap-5">
+          <GenerateKey />
+          <LinkKeyForm />
+        </div>
       </div>
 
       {keys.length === 0 ? (

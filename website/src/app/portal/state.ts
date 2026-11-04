@@ -6,27 +6,27 @@
 
 import type { UsagePoint } from "@/lib/portal-store";
 
-export const PORTAL_COOKIE = "sova_portal";
-
-// The cookie carries the customer's own plaintext key so the server can look
-// it up by fingerprint on every render: httpOnly, secure in production,
-// sameSite lax, 7 days. It only travels back to our server over HTTPS, and
-// the database stores only its SHA-256 fingerprint, never the plaintext.
-export const PORTAL_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
-
 // Console feedback goes straight to the founder's inbox.
 export const FEEDBACK_MAILTO = "mailto:aniruddh302004@gmail.com";
 
+// Self-serve and ops-minted keys share one shape: sk-sova- plus 48 hex
+// characters, the same shape the inference API authenticates against.
+export const KEY_PATTERN = /^sk-sova-[0-9a-f]{48}$/;
+
 /* --------------------------- server-action states --------------------------- */
 
-export type PortalLoginState = {
+// Shared by sign in and sign up. error is the red line, notice is the calm
+// one (for example "check your inbox", which is success, not failure).
+export type PortalAuthState = {
   ok: boolean;
   error: string;
+  notice: string;
 };
 
-export const initialPortalLoginState: PortalLoginState = {
+export const initialPortalAuthState: PortalAuthState = {
   ok: false,
   error: "",
+  notice: "",
 };
 
 export type GenerateKeyState = {
@@ -41,6 +41,16 @@ export const initialGenerateKeyState: GenerateKeyState = {
   key: "",
   keyId: "",
   error: "",
+};
+
+export type LinkKeyState = {
+  status: "idle" | "ok" | "error";
+  message: string;
+};
+
+export const initialLinkKeyState: LinkKeyState = {
+  status: "idle",
+  message: "",
 };
 
 /* ----------------------------- range + model params ----------------------------- */

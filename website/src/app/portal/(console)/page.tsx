@@ -1,19 +1,17 @@
 import type { Metadata } from "next";
 import { getPortalStore, type ModelStat } from "@/lib/portal-store";
-import { getPortalAuth } from "./auth";
-import LineChart from "./line-chart";
-import ModelFilter from "./model-filter";
-import { EmptyState, PageHeader, RangeLinks, StatCard } from "./ui";
+import { getCurrentUser } from "../auth";
+import LineChart from "../line-chart";
+import ModelFilter from "../model-filter";
+import { EmptyState, PageHeader, RangeLinks, StatCard } from "../ui";
 import {
   compact,
   dayLabel,
-  formatDateTimeUTC,
-  maskKey,
   parseModel,
   parseRange,
   successRate,
   zeroFillDays,
-} from "./state";
+} from "../state";
 
 export const metadata: Metadata = {
   title: "SOVA · Overview",
@@ -91,21 +89,43 @@ export default async function PortalOverviewPage({
   const days = parseRange(params.days);
   const requestedModel = parseModel(params.model);
 
-  const { key, row } = await getPortalAuth();
-  if (!row) return null; // the layout already rendered the auth gate
+  const user = await getCurrentUser();
+  if (!user) return null; // the layout already rendered the auth gate
 
   const store = getPortalStore(process.env);
 
+  // Everything on this page is scoped to the account, so usage across all
+  // of its keys rolls up here. listKeys decides the empty state up front.
+  const keys = await store.listKeys(user.id);
+
+  if (keys.length === 0) {
+    return (
+      <div>
+        <PageHeader title="Overview">
+          <p className="mono text-sm text-[var(--muted)]">{user.email}</p>
+        </PageHeader>
+        <div className="mt-8">
+          <EmptyState
+            title="No keys yet. Generate your first key."
+            body="Keys open the inference endpoint, and their usage shows up here: tokens, success rate, and per-model latency."
+            linkHref="/portal/keys"
+            linkLabel="Go to API keys"
+          />
+        </div>
+      </div>
+    );
+  }
+
   // modelStats also decides which models exist, so it resolves first and the
   // filter is normalized against it: a stale ?model= falls back to all models.
-  const models = await store.modelStats(row.keyId, days);
+  const models = await store.modelStats(user.id, days);
   const model = requestedModel && models.some((m) => m.model === requestedModel)
     ? requestedModel
     : null;
 
   const [overview, series] = await Promise.all([
-    store.overview(row.keyId, days),
-    store.dailySeries(row.keyId, days, model),
+    store.overview(user.id, days),
+    store.dailySeries(user.id, days, model),
   ]);
 
   const filled = zeroFillDays(series, days);
@@ -136,19 +156,19 @@ export default async function PortalOverviewPage({
     0,
   );
 
+  const activeCount = keys.filter((k) => !k.revokedAt).length;
+
   return (
     <div>
       <PageHeader title="Overview">
         <p className="mono flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-[var(--muted)]">
-          <span className="text-[var(--ink)]">{row.label}</span>
+          <span className="text-[var(--ink)]">{user.email}</span>
           <span className="text-[var(--faint)]" aria-hidden>
             ·
           </span>
-          <span>{maskKey(key)}</span>
-          <span className="text-[var(--faint)]" aria-hidden>
-            ·
+          <span>
+            {activeCount} active {activeCount === 1 ? "key" : "keys"} · all keys included
           </span>
-          <span>last used {row.lastUsedAt ? formatDateTimeUTC(row.lastUsedAt) : "never"}</span>
         </p>
       </PageHeader>
 

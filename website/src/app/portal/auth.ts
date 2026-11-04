@@ -1,19 +1,24 @@
 import { cache } from "react";
-import { cookies } from "next/headers";
-import { getPortalStore, type PortalKeyRow } from "@/lib/portal-store";
-import { PORTAL_COOKIE } from "./state";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+
+export type PortalUser = {
+  id: string;
+  email: string;
+};
 
 /**
- * Reads the portal cookie and verifies it against the store on every render.
- * cache() dedupes the lookup so the layout and the active page share one
- * store query per request.
+ * Reads the Supabase session on the server and returns the signed-in user,
+ * or null when signed out or when accounts are not configured. cache()
+ * dedupes the auth call so the layout, the active page, and any server
+ * action in the same request share one lookup.
  */
-export const getPortalAuth = cache(
-  async (): Promise<{ key: string; row: PortalKeyRow | null }> => {
-    const jar = await cookies();
-    const key = jar.get(PORTAL_COOKIE)?.value ?? "";
-    if (!key) return { key: "", row: null };
-    const row = await getPortalStore(process.env).findByKey(key);
-    return { key, row };
-  },
-);
+export const getCurrentUser = cache(async (): Promise<PortalUser | null> => {
+  const supabase = await createSupabaseServerClient();
+  if (!supabase) return null;
+
+  const { data } = await supabase.auth.getUser();
+  const user = data.user;
+  if (!user) return null;
+
+  return { id: user.id, email: user.email ?? "" };
+});

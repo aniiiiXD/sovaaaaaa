@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { getPortalStore } from "@/lib/portal-store";
-import { getPortalAuth } from "../auth";
-import ModelFilter from "../model-filter";
-import { EmptyState, PageHeader, RangeLinks } from "../ui";
-import { parseModel, parseRange, zeroFillDays, type UsageRow } from "../state";
+import { getCurrentUser } from "../../auth";
+import ModelFilter from "../../model-filter";
+import { EmptyState, PageHeader, RangeLinks } from "../../ui";
+import { parseModel, parseRange, zeroFillDays, type UsageRow } from "../../state";
 
 export const metadata: Metadata = {
   title: "SOVA · Usage",
@@ -19,15 +19,37 @@ export default async function PortalUsagePage({
   const days = parseRange(params.days);
   const requestedModel = parseModel(params.model);
 
-  const { row } = await getPortalAuth();
-  if (!row) return null; // the layout already rendered the auth gate
+  const user = await getCurrentUser();
+  if (!user) return null; // the layout already rendered the auth gate
 
   const store = getPortalStore(process.env);
-  const models = await store.modelStats(row.keyId, days);
+
+  // Account-scoped: every key on the account contributes to this table.
+  const keys = await store.listKeys(user.id);
+
+  if (keys.length === 0) {
+    return (
+      <div>
+        <PageHeader title="Usage">
+          <p className="mono text-sm text-[var(--muted)]">{user.email}</p>
+        </PageHeader>
+        <div className="mt-8">
+          <EmptyState
+            title="No keys yet. Generate your first key."
+            body="Requests land here day by day once your integration runs. Generate a key first, then point the docs' quickstart at it."
+            linkHref="/portal/keys"
+            linkLabel="Go to API keys"
+          />
+        </div>
+      </div>
+    );
+  }
+
+  const models = await store.modelStats(user.id, days);
   const model =
     requestedModel && models.some((m) => m.model === requestedModel) ? requestedModel : null;
 
-  const series = await store.dailySeries(row.keyId, days, model);
+  const series = await store.dailySeries(user.id, days, model);
 
   // Every day in the window appears, even the quiet ones; newest first so
   // the recent days are the ones you never scroll for.
@@ -47,7 +69,8 @@ export default async function PortalUsagePage({
     <div>
       <PageHeader title="Usage">
         <p className="mono text-sm text-[var(--muted)]">
-          Day-by-day traffic for the last {days} days{model ? `, ${model} only` : ""}.
+          Day-by-day traffic for the last {days} days{model ? `, ${model} only` : ""}, across all
+          of your keys.
         </p>
       </PageHeader>
 

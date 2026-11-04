@@ -41,9 +41,10 @@ function ArrowIcon() {
 
 /**
  * Console navigation: a fixed dark sidebar on desktop, a sticky top bar with
- * a scrollable nav row on phones. The sign-out button sits at the bottom.
+ * a scrollable nav row on phones. The account email sits above the
+ * sign-out button so it is always obvious who is signed in.
  */
-export default function Sidebar() {
+export default function Sidebar({ email }: { email: string }) {
   const pathname = usePathname();
 
   function isActive(item: { href: string; exact: boolean }): boolean {
@@ -91,14 +92,19 @@ export default function Sidebar() {
           </a>
         </nav>
 
-        <form action={portalSignOutAction} className="mt-auto pt-6">
-          <button
-            type="submit"
-            className="mono w-full rounded-lg px-3 py-2.5 text-left text-sm text-[var(--muted)] transition-colors hover:text-[var(--signal)]"
-          >
-            Sign out
-          </button>
-        </form>
+        <div className="mt-auto pt-6">
+          <p className="mono truncate px-3 pb-1 text-xs text-[var(--faint)]" title={email}>
+            {email}
+          </p>
+          <form action={portalSignOutAction}>
+            <button
+              type="submit"
+              className="mono w-full rounded-lg px-3 py-2.5 text-left text-sm text-[var(--muted)] transition-colors hover:text-[var(--signal)]"
+            >
+              Sign out
+            </button>
+          </form>
+        </div>
       </aside>
 
       {/* Mobile top bar */}

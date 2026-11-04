@@ -70,16 +70,26 @@ export function RangeLinks({
   );
 }
 
-export function EmptyState({ title, body }: { title: string; body: string }) {
+export function EmptyState({
+  title,
+  body,
+  linkHref = "/docs",
+  linkLabel = "Read the docs",
+}: {
+  title: string;
+  body: string;
+  linkHref?: string;
+  linkLabel?: string;
+}) {
   return (
     <div className="well p-8 sm:p-10">
       <p className="display text-3xl text-[var(--ink)]">{title}</p>
       <p className="mt-3 max-w-md text-[0.95rem] leading-relaxed text-[var(--muted)]">{body}</p>
       <Link
-        href="/docs"
+        href={linkHref}
         className="mono mt-6 inline-flex items-center gap-2 text-sm text-[var(--ink)] underline-offset-4 transition-colors hover:text-[var(--signal)] hover:underline"
       >
-        Read the docs
+        {linkLabel}
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
           <path d="M5 12h14M13 6l6 6-6 6" />
         </svg>
