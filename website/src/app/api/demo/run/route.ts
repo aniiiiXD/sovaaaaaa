@@ -43,7 +43,7 @@ export async function POST(request: Request) {
       const response = await inference.chat(new Request("https://sova.internal/api/v1/chat/completions", {
         method: "POST", signal,
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${process.env.SOVA_API_KEY}` },
-        body: JSON.stringify({ model: "fin-o1-14b", messages: [{ role: "system", content: system }, { role: "user", content: prompt }], stream: false, max_tokens: warmup ? 32 : 2048, temperature: 0.2 }),
+        body: JSON.stringify({ model: "qwen3-4b", messages: [{ role: "system", content: system }, { role: "user", content: prompt }], stream: false, max_tokens: warmup ? 32 : 2048, temperature: 0.2 }),
       }));
       if (!response.ok) {
         await response.body?.cancel();

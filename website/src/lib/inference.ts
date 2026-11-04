@@ -5,7 +5,7 @@ import { getPortalStore } from "./portal-store.ts";
 import type { VllmBackend } from "./vllm.ts";
 import { inferenceConfigured } from "./serving-config.ts";
 
-const MODEL = "fin-o1-14b";
+const MODEL = "qwen3-4b";
 const UPSTREAM = "https://api.fireworks.ai/inference/v1/chat/completions";
 const MAX_BODY = 128 * 1024;
 const MAX_ACTIVE = 4;

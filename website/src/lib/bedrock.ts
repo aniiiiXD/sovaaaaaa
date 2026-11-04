@@ -6,7 +6,7 @@ import {
 } from "@aws-sdk/client-bedrock-runtime";
 import { awsCredentialsProvider } from "@vercel/oidc-aws-credentials-provider";
 
-const MODEL = "fin-o1-14b";
+const MODEL = "qwen3-4b";
 
 // Bedrock sends JSON payloads inside AWS EventStream events. Convert each payload
 // to an OpenAI SSE event; never forward AWS exception details to API clients.

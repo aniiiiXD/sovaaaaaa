@@ -1,6 +1,6 @@
 type Environment = Record<string, string | undefined>;
 
-const MODEL = "fin-o1-14b";
+const MODEL = "qwen3-4b";
 
 // vLLM speaks the OpenAI API. The base URL is operator-provided via
 // SOVA_VLLM_BASE_URL and OpenAI endpoint paths are appended to it. Timeouts

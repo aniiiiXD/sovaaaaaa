@@ -11,7 +11,7 @@ const config = {
   FIREWORKS_API_KEY: "test-provider-secret",
   FIREWORKS_DEPLOYMENT: "accounts/test/deployments/private-model",
 };
-const payload = { model: "fin-o1-14b", messages: [{ role: "user", content: "Hello" }] };
+const payload = { model: "qwen3-4b", messages: [{ role: "user", content: "Hello" }] };
 const bedrockConfig = {
   SOVA_API_KEY: key, SOVA_INFERENCE_ENABLED: "true", SOVA_INFERENCE_PROVIDER: "bedrock",
   AWS_REGION: "us-east-1", BEDROCK_MODEL_ARN: "arn:aws:bedrock:us-east-1:123456789012:imported-model/abcdefgh1234",
@@ -133,17 +133,17 @@ test("model discovery is authenticated", async () => {
   const api = make();
   assert.equal(api.models(new Request("http://localhost/api/v1/models")).status, 401);
   const response = api.models(new Request("http://localhost/api/v1/models", { headers: { authorization: `Bearer ${key}` } }));
-  assert.equal((await response.json()).data[0].id, "fin-o1-14b");
+  assert.equal((await response.json()).data[0].id, "qwen3-4b");
 });
 
 test("SageMaker selection uses its endpoint configuration without Fireworks credentials", async () => {
   let called = false;
   const api = make({
-    env: () => ({ SOVA_API_KEY: key, SOVA_INFERENCE_ENABLED: "true", SOVA_INFERENCE_PROVIDER: "sagemaker", AWS_REGION: "ap-south-1", SAGEMAKER_ENDPOINT: "sova-fin-o1-14b" }),
+    env: () => ({ SOVA_API_KEY: key, SOVA_INFERENCE_ENABLED: "true", SOVA_INFERENCE_PROVIDER: "sagemaker", AWS_REGION: "ap-south-1", SAGEMAKER_ENDPOINT: "sova-qwen3-4b" }),
     sagemaker: async (body, signal, env) => {
       called = true;
-      assert.equal(body.model, "fin-o1-14b");
-      assert.equal(env.SAGEMAKER_ENDPOINT, "sova-fin-o1-14b");
+      assert.equal(body.model, "qwen3-4b");
+      assert.equal(env.SAGEMAKER_ENDPOINT, "sova-qwen3-4b");
       assert.equal(signal.aborted, false);
       return Response.json({ choices: [{ message: { content: "25%" } }] });
     },
@@ -171,7 +171,7 @@ test("Bedrock selects the server-configured imported model without Fireworks cre
   let calls = 0;
   const api = make({ env: () => bedrockConfig, bedrock: async (body, _signal, env) => {
     calls++;
-    assert.equal(body.model, "fin-o1-14b");
+    assert.equal(body.model, "qwen3-4b");
     assert.equal(env.BEDROCK_MODEL_ARN, bedrockConfig.BEDROCK_MODEL_ARN);
     return Response.json({ choices: [] });
   } });
@@ -202,7 +202,7 @@ test("Bedrock JSON transport pins ARN, strips routing parameters, preserves reas
     } };
   });
   const response = await invoke({ ...payload, stream: false }, new AbortController().signal, bedrockConfig);
-  assert.deepEqual(await response.json(), { ...result, model: "fin-o1-14b" });
+  assert.deepEqual(await response.json(), { ...result, model: "qwen3-4b" });
   assert.equal(destroyed, 1);
 });
 
@@ -218,7 +218,7 @@ test("Bedrock event stream becomes SSE preserving Unicode, reasoning, usage and 
   }
   const reader = bedrockBody(events()).getReader();
   for (const chunk of chunks) {
-    assert.equal(new TextDecoder().decode((await reader.read()).value), `data: ${JSON.stringify({ ...chunk, model: "fin-o1-14b" })}\n\n`);
+    assert.equal(new TextDecoder().decode((await reader.read()).value), `data: ${JSON.stringify({ ...chunk, model: "qwen3-4b" })}\n\n`);
   }
   assert.equal(new TextDecoder().decode((await reader.read()).value), "data: [DONE]\n\n");
   assert.equal((await reader.read()).done, true);

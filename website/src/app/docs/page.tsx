@@ -8,7 +8,7 @@ import CopyButton from "./copy-button";
 export const metadata: Metadata = {
   title: "Sova · API documentation",
   description:
-    "The Sova inference API: an OpenAI-shaped chat completions endpoint for fin-o1-14b, with per-key usage metering, streaming on the managed lane, and limits enforced server side.",
+    "The Sova inference API: an OpenAI-shaped chat completions endpoint for qwen3-4b, with per-key usage metering, streaming on the managed lane, and limits enforced server side.",
 };
 
 const BASE_URL = "https://sova-native.vercel.app/api/v1";
@@ -20,7 +20,7 @@ const CURL_BASIC = String.raw`curl https://sova-native.vercel.app/api/v1/chat/co
   -H "Authorization: Bearer $SOVA_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
-    "model": "fin-o1-14b",
+    "model": "qwen3-4b",
     "messages": [
       { "role": "system", "content": "Answer in one sentence." },
       { "role": "user", "content": "Why does a card payment take two days to settle?" }
@@ -32,7 +32,7 @@ const BASIC_RESPONSE = `{
   "id": "cmpl-9f31a2c4",
   "object": "chat.completion",
   "created": 1793868200,
-  "model": "fin-o1-14b",
+  "model": "qwen3-4b",
   "choices": [
     {
       "index": 0,
@@ -50,7 +50,7 @@ const CURL_STREAM = String.raw`curl -N https://sova-native.vercel.app/api/v1/cha
   -H "Authorization: Bearer $SOVA_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
-    "model": "fin-o1-14b",
+    "model": "qwen3-4b",
     "messages": [
       { "role": "user", "content": "Draft a two-line follow-up for a late invoice." }
     ],
@@ -59,7 +59,7 @@ const CURL_STREAM = String.raw`curl -N https://sova-native.vercel.app/api/v1/cha
     "max_tokens": 128
   }'`;
 
-const SSE_SAMPLE = `data: {"id":"cmpl-8f31a2c4","object":"chat.completion.chunk","created":1793868200,"model":"fin-o1-14b","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+const SSE_SAMPLE = `data: {"id":"cmpl-8f31a2c4","object":"chat.completion.chunk","created":1793868200,"model":"qwen3-4b","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
 
 data: {"id":"cmpl-8f31a2c4","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"content":"Payment is"},"finish_reason":null}]}
 
@@ -76,7 +76,7 @@ client = OpenAI(
 )
 
 reply = client.chat.completions.create(
-    model="fin-o1-14b",
+    model="qwen3-4b",
     messages=[
         {"role": "system", "content": "Answer in one sentence."},
         {"role": "user", "content": "What does chargeback representment mean?"},
@@ -88,7 +88,7 @@ print(reply.usage.prompt_tokens, reply.usage.completion_tokens)
 
 # Streaming works on the managed lane:
 stream = client.chat.completions.create(
-    model="fin-o1-14b",
+    model="qwen3-4b",
     messages=[{"role": "user", "content": "Draft a two-line payment follow-up."}],
     stream=True,
     stream_options={"include_usage": True},
@@ -104,7 +104,7 @@ const MODELS_CURL = String.raw`curl https://sova-native.vercel.app/api/v1/models
 const MODELS_RESPONSE = `{
   "object": "list",
   "data": [
-    { "id": "fin-o1-14b", "object": "model", "created": 0, "owned_by": "sova" }
+    { "id": "qwen3-4b", "object": "model", "created": 0, "owned_by": "sova" }
   ]
 }`;
 
@@ -118,7 +118,7 @@ const ERROR_401 = `{
 /* ------------------------------ table data ------------------------------ */
 
 const REQUEST_FIELDS: [string, string, string][] = [
-  ["model", "string", `Must be "fin-o1-14b". Any other value is rejected with 400.`],
+  ["model", "string", `Must be "qwen3-4b". Any other value is rejected with 400.`],
   [
     "messages",
     "array",
@@ -147,7 +147,7 @@ const ERROR_ROWS: [string, string, string][] = [
 ];
 
 const LIMITS: [string, string][] = [
-  ["Model", "fin-o1-14b, the only accepted value"],
+  ["Model", "qwen3-4b, the only accepted value"],
   ["Messages", "1 to 64 per request"],
   ["Message text", "Up to 16,000 UTF-8 bytes total, across all messages"],
   ["max_tokens", "Integer, 1 to 4096. Default 1024"],
@@ -291,7 +291,7 @@ export default function DocsPage() {
             One endpoint, <span className="text-[var(--signal)]">OpenAI-shaped.</span>
           </h1>
           <p className="lead mt-7">
-            Send OpenAI chat completions to <C>fin-o1-14b</C> over HTTPS. Every
+            Send OpenAI chat completions to <C>qwen3-4b</C> over HTTPS. Every
             request is metered per key, every response carries a request id, and
             every limit on this page is enforced server side.
           </p>
