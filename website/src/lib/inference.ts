@@ -238,9 +238,14 @@ export function createInferenceHandlers(deps: Dependencies = {}) {
       // Fire-and-forget per-key accounting for the customer portal; must
       // never touch or delay the response path.
       try {
-        void getPortalStore(env).recordUsage(auth.keyId, usage.prompt_tokens, usage.completion_tokens)
-          .catch(() => {});
-      } catch { /* Accounting is best-effort. */ }
+        const store = getPortalStore(env);
+        store.recordUsage(auth.keyId, usage.prompt_tokens, usage.completion_tokens)
+          .catch((cause) => {
+            console.error(JSON.stringify({ event: "usage_record_failed", keyId: auth.keyId, message: String(cause).slice(0, 300) }));
+          });
+      } catch (cause) {
+        console.error(JSON.stringify({ event: "usage_record_sync_failed", message: String(cause).slice(0, 300) }));
+      }
     };
     const onAbort = () => { status = request.signal.aborted ? 499 : 504; finish(); };
     signal.addEventListener("abort", onAbort, { once: true });
