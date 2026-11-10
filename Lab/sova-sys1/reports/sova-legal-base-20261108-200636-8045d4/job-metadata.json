@@ -1,0 +1,10 @@
+{
+  "job_name": "sova-legal-base-20261108-200636-8045d4",
+  "status": "Completed",
+  "artifact_uri": "s3://sova-finance1-artifacts-use2-169970912263/sys1/legal-baseline/sova-legal-base-20261108-200636-8045d4/output/sova-legal-base-20261108-200636-8045d4/output/model.tar.gz",
+  "artifact_sha256": "4ff54b546d2f2c083b527607b4d1f635f3d5b1ed66433fe679512633c8e35eb4",
+  "training_seconds": 881,
+  "billable_seconds": 881,
+  "previously_observed_instance_rate_usd_per_hour": 1.515,
+  "note": "The previous rate is an estimate; storage, network and actual billing may differ."
+}

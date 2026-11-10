@@ -1,0 +1,7 @@
+{
+  "base_model": "Qwen/Qwen3-4B",
+  "base_revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+  "optimizer_steps": 812,
+  "resumable_optimizer_state": false,
+  "trained_examples": 6491
+}

@@ -1,0 +1,17 @@
+{
+  "attention_layers": 0,
+  "forward_backward_seconds": 78.29983016099999,
+  "native_forward_max_abs_difference": 0.0,
+  "peak_gpu_allocated_bytes": 6441700352,
+  "peak_gpu_reserved_bytes": 7495221248,
+  "s3_artifact_access": {
+    "multipart_upload_and_read": true,
+    "probe_bytes": 32,
+    "variants": [
+      "labels_only",
+      "distilled"
+    ]
+  },
+  "synthetic_loss": 3.9890692234039307,
+  "synthetic_tokens": 8192
+}

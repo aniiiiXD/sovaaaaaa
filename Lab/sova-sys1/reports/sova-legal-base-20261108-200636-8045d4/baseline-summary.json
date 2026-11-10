@@ -1,0 +1,78 @@
+{
+  "accuracy_all_examples": 0.523625843780135,
+  "accuracy_scored_examples": 0.6026637069922308,
+  "backend": "transformers",
+  "brier_scored_examples": 0.7026281803375629,
+  "confusion": {
+    "Contradiction": {
+      "Contradiction": 24,
+      "Entailment": 15,
+      "NotMentioned": 43,
+      "Unscored": 13
+    },
+    "Entailment": {
+      "Contradiction": 58,
+      "Entailment": 286,
+      "NotMentioned": 83,
+      "Unscored": 92
+    },
+    "NotMentioned": {
+      "Contradiction": 34,
+      "Entailment": 125,
+      "NotMentioned": 233,
+      "Unscored": 31
+    }
+  },
+  "correct": 543,
+  "coverage": 0.8688524590163934,
+  "dataset": "ContractNLI",
+  "device": "cuda",
+  "documents": 61,
+  "elapsed_seconds": 654.916455926,
+  "examples": 1037,
+  "macro_f1_all_examples": 0.47622902844617326,
+  "max_input_tokens": 4096,
+  "model": "Qwen/Qwen3-4B",
+  "model_revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+  "notes": [
+    "The model is an untuned pretrained baseline; option scores are uncalibrated.",
+    "The official dev split contains repeated statements over 61 documents.",
+    "Too-long examples count as incorrect for accuracy_all_examples and as false negatives for their true class.",
+    "Only dev decision labels were loaded; document texts from other splits were read for exact-duplicate checking.",
+    "Potential pretraining contamination and near duplicates are not ruled out."
+  ],
+  "per_class": {
+    "Contradiction": {
+      "correct": 24,
+      "f1": 0.2274881516587678,
+      "precision": 0.20689655172413793,
+      "predicted": 116,
+      "recall": 0.25263157894736843,
+      "support": 95
+    },
+    "Entailment": {
+      "correct": 286,
+      "f1": 0.6052910052910053,
+      "precision": 0.6713615023474179,
+      "predicted": 426,
+      "recall": 0.5510597302504817,
+      "support": 519
+    },
+    "NotMentioned": {
+      "correct": 233,
+      "f1": 0.5959079283887467,
+      "precision": 0.649025069637883,
+      "predicted": 359,
+      "recall": 0.5508274231678487,
+      "support": 423
+    }
+  },
+  "score_calibrated": false,
+  "scored": 901,
+  "split": "official dev",
+  "test_examples_scored": false,
+  "test_labels_loaded": false,
+  "training_performed": false,
+  "unscored_context_too_long": 136,
+  "weight_dtype": "float16"
+}

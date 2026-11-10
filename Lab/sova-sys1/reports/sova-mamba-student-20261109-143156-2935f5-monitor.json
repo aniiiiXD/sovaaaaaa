@@ -1,0 +1,7 @@
+{
+  "checked_at_utc": "2026-11-09T17:26:20.690463+00:00",
+  "job_name": "sova-mamba-student-20261109-143156-2935f5",
+  "status": "Completed",
+  "phase": "Completed",
+  "message": "Training job completed. The model results are ready to collect."
+}

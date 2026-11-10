@@ -1,0 +1,247 @@
+{
+  "adapter_dtype": "float32",
+  "adapter_load_ms": 120.65377599992644,
+  "base": {
+    "context_too_long": 136,
+    "coverage": 0.8688524590163934,
+    "documents": 61,
+    "name": "base",
+    "overall": {
+      "documents": 53,
+      "end_to_end_ms": {
+        "mean": 719.251243598224,
+        "p50": 704.480646,
+        "p95": 1448.993582
+      },
+      "examples": 901,
+      "gpu_forward_ms": {
+        "mean": 700.650831199248,
+        "p50": 685.412353515625,
+        "p95": 1417.344970703125
+      },
+      "tokenization_ms": {
+        "mean": 17.97602666148723,
+        "p50": 17.662874,
+        "p95": 29.680306
+      }
+    },
+    "peak_gpu_allocated_bytes": 11563311616,
+    "peak_gpu_reserved_bytes": 22913482752,
+    "prediction_disagreements_with_saved_run": 0,
+    "requests": 1037,
+    "resident_gpu_allocated_bytes": 8053474816,
+    "resident_gpu_reserved_bytes": 10177478656,
+    "scored_requests": 901,
+    "token_buckets": {
+      "1-512": {
+        "documents": 0,
+        "end_to_end_ms": {
+          "mean": null,
+          "p50": null,
+          "p95": null
+        },
+        "examples": 0,
+        "gpu_forward_ms": {
+          "mean": null,
+          "p50": null,
+          "p95": null
+        },
+        "tokenization_ms": {
+          "mean": null,
+          "p50": null,
+          "p95": null
+        }
+      },
+      "1025-2048": {
+        "documents": 22,
+        "end_to_end_ms": {
+          "mean": 424.8668499358289,
+          "p50": 421.3825355,
+          "p95": 534.8602242000001
+        },
+        "examples": 374,
+        "gpu_forward_ms": {
+          "mean": 411.3443156359667,
+          "p50": 407.39686584472656,
+          "p95": 519.1674682617188
+        },
+        "tokenization_ms": {
+          "mean": 12.981171788770054,
+          "p50": 13.250895,
+          "p95": 15.2978575
+        }
+      },
+      "2049-4096": {
+        "documents": 27,
+        "end_to_end_ms": {
+          "mean": 1036.2272265969505,
+          "p50": 979.69403,
+          "p95": 1505.6951364999998
+        },
+        "examples": 459,
+        "gpu_forward_ms": {
+          "mean": 1011.8720764293131,
+          "p50": 957.0140380859375,
+          "p95": 1475.4898681640623
+        },
+        "tokenization_ms": {
+          "mean": 23.63459322440086,
+          "p50": 22.721801,
+          "p95": 29.916936699999997
+        }
+      },
+      "513-1024": {
+        "documents": 4,
+        "end_to_end_ms": {
+          "mean": 198.7775235,
+          "p50": 197.02212500000002,
+          "p95": 258.54879215
+        },
+        "examples": 68,
+        "gpu_forward_ms": {
+          "mean": 191.09326149435606,
+          "p50": 189.34476470947266,
+          "p95": 248.74101715087892
+        },
+        "tokenization_ms": {
+          "mean": 7.252404161764704,
+          "p50": 7.40922,
+          "p95": 9.113686
+        }
+      }
+    },
+    "warmup_requests": 3
+  },
+  "base_dtype": "float16",
+  "base_model_load_ms": 1789.7564170000066,
+  "batch_size": 1,
+  "cuda_version": "12.1",
+  "dataset": "ContractNLI",
+  "gpu_name": "NVIDIA A10G",
+  "gpu_total_bytes": 23686938624,
+  "limitations": [
+    "In-process warm timings include prompt construction, tokenization, device transfers, inference and reading scores.",
+    "PDF extraction, HTTP, network, model load and queuing are not included in per-request timing.",
+    "GPU forward uses synchronized CUDA events; PyTorch allocator memory excludes CUDA context and other processes.",
+    "The baseline ran before the LoRA adapter in the same process; allocator reserved memory may carry over.",
+    "136 long development decisions were rejected, not truncated or included in latency percentiles.",
+    "Token buckets contain repeated questions on 61 contracts; results are not a customer performance guarantee."
+  ],
+  "lora": {
+    "context_too_long": 136,
+    "coverage": 0.8688524590163934,
+    "documents": 61,
+    "name": "lora",
+    "overall": {
+      "documents": 53,
+      "end_to_end_ms": {
+        "mean": 751.5674578335182,
+        "p50": 738.552881,
+        "p95": 1501.424631
+      },
+      "examples": 901,
+      "gpu_forward_ms": {
+        "mean": 732.6353032559851,
+        "p50": 719.5740356445312,
+        "p95": 1469.40625
+      },
+      "tokenization_ms": {
+        "mean": 18.296309486126532,
+        "p50": 18.044167,
+        "p95": 30.033412
+      }
+    },
+    "peak_gpu_allocated_bytes": 11575108096,
+    "peak_gpu_reserved_bytes": 22932357120,
+    "prediction_disagreements_with_saved_run": 0,
+    "requests": 1037,
+    "resident_gpu_allocated_bytes": 8065271296,
+    "resident_gpu_reserved_bytes": 22932357120,
+    "scored_requests": 901,
+    "token_buckets": {
+      "1-512": {
+        "documents": 0,
+        "end_to_end_ms": {
+          "mean": null,
+          "p50": null,
+          "p95": null
+        },
+        "examples": 0,
+        "gpu_forward_ms": {
+          "mean": null,
+          "p50": null,
+          "p95": null
+        },
+        "tokenization_ms": {
+          "mean": null,
+          "p50": null,
+          "p95": null
+        }
+      },
+      "1025-2048": {
+        "documents": 22,
+        "end_to_end_ms": {
+          "mean": 448.16097376203237,
+          "p50": 445.122472,
+          "p95": 561.73758225
+        },
+        "examples": 374,
+        "gpu_forward_ms": {
+          "mean": 434.2937935405874,
+          "p50": 430.6585693359375,
+          "p95": 546.0393249511719
+        },
+        "tokenization_ms": {
+          "mean": 13.309097155080211,
+          "p50": 13.611526999999999,
+          "p95": 15.811764799999999
+        }
+      },
+      "2049-4096": {
+        "documents": 27,
+        "end_to_end_ms": {
+          "mean": 1078.8228582091504,
+          "p50": 1022.147339,
+          "p95": 1559.5739095999998
+        },
+        "examples": 459,
+        "gpu_forward_ms": {
+          "mean": 1054.1333797679229,
+          "p50": 998.8495483398438,
+          "p95": 1528.9229248046875
+        },
+        "tokenization_ms": {
+          "mean": 23.962016198257107,
+          "p50": 23.109808,
+          "p95": 30.371212099999997
+        }
+      },
+      "513-1024": {
+        "documents": 4,
+        "end_to_end_ms": {
+          "mean": 211.32916769117654,
+          "p50": 209.598053,
+          "p95": 274.66394385
+        },
+        "examples": 68,
+        "gpu_forward_ms": {
+          "mean": 203.40159023509307,
+          "p50": 201.62201690673828,
+          "p95": 264.4860900878906
+        },
+        "tokenization_ms": {
+          "mean": 7.482457000000004,
+          "p50": 7.6131465,
+          "p95": 9.57323965
+        }
+      }
+    },
+    "warmup_requests": 3
+  },
+  "max_input_tokens": 4096,
+  "model": "Qwen/Qwen3-4B",
+  "model_revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+  "split": "official dev",
+  "test_labels_loaded": false,
+  "torch_version": "2.1.0"
+}

@@ -1,0 +1,132 @@
+{
+  "bundle_sha256": "4c1505ac53775903a8874fd1387fe939a105d53c6926d2cd9d70b2b94d5fd486",
+  "dataset": {
+    "dataset": "anespo28/fincalc-nli",
+    "examples": 4000,
+    "labels": {
+      "Contradiction": 1853,
+      "Entailment": 1512,
+      "NotMentioned": 635
+    },
+    "majority_baseline_accuracy": 0.46325,
+    "mapping": {
+      "0": "Contradiction",
+      "1": "Entailment",
+      "2": "NotMentioned"
+    },
+    "mapping_note": "FinCalc neutral is approximated by the legal model's NotMentioned label.",
+    "revision": "498b53ab487ece83d38a2ab95ac601b959d319a0",
+    "sha256": "f53eaacc749f6014cb3ee157a461f0ce110ee7df1843e148767fc10e514fa258",
+    "source": "https://huggingface.co/datasets/anespo28/fincalc-nli/blob/498b53ab487ece83d38a2ab95ac601b959d319a0/test.jsonl",
+    "split": "test",
+    "synthetic": true
+  },
+  "estimated_instance_compute_at_runtime_limit_usd": 0.7575,
+  "file_sha256": {
+    "datasets/raw/fincalc-nli/498b53ab487ece83d38a2ab95ac601b959d319a0/test.jsonl": "f53eaacc749f6014cb3ee157a461f0ce110ee7df1843e148767fc10e514fa258",
+    "reports/sova-mamba-student-20261109-143156-2935f5/tokenizer/special_tokens_map.json": "10b8c8852c1e1f70b54d9aff61728408c28971c0e97a6c5a7b2debbd1d3e9c0c",
+    "reports/sova-mamba-student-20261109-143156-2935f5/tokenizer/tokenizer.json": "d4c0d99d84af59e9126913fafe5210822963e9a3065ee43e6833b358b0c2f825",
+    "reports/sova-mamba-student-20261109-143156-2935f5/tokenizer/tokenizer_config.json": "abdb9f7d39c9ea2a0af5d1b9e7144ab36254d096bc117ac3364e55523a7e44d6",
+    "sova_bench/__init__.py": "b48c2ca50ac010be375eeefac254fe081f9cac11e8566fae7cfb0a916a0e1ef5",
+    "sova_bench/cloud_worker.py": "5768ed864fef239e2bcd60b17b051ec62de71f7457d5a8ec6af2b574448419af",
+    "sova_bench/collect_sagemaker.py": "14c2beeae4dab82f999e36df3442ad2b0512648530accd2ab63cc17321173854",
+    "sova_bench/measure.py": "ad7b17ccd82fef078289dd31eafee46f50caf1b5b64b6496face26b0127ce089",
+    "sova_bench/metrics.py": "e59f183b8f3e6f343b3586894ede564bc3981a8a7da63bf08d8b2748ecc429ed",
+    "sova_bench/submit_sagemaker.py": "3b6e78071722623486c03fe2b34321b7f03117257eae46a0cc23bcdd202d9aea",
+    "sova_data/__init__.py": "ee4f68696883a54246c7cb3d8325a901383faff8bde08ddb4cd41b58b7c88804",
+    "sova_data/loader.py": "d1ef8f901d741abc1f3d62ab3859cfa929033a3b76844bf691dea9a7790d6db9",
+    "sova_eval/__init__.py": "f830f004b693b12b694aa8fdf62d4a9f82deea16decbbb05cd5121194623186b",
+    "sova_eval/__main__.py": "de7abd5eb5362688acfa8c09eff7a94e0d9309f8dd902479b14e7e706d607893",
+    "sova_eval/baseline.py": "a8ff485e6cca25f9538712df91b280c2fe09040a127d3b2ee5707dbea9d02896",
+    "sova_eval/cloud_worker.py": "c211bbf71fb04658f0e44124922f9d05567fe9a8ff54f16f7d53c5e5bb39eb68",
+    "sova_eval/collect_sagemaker.py": "9ab781eafc740bd3c41419343925ac90afcf0822b3c5a09b0050110a69524d8f",
+    "sova_eval/submit_sagemaker.py": "f9923be86d44b3b65cfd92621a54c121e39e64f3c7b080187b118bb7e4586c4a",
+    "sova_fincalc/__init__.py": "7e1be689360a2924cafe1e04dbb12f58ddb11cba32fd9ebc6bb179e7921429a1",
+    "sova_fincalc/collect_sagemaker.py": "3c61600c6939bda81f2cb7e359fcce0750f5662d1b99fe34aa4386258f8c2c34",
+    "sova_fincalc/config.py": "f33583df4c9a693854a72b9a8f81b9cdd1ac06d720baa34645ff724f6ba608bc",
+    "sova_fincalc/dataset.py": "56edbf6bf1f5918441bc26f0d1a98ef0cbccd890c4e04966e104863f239da7a9",
+    "sova_fincalc/submit_sagemaker.py": "1e0bc639ce738e45974ecb911821b829d71181a2c6a8f618eb9fe53e348566f6",
+    "sova_fincalc/worker.py": "7e08d01201bbcfd932ad39aa7c2f072ae9563cfa5cd8091018eea9e8456170da",
+    "sova_model/__init__.py": "5f83483f859d5a006189b6e798b8a3718b60393db49e707f6bf8ec11262e42b0",
+    "sova_model/__main__.py": "f53a40012511f88a331c1ca65dc08e27a48a02628e947d9973c3205e882000d7",
+    "sova_model/mlx_scorer.py": "adeaa75aba86d1ecf3a622bb94e8b2f141fe1746538189a5f2167073f00a9d91",
+    "sova_model/prompting.py": "8c29060e0ca93550346e1a2278d2b0849396bd2862966637db8ff112ff3c7d03",
+    "sova_model/scorer.py": "078a709b8b6d474466103c08ee26e75e45659de772d0d1d573a374d5878015cb",
+    "sova_student/__init__.py": "7a3d0794f965b930455ae1a615ff788593aa7f029a68cd5d341c942d1ca9f6e7",
+    "sova_student/artifacts.py": "c3e7f8d9759f4ecb1b622b148e17cd79722bb247b21f128d4a09e17621997aeb",
+    "sova_student/bootstrap.py": "4e6b6d5b54f414457f6cae581c281769225ca4341e9049ce8db580f8bcea8b42",
+    "sova_student/cloud_worker.py": "c4f68e78bce51e0d8788a7bb0f3124c118f25a4fa4b7636565de2caac5f43024",
+    "sova_student/collect_sagemaker.py": "07ee3042cbcd778e9cdded133dcd2eb97e4b1825acc10998ca62004dc9b8c4f5",
+    "sova_student/config.py": "d9d043eabdea75972b4de7026fa5dcf9f734a649b4ab51b64e22119182b5ff37",
+    "sova_student/data.py": "b3b0779881ad2b1c741ad5d825dde3c69c605e6c480f86f35cd0d3302d4b9161",
+    "sova_student/evaluation.py": "9ecb0604597ec630a1a47259293784d75d058a5c7069b385e6a2585017e44c92",
+    "sova_student/fetch_student.py": "3504ef830d5c17fa9713ad5332019dd9e9d3ede1ab61b6b8e793be36783b4226",
+    "sova_student/inference.py": "92ea7a7002ccbb1b13b7f601ac2e3e9448743cf3e455d42634b06bfe9da3d996",
+    "sova_student/loss.py": "d5f25f4d0ec1ec84cc0a0ea1904d062052dcaa2fa4f256f151abd51f9c1750b6",
+    "sova_student/model.py": "4c1dd125f74842d6c810f19311d9f054d5aa4ddf7f9469d6d3b9e928d5f8afb3",
+    "sova_student/runtime.py": "292c72c362df5ab1b0a62526b0c3f6605a360ae33e6145e2eb32c45ce2b77554",
+    "sova_student/s3_preflight.py": "b35683787366856f609a5b39bdcaacc24879123c97b763e2c5258420dbbbd5d4",
+    "sova_student/service.py": "25e7a9cb83764ebe0d87ba80b07b376228e7a528b9a4a3a470c0c89db1df2313",
+    "sova_student/submit_sagemaker.py": "b64f3ac6e5c1da35de12b9ad579b14be385459056e0890948bbe76b60e6ab8d0",
+    "sova_student/teacher.py": "c9696754c44022e4c978e63cb80f33de5e42045faa0dd4c5fdc6794c4a1db36a",
+    "sova_student/train.py": "0ab95b013de2fcccff275c9c2be20abd473423d57b6bdf4a9030897b2682ff94"
+  },
+  "input": "s3://sova-finance1-artifacts-use2-169970912263/sys1/finance-transfer/sova-fincalc-20261110-075915-f9a587/input/",
+  "instance_type": "ml.g5.2xlarge",
+  "job_arn": "arn:aws:sagemaker:us-east-2:169970912263:training-job/sova-fincalc-20261110-075915-f9a587",
+  "job_name": "sova-fincalc-20261110-075915-f9a587",
+  "max_runtime_seconds": 1800,
+  "output": "s3://sova-finance1-artifacts-use2-169970912263/sys1/finance-transfer/sova-fincalc-20261110-075915-f9a587/output/",
+  "price_note": "Prior observed rate, not a live quote; storage, transfer and taxes are extra.",
+  "prior_instance_rate_usd_per_hour": 1.515,
+  "profile": "passkarwado",
+  "region": "us-east-2",
+  "request": {
+    "AlgorithmSpecification": {
+      "ContainerEntrypoint": [
+        "bash",
+        "-c",
+        "mkdir -p /opt/ml/sova-fincalc && tar -xzf /opt/ml/input/data/code/bundle.tar.gz -C /opt/ml/sova-fincalc && cd /opt/ml/sova-fincalc && python3 -m sova_student.bootstrap && exec python3 -m sova_fincalc.worker"
+      ],
+      "TrainingImage": "763104351884.dkr.ecr.us-east-2.amazonaws.com/pytorch-training:2.1.0-gpu-py310-cu121-ubuntu20.04-ec2",
+      "TrainingInputMode": "File"
+    },
+    "EnableManagedSpotTraining": false,
+    "InputDataConfig": [
+      {
+        "ChannelName": "code",
+        "DataSource": {
+          "S3DataSource": {
+            "S3DataType": "S3Prefix",
+            "S3Uri": "s3://sova-finance1-artifacts-use2-169970912263/sys1/finance-transfer/sova-fincalc-20261110-075915-f9a587/input/"
+          }
+        }
+      },
+      {
+        "ChannelName": "student",
+        "DataSource": {
+          "S3DataSource": {
+            "S3DataType": "S3Prefix",
+            "S3Uri": "s3://sova-finance1-artifacts-use2-169970912263/sys1/legal-student/sova-mamba-student-20261109-143156-2935f5/models/distilled/"
+          }
+        }
+      }
+    ],
+    "OutputDataConfig": {
+      "S3OutputPath": "s3://sova-finance1-artifacts-use2-169970912263/sys1/finance-transfer/sova-fincalc-20261110-075915-f9a587/output/"
+    },
+    "ResourceConfig": {
+      "InstanceCount": 1,
+      "InstanceType": "ml.g5.2xlarge",
+      "VolumeSizeInGB": 50
+    },
+    "RoleArn": "arn:aws:iam::169970912263:role/sova-sagemaker-exec",
+    "StoppingCondition": {
+      "MaxRuntimeInSeconds": 1800
+    },
+    "TrainingJobName": "sova-fincalc-20261110-075915-f9a587"
+  },
+  "status": "submitted",
+  "student": "s3://sova-finance1-artifacts-use2-169970912263/sys1/legal-student/sova-mamba-student-20261109-143156-2935f5/models/distilled/",
+  "volume_gb": 50
+}

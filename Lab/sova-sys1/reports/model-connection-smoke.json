@@ -1,0 +1,16 @@
+{
+  "purpose": "One local model-connection check; not a model evaluation",
+  "model": "Qwen/Qwen3-4B-MLX-4bit",
+  "revision": "52a5ab34fa604bc8af6d3ce0cac0cab10b7eb495",
+  "backend": "mlx",
+  "example_id": "contractnli:train:295:nda-1",
+  "input_tokens": 395,
+  "scores": {
+    "Entailment": 0.5307291746139526,
+    "Contradiction": 0.05593844875693321,
+    "NotMentioned": 0.4133322834968567
+  },
+  "selected_label": "Entailment",
+  "calibrated": false,
+  "training_performed": false
+}

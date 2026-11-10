@@ -1,0 +1,9 @@
+{
+  "artifact_sha256": "216491cfb50b3b265d34849cd5f156ee3aa333d1879decdda3039bdc3e873e80",
+  "artifact_uri": "s3://sova-finance1-artifacts-use2-169970912263/sys1/finance-transfer/sova-fincalc-20261110-075915-f9a587/output/sova-fincalc-20261110-075915-f9a587/output/model.tar.gz",
+  "billable_seconds": 526,
+  "estimated_instance_cost_usd": 0.2214,
+  "job_name": "sova-fincalc-20261110-075915-f9a587",
+  "note": "Prior observed rate; storage, transfer, tax and actual billing may differ.",
+  "status": "Completed"
+}

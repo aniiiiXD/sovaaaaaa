@@ -1,0 +1,30 @@
+#!/bin/bash
+# DL Base AMI: NVIDIA driver preinstalled (proven on the Mumbai serving boxes).
+# Nothing driver-related to install: verify, then build the Python environment.
+set -euxo pipefail
+
+exec > /dev/console 2>&1   # all of this is visible via aws ec2 get-console-output
+
+echo "=== sova-train bootstrap start $(date -u +%H:%M:%S) ==="
+echo "=== driver check ==="
+nvidia-smi || echo "WARN: no GPU visible at boot"
+
+export DEBIAN_FRONTEND=noninteractive
+apt-get update -qq
+apt-get install -y -qq python3-pip python3-venv > /dev/null
+
+# venv inherits the system site packages (CUDA runtime pieces where present).
+# PIP_CONFIG_FILE=/dev/null: DL AMIs ship global pip config that can point at
+# stale indexes; force PyPI. No -q on the big install: failures must be VISIBLE.
+python3 -m venv --system-site-packages /opt/venv
+/opt/venv/bin/pip install -q --upgrade pip
+PIP_CONFIG_FILE=/dev/null /opt/venv/bin/pip install --retries 10 --timeout 60 \
+  "torch>=2.4,<3" "transformers==4.52.*" "peft>=0.14,<1" "accelerate>=0.31,<2"
+chown -R ubuntu:ubuntu /opt/venv
+
+echo "=== venv check ==="
+/opt/venv/bin/python -c "import torch; print('torch', torch.__version__, '| cuda available:', torch.cuda.is_available())"
+echo "=== sova-train bootstrap done $(date -u +%H:%M:%S) ==="
+# NOTE: no self-destruct timer. The founder's policy: the box STAYS UP once
+# spun up; phases run on it one by one. It is destroyed only on explicit
+# order ("close it"). Cost is ~$1.01/hr while standing.

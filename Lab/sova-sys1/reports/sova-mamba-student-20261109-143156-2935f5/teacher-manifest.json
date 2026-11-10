@@ -1,0 +1,16 @@
+{
+  "choice_order": [
+    "Entailment",
+    "Contradiction",
+    "NotMentioned"
+  ],
+  "context_too_long": 649,
+  "examples": 7140,
+  "note": "Teacher was trained on these same training examples; logits may be overconfident or memorized.",
+  "scored": 6491,
+  "split": "train_clean",
+  "teacher_adapter": "reports/sova-legal-lora-20261109-061959-54ad8d/adapter",
+  "teacher_max_input_tokens": 4096,
+  "teacher_model": "Qwen/Qwen3-4B",
+  "teacher_revision": "1cfa9a7208912126459214e8b04321603b3df60c"
+}

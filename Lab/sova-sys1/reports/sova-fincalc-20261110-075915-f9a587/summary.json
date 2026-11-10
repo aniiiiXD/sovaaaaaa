@@ -1,0 +1,358 @@
+{
+  "accuracy_by_kind": {
+    "absent_subject": {
+      "accuracy_all_examples": 1.0,
+      "correct": 209,
+      "examples": 209,
+      "scored": 209
+    },
+    "correct": {
+      "accuracy_all_examples": 0.0,
+      "correct": 0,
+      "examples": 1135,
+      "scored": 1135
+    },
+    "covenant_correct": {
+      "accuracy_all_examples": 0.0,
+      "correct": 0,
+      "examples": 135,
+      "scored": 135
+    },
+    "covenant_flipped": {
+      "accuracy_all_examples": 0.0,
+      "correct": 0,
+      "examples": 194,
+      "scored": 194
+    },
+    "inverted": {
+      "accuracy_all_examples": 0.0,
+      "correct": 0,
+      "examples": 157,
+      "scored": 157
+    },
+    "lookup": {
+      "accuracy_all_examples": 0.0,
+      "correct": 0,
+      "examples": 242,
+      "scored": 242
+    },
+    "missing_input": {
+      "accuracy_all_examples": 1.0,
+      "correct": 426,
+      "examples": 426,
+      "scored": 426
+    },
+    "numeric_swap": {
+      "accuracy_all_examples": 0.0,
+      "correct": 0,
+      "examples": 256,
+      "scored": 256
+    },
+    "slip": {
+      "accuracy_all_examples": 0.0,
+      "correct": 0,
+      "examples": 680,
+      "scored": 680
+    },
+    "unit": {
+      "accuracy_all_examples": 0.0,
+      "correct": 0,
+      "examples": 118,
+      "scored": 118
+    },
+    "wrong_entity": {
+      "accuracy_all_examples": 0.0,
+      "correct": 0,
+      "examples": 448,
+      "scored": 448
+    }
+  },
+  "accuracy_by_metric": {
+    "CET1 ratio": {
+      "accuracy_all_examples": 0.16314199395770393,
+      "correct": 54,
+      "examples": 331,
+      "scored": 331
+    },
+    "EBITDA margin": {
+      "accuracy_all_examples": 0.19879518072289157,
+      "correct": 66,
+      "examples": 332,
+      "scored": 332
+    },
+    "NPL coverage ratio": {
+      "accuracy_all_examples": 0.19935691318327975,
+      "correct": 62,
+      "examples": 311,
+      "scored": 311
+    },
+    "NPL ratio": {
+      "accuracy_all_examples": 0.1661807580174927,
+      "correct": 57,
+      "examples": 343,
+      "scored": 343
+    },
+    "annual interest cost": {
+      "accuracy_all_examples": 0.16147308781869688,
+      "correct": 57,
+      "examples": 353,
+      "scored": 353
+    },
+    "debt service coverage ratio": {
+      "accuracy_all_examples": 0.1554959785522788,
+      "correct": 58,
+      "examples": 373,
+      "scored": 373
+    },
+    "interest cover ratio": {
+      "accuracy_all_examples": 0.22162162162162163,
+      "correct": 82,
+      "examples": 370,
+      "scored": 370
+    },
+    "leverage": {
+      "accuracy_all_examples": 0.16,
+      "correct": 60,
+      "examples": 375,
+      "scored": 375
+    },
+    "loan-to-value ratio": {
+      "accuracy_all_examples": 0.22284122562674094,
+      "correct": 80,
+      "examples": 359,
+      "scored": 359
+    },
+    "lookup": {
+      "accuracy_all_examples": 0.0,
+      "correct": 0,
+      "examples": 498,
+      "scored": 498
+    },
+    "net debt": {
+      "accuracy_all_examples": 0.16619718309859155,
+      "correct": 59,
+      "examples": 355,
+      "scored": 355
+    }
+  },
+  "cuda_version": "12.1",
+  "dataset": {
+    "dataset": "anespo28/fincalc-nli",
+    "examples": 4000,
+    "labels": {
+      "Contradiction": 1853,
+      "Entailment": 1512,
+      "NotMentioned": 635
+    },
+    "majority_baseline_accuracy": 0.46325,
+    "mapping": {
+      "0": "Contradiction",
+      "1": "Entailment",
+      "2": "NotMentioned"
+    },
+    "mapping_note": "FinCalc neutral is approximated by the legal model's NotMentioned label.",
+    "revision": "498b53ab487ece83d38a2ab95ac601b959d319a0",
+    "sha256": "f53eaacc749f6014cb3ee157a461f0ce110ee7df1843e148767fc10e514fa258",
+    "source": "https://huggingface.co/datasets/anespo28/fincalc-nli/blob/498b53ab487ece83d38a2ab95ac601b959d319a0/test.jsonl",
+    "split": "test",
+    "synthetic": true
+  },
+  "evaluation": {
+    "accuracy_all_examples": 0.15875,
+    "accuracy_scored_examples": 0.15875,
+    "brier_scored_examples": 1.4304424981482178,
+    "confusion": {
+      "Contradiction": {
+        "Contradiction": 0,
+        "Entailment": 0,
+        "NotMentioned": 1853,
+        "Unscored": 0
+      },
+      "Entailment": {
+        "Contradiction": 0,
+        "Entailment": 0,
+        "NotMentioned": 1512,
+        "Unscored": 0
+      },
+      "NotMentioned": {
+        "Contradiction": 0,
+        "Entailment": 0,
+        "NotMentioned": 635,
+        "Unscored": 0
+      }
+    },
+    "correct": 635,
+    "coverage": 1.0,
+    "documents": 4000,
+    "examples": 4000,
+    "macro_f1_all_examples": 0.09133405249910105,
+    "per_class": {
+      "Contradiction": {
+        "correct": 0,
+        "f1": 0.0,
+        "precision": 0.0,
+        "predicted": 0,
+        "recall": 0.0,
+        "support": 1853
+      },
+      "Entailment": {
+        "correct": 0,
+        "f1": 0.0,
+        "precision": 0.0,
+        "predicted": 0,
+        "recall": 0.0,
+        "support": 1512
+      },
+      "NotMentioned": {
+        "correct": 635,
+        "f1": 0.27400215749730317,
+        "precision": 0.15875,
+        "predicted": 4000,
+        "recall": 1.0,
+        "support": 635
+      }
+    },
+    "score_calibrated": false,
+    "scored": 4000,
+    "unscored_context_too_long": 0
+  },
+  "gpu": "NVIDIA A10G",
+  "latency": {
+    "context_too_long": 0,
+    "overall": {
+      "documents": 4000,
+      "end_to_end_ms": {
+        "mean": 55.1292212325002,
+        "p50": 54.209293,
+        "p95": 56.38929825
+      },
+      "examples": 4000,
+      "gpu_forward_ms": {
+        "mean": 54.35722362232208,
+        "p50": 53.43795204162598,
+        "p95": 55.56644153594971
+      },
+      "tokenization_ms": {
+        "mean": 0.4482895559999994,
+        "p50": 0.443763,
+        "p95": 0.5794214999999999
+      }
+    },
+    "peak_gpu_allocated_bytes": 1975141376,
+    "peak_gpu_reserved_bytes": 2145386496,
+    "token_buckets": {
+      "1-512": {
+        "documents": 4000,
+        "end_to_end_ms": {
+          "mean": 55.1292212325002,
+          "p50": 54.209293,
+          "p95": 56.38929825
+        },
+        "examples": 4000,
+        "gpu_forward_ms": {
+          "mean": 54.35722362232208,
+          "p50": 53.43795204162598,
+          "p95": 55.56644153594971
+        },
+        "tokenization_ms": {
+          "mean": 0.4482895559999994,
+          "p50": 0.443763,
+          "p95": 0.5794214999999999
+        }
+      },
+      "1025-2048": {
+        "documents": 0,
+        "end_to_end_ms": {
+          "mean": null,
+          "p50": null,
+          "p95": null
+        },
+        "examples": 0,
+        "gpu_forward_ms": {
+          "mean": null,
+          "p50": null,
+          "p95": null
+        },
+        "tokenization_ms": {
+          "mean": null,
+          "p50": null,
+          "p95": null
+        }
+      },
+      "2049-4096": {
+        "documents": 0,
+        "end_to_end_ms": {
+          "mean": null,
+          "p50": null,
+          "p95": null
+        },
+        "examples": 0,
+        "gpu_forward_ms": {
+          "mean": null,
+          "p50": null,
+          "p95": null
+        },
+        "tokenization_ms": {
+          "mean": null,
+          "p50": null,
+          "p95": null
+        }
+      },
+      "4097-8192": {
+        "documents": 0,
+        "end_to_end_ms": {
+          "mean": null,
+          "p50": null,
+          "p95": null
+        },
+        "examples": 0,
+        "gpu_forward_ms": {
+          "mean": null,
+          "p50": null,
+          "p95": null
+        },
+        "tokenization_ms": {
+          "mean": null,
+          "p50": null,
+          "p95": null
+        }
+      },
+      "513-1024": {
+        "documents": 0,
+        "end_to_end_ms": {
+          "mean": null,
+          "p50": null,
+          "p95": null
+        },
+        "examples": 0,
+        "gpu_forward_ms": {
+          "mean": null,
+          "p50": null,
+          "p95": null
+        },
+        "tokenization_ms": {
+          "mean": null,
+          "p50": null,
+          "p95": null
+        }
+      }
+    }
+  },
+  "limitations": [
+    "FinCalc-NLI is synthetic; its test split does not measure real customer outcomes.",
+    "The contract-trained prompt and model are unchanged; this is zero-shot finance transfer.",
+    "Neutral is approximated as NotMentioned; annotation definitions may differ.",
+    "Scores are uncalibrated and do not provide evidence or verified calculations.",
+    "Latency is warm, in-process, batch one and excludes PDF parsing, HTTP and network."
+  ],
+  "model": {
+    "attention_layers": 0,
+    "source": "s3://sova-finance1-artifacts-use2-169970912263/sys1/legal-student/sova-mamba-student-20261109-143156-2935f5/models/distilled/",
+    "source_job": "sova-mamba-student-20261109-143156-2935f5",
+    "variant": "distilled",
+    "weights_sha256": "2e5e05cddd2589d9fc11630e560c333a9a99b378997caec3c286296444e161a6"
+  },
+  "scoring_seconds": 221.853231135,
+  "torch_version": "2.1.0",
+  "warmup_examples": 3
+}

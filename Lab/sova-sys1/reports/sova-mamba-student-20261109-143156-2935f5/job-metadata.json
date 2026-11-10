@@ -1,0 +1,10 @@
+{
+  "job_name": "sova-mamba-student-20261109-143156-2935f5",
+  "status": "Completed",
+  "artifact_uri": "s3://sova-finance1-artifacts-use2-169970912263/sys1/legal-student/sova-mamba-student-20261109-143156-2935f5/output/sova-mamba-student-20261109-143156-2935f5/output/model.tar.gz",
+  "artifact_sha256": "45a81f29277889881a389d46d7b0b1b5aecb687c51f9560ca80b2ba2fb6b3667",
+  "billable_seconds": 10290,
+  "estimated_rate_usd_per_hour": 1.515,
+  "estimated_instance_cost_usd": 4.3304,
+  "note": "Estimated instance cost; storage, network and taxes may differ."
+}

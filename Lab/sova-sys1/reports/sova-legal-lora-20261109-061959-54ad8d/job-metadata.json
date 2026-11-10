@@ -1,0 +1,11 @@
+{
+  "job_name": "sova-legal-lora-20261109-061959-54ad8d",
+  "status": "Completed",
+  "artifact_uri": "s3://sova-finance1-artifacts-use2-169970912263/sys1/legal-lora/sova-legal-lora-20261109-061959-54ad8d/output/sova-legal-lora-20261109-061959-54ad8d/output/model.tar.gz",
+  "artifact_sha256": "bf937796e190b425823a7fe0ec7bcf650d489820d6f3afc06ac1a7a1445bc9a0",
+  "training_seconds": 15772,
+  "billable_seconds": 15772,
+  "estimated_rate_usd_per_hour": 1.515,
+  "estimated_instance_cost_usd": 6.6374,
+  "note": "Estimated instance cost; storage, network and actual billing may differ."
+}

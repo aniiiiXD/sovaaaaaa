@@ -1,5 +1,28 @@
 # HANDOFF — IAM fix only (for the next agent)
 
+## Status — completed 2026-11-04
+
+Created `arn:aws:iam::169970912263:policy/SovaServingDeploy` and attached it
+directly to IAM user `PassKarwado` through the AWS console. The Permissions tab
+confirms the attachment. No infrastructure was deployed and no credentials changed.
+
+Corrected three invalid action names in `infra/deploy-policy.json` before creation:
+`cloudwatch:DeleteMetricAlarms` became `cloudwatch:DeleteAlarms`; removed
+`budgets:CreateBudget` and `budgets:DeleteBudget`, which are covered by the existing
+`budgets:ModifyBudget`. AWS policy validation then showed zero errors.
+The policy retains broad resource wildcards, including IAM PassRole and
+CreateServiceLinkedRole warnings; it should not be described as least-privilege.
+
+Read-only checks with `--profile passkarwado`:
+- STS identity: `arn:aws:iam::169970912263:user/PassKarwado`.
+- EC2 DescribeAvailabilityZones in us-east-2: `us-east-2a`.
+- ELBv2 DescribeLoadBalancers in us-east-2: succeeded, zero load balancers.
+- Budgets DescribeBudgets: succeeded (empty response).
+- IAM GetRole for `sova-serving-instance-role`: `NoSuchEntity`, not AccessDenied;
+  authorization works, but this role does not exist.
+
+The original instructions below are retained for context; do not recreate the policy.
+
 One job: give the IAM user `PassKarwado` permission to deploy the serving stack. Nothing else.
 
 ## Blocker

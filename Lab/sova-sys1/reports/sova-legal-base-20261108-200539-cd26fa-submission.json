@@ -1,0 +1,32 @@
+{
+  "bundle_files": [
+    "datasets/processed/contractnli/statements.json",
+    "datasets/processed/contractnli/documents/train_clean.jsonl",
+    "datasets/processed/contractnli/documents/dev.jsonl",
+    "datasets/processed/contractnli/documents/test.jsonl",
+    "datasets/processed/contractnli/decisions/dev.jsonl",
+    "sova_data/__init__.py",
+    "sova_data/loader.py",
+    "sova_model/__init__.py",
+    "sova_model/__main__.py",
+    "sova_model/mlx_scorer.py",
+    "sova_model/prompting.py",
+    "sova_model/scorer.py",
+    "sova_eval/__init__.py",
+    "sova_eval/__main__.py",
+    "sova_eval/baseline.py",
+    "sova_eval/cloud_worker.py",
+    "sova_eval/submit_sagemaker.py"
+  ],
+  "bundle_sha256": "a31b64b673bf7cd16909375f6afd09b93163615dfc419b93db354fc9c1fb382e",
+  "input": "s3://sova-finance1-artifacts-use2-169970912263/sys1/legal-baseline/sova-legal-base-20261108-200539-cd26fa/input/",
+  "instance_type": "ml.g5.2xlarge",
+  "job_name": "sova-legal-base-20261108-200539-cd26fa",
+  "max_runtime_seconds": 3600,
+  "note": "Unquantized FP16 Qwen3-4B; only validation labels included.",
+  "output": "s3://sova-finance1-artifacts-use2-169970912263/sys1/legal-baseline/sova-legal-base-20261108-200539-cd26fa/output/",
+  "profile": "passkarwado",
+  "region": "us-east-2",
+  "status": "rejected_before_start",
+  "failure": "SageMaker rejected a container entrypoint longer than 256 characters; no instance was started."
+}

@@ -1,0 +1,10 @@
+{
+  "job_name": "sova-legal-bench-20261109-124257-582bda",
+  "status": "Completed",
+  "artifact_uri": "s3://sova-finance1-artifacts-use2-169970912263/sys1/legal-benchmark/sova-legal-bench-20261109-124257-582bda/output/sova-legal-bench-20261109-124257-582bda/output/model.tar.gz",
+  "artifact_sha256": "7d7ae487c561246262534dd3d45e0257c092e710c963fe2609b1cf0df0d96a86",
+  "billable_seconds": 1528,
+  "estimated_rate_usd_per_hour": 1.515,
+  "estimated_instance_cost_usd": 0.643,
+  "note": "Estimate excludes storage, transfer and taxes; actual billing may differ."
+}

@@ -1,0 +1,6 @@
+# Original datasets and generated data are stored locally, not in Git.
+datasets/raw/
+datasets/processed/
+datasets/manifests/
+__pycache__/
+*.pyc

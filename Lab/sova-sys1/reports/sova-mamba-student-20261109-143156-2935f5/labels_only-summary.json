@@ -1,0 +1,236 @@
+{
+  "accuracy": {
+    "accuracy_all_examples": 0.7107039537126326,
+    "accuracy_scored_examples": 0.7107039537126326,
+    "attention_layers": 0,
+    "brier_scored_examples": 0.38742257675164027,
+    "confusion": {
+      "Contradiction": {
+        "Contradiction": 51,
+        "Entailment": 20,
+        "NotMentioned": 24,
+        "Unscored": 0
+      },
+      "Entailment": {
+        "Contradiction": 15,
+        "Entailment": 416,
+        "NotMentioned": 88,
+        "Unscored": 0
+      },
+      "NotMentioned": {
+        "Contradiction": 34,
+        "Entailment": 119,
+        "NotMentioned": 270,
+        "Unscored": 0
+      }
+    },
+    "correct": 737,
+    "coverage": 1.0,
+    "dataset": "ContractNLI",
+    "documents": 61,
+    "examples": 1037,
+    "macro_f1_all_examples": 0.6561861639831035,
+    "model": "state-spaces/mamba2-370m",
+    "model_revision": "0eb4c69a118dc9b7568ce0b52990dc8f99967983",
+    "per_class": {
+      "Contradiction": {
+        "correct": 51,
+        "f1": 0.523076923076923,
+        "precision": 0.51,
+        "predicted": 100,
+        "recall": 0.5368421052631579,
+        "support": 95
+      },
+      "Entailment": {
+        "correct": 416,
+        "f1": 0.7746741154562383,
+        "precision": 0.7495495495495496,
+        "predicted": 555,
+        "recall": 0.8015414258188824,
+        "support": 519
+      },
+      "NotMentioned": {
+        "correct": 270,
+        "f1": 0.6708074534161491,
+        "precision": 0.7068062827225131,
+        "predicted": 382,
+        "recall": 0.6382978723404256,
+        "support": 423
+      }
+    },
+    "score_calibrated": false,
+    "scored": 1037,
+    "split": "official dev",
+    "student_max_input_tokens": 8192,
+    "test_examples_scored": false,
+    "test_labels_loaded": false,
+    "unscored_context_too_long": 0,
+    "variant": "labels_only"
+  },
+  "latency": {
+    "context_too_long": 0,
+    "overall": {
+      "documents": 61,
+      "end_to_end_ms": {
+        "mean": 75.95692635776275,
+        "p50": 64.152446,
+        "p95": 122.058113
+      },
+      "examples": 1037,
+      "gpu_forward_ms": {
+        "mean": 68.42325672602125,
+        "p50": 58.31475067138672,
+        "p95": 108.4653579711914
+      },
+      "tokenization_ms": {
+        "mean": 7.002935256509157,
+        "p50": 6.481419,
+        "p95": 13.090806399999998
+      }
+    },
+    "peak_gpu_allocated_bytes": 2223074816,
+    "peak_gpu_reserved_bytes": 2506096640,
+    "resident_gpu_allocated_bytes": 1534075392,
+    "resident_gpu_reserved_bytes": 2447376384,
+    "token_buckets": {
+      "1-512": {
+        "documents": 0,
+        "end_to_end_ms": {
+          "mean": null,
+          "p50": null,
+          "p95": null
+        },
+        "examples": 0,
+        "gpu_forward_ms": {
+          "mean": null,
+          "p50": null,
+          "p95": null
+        },
+        "tokenization_ms": {
+          "mean": null,
+          "p50": null,
+          "p95": null
+        }
+      },
+      "1025-2048": {
+        "documents": 22,
+        "end_to_end_ms": {
+          "mean": 61.441309363636336,
+          "p50": 61.2987515,
+          "p95": 64.15951495
+        },
+        "examples": 374,
+        "gpu_forward_ms": {
+          "mean": 56.74027416412843,
+          "p50": 56.63385581970215,
+          "p95": 58.79941253662109
+        },
+        "tokenization_ms": {
+          "mean": 4.2259644278074875,
+          "p50": 4.28134,
+          "p95": 5.174257
+        }
+      },
+      "2049-4096": {
+        "documents": 27,
+        "end_to_end_ms": {
+          "mean": 73.41355991067542,
+          "p50": 70.802823,
+          "p95": 90.8785081
+        },
+        "examples": 459,
+        "gpu_forward_ms": {
+          "mean": 65.10298615499259,
+          "p50": 62.577598571777344,
+          "p95": 80.32634887695312
+        },
+        "tokenization_ms": {
+          "mean": 7.779234851851855,
+          "p50": 7.558315,
+          "p95": 10.0325519
+        }
+      },
+      "4097-8192": {
+        "documents": 8,
+        "end_to_end_ms": {
+          "mean": 132.7918088235295,
+          "p50": 120.575055,
+          "p95": 169.94404
+        },
+        "examples": 136,
+        "gpu_forward_ms": {
+          "mean": 117.74499825870289,
+          "p50": 106.90304183959961,
+          "p95": 151.27398300170898
+        },
+        "tokenization_ms": {
+          "mean": 14.307466433823532,
+          "p50": 12.8341225,
+          "p95": 17.861996
+        }
+      },
+      "513-1024": {
+        "documents": 4,
+        "end_to_end_ms": {
+          "mean": 59.2907784117647,
+          "p50": 59.020579999999995,
+          "p95": 61.8365596
+        },
+        "examples": 68,
+        "gpu_forward_ms": {
+          "mean": 56.448004105511835,
+          "p50": 56.40553665161133,
+          "p95": 58.3313404083252
+        },
+        "tokenization_ms": {
+          "mean": 2.4271901911764693,
+          "p50": 2.475611,
+          "p95": 3.1277245
+        }
+      }
+    },
+    "warmup_requests": 4
+  },
+  "matched_qwen_latency": {
+    "matched_examples": 901,
+    "note": "Same source decisions and GPU type, but separate jobs and different tokenizers/prompts.",
+    "qwen_p50_ms": 738.552881,
+    "qwen_p95_ms": 1501.424631,
+    "student_p50_ms": 63.321147,
+    "student_p95_ms": 90.351365
+  },
+  "matched_teacher_accuracy": {
+    "matched_documents": 53,
+    "matched_examples": 901,
+    "student_accuracy": 0.7036625971143174,
+    "student_correct": 634,
+    "student_scored_teacher_unscored": 136,
+    "teacher_accuracy": 0.8601553829078802,
+    "teacher_correct": 775,
+    "teacher_scored_student_unscored": 0
+  },
+  "training": {
+    "autocast": "float16",
+    "checkpoint_layers": true,
+    "elapsed_seconds": 2528.6435408899997,
+    "epochs": 1,
+    "examples_with_teacher": 0,
+    "gradient_accumulation": 8,
+    "learning_rate": 2e-05,
+    "mean_distillation_loss_on_teacher_examples": null,
+    "mean_gold_loss": 0.7461230514493482,
+    "mean_loss": 0.7461230514493482,
+    "optimizer_steps": 889,
+    "peak_gpu_allocated_bytes": 8744204800,
+    "peak_gpu_reserved_bytes": 12880707584,
+    "seed": 20261109,
+    "teacher_weight": null,
+    "temperature": null,
+    "trainable_dtype": "float32",
+    "trainable_parameters": 368349699,
+    "trained_examples": 7106,
+    "variant": "labels_only",
+    "warmup_steps": 44,
+    "weight_decay": 0.01
+  }
+}

@@ -1,9 +1,0 @@
-# Virtualenvs (each lab has its own; identical install)
-.venv/
-
-# Python
-__pycache__/
-*.pyc
-
-# macOS
-.DS_Store

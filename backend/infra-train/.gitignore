@@ -1,0 +1,6 @@
+sova_train_key
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!terraform.tfvars.example
