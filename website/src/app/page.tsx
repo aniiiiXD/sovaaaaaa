@@ -14,14 +14,14 @@ import s from "./dojo.module.css";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Clove — APIs that do the job",
+  title: "Clove | Own your AI",
   description: "Financial analysis, engineering, and reasoning through one OpenAI-compatible API. Explore task presets, example requests, and custom models for your workflow.",
   alternates: { canonical: "/" },
   openGraph: {
     url: "/",
     siteName: "Clove",
     type: "website",
-    title: "Clove — APIs that do the job",
+    title: "Clove | Own your AI",
     description: "Choose a task. Send a question. Put the answer to work.",
     images: [{ url: "/images/sova-dojo-watercolor.png", width: 1672, height: 941, alt: "A watercolor of Clove’s lakeside model dojo" }],
   },
@@ -66,7 +66,7 @@ export default function Home() {
           <div className={s.heroWash} aria-hidden="true" />
           <div className={`${s.wrap} ${s.heroContent}`}>
             <p className={s.heroLabel}><span aria-hidden="true" /> Intelligence, through an API</p>
-            <h1 id="hero-title">APIs that<br />do the job.</h1>
+            <h1 id="hero-title">Own your AI. Sovereign Intelligence.</h1>
             <p className={s.heroDescription}>Financial analysis. Engineering. Reasoning. Choose a task, send your question, and put the answer to work in your product.</p>
             <div className={s.heroActions}>
               <a href="#apis" className={s.primary}>Explore the APIs <Arrow down /></a>

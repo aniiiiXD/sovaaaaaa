@@ -1,6 +1,6 @@
 .explorer {
   color: var(--ink, #34474a);
-  font-family: var(--font-geist-sans), sans-serif;
+  font-family: var(--font-ibm-plex-sans), sans-serif;
   min-width: 0;
 }
 
@@ -41,7 +41,7 @@
 .intro { display: flex; align-items: flex-start; justify-content: space-between; gap: 40px; margin-bottom: 29px; }
 .intro > div { min-width: 0; max-width: 670px; }
 .model { font-family: var(--font-roboto-mono), monospace; font-size: 11px; color: var(--signal, #8e5b4f); margin: 0 0 15px; }
-.title { font-family: var(--font-instrument), Georgia, serif; font-weight: 400; font-size: clamp(32px, 3.2vw, 46px); line-height: 1.1; letter-spacing: -.02em; margin: 0; max-width: 26ch; text-wrap: balance; }
+.title { font-family: var(--font-roboto-flex), sans-serif; font-weight: 400; font-size: clamp(32px, 3.2vw, 46px); line-height: 1.1; letter-spacing: -.02em; margin: 0; max-width: 26ch; text-wrap: balance; }
 .description { margin: 16px 0 0; max-width: 62ch; color: var(--muted, #56635f); font-size: 14px; line-height: 1.8; }
 .preset { margin: 3px 0 0; font-size: 11px; color: var(--muted, #56635f); line-height: 1.6; white-space: nowrap; }
 .example { display: grid; grid-template-columns: minmax(0, 1fr) 42px minmax(0, 1fr); align-items: stretch; background: #34474a06; }

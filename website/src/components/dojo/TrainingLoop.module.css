@@ -80,7 +80,7 @@
 .panel[hidden] { display: none; }
 .journalMeta { display: flex; justify-content: space-between; gap: 1rem; color: var(--journal-muted); border-bottom: 1px solid var(--journal-rule); padding-bottom: 1rem; }
 .journalMeta > span:last-child { color: var(--journal-red); white-space: nowrap; }
-.title { margin: 1.9rem 0 1rem; font-family: var(--font-instrument), Georgia, serif; font-weight: 400; font-size: clamp(2.2rem, 3.3vw, 3.2rem); line-height: 1.06; letter-spacing: -0.025em; text-wrap: balance; }
+.title { margin: 1.9rem 0 1rem; font-family: var(--font-roboto-flex), sans-serif; font-weight: 400; font-size: clamp(2.2rem, 3.3vw, 3.2rem); line-height: 1.06; letter-spacing: -0.025em; text-wrap: balance; }
 .body { max-width: 58ch; margin: 0; font-size: 0.94rem; line-height: 1.8; color: var(--journal-muted); }
 .board { margin-top: 1.8rem; padding: 1.25rem 1.5rem; background: rgba(52, 71, 74, 0.025); }
 .boardLabel { margin: 0 0 1.15rem; color: var(--journal-muted); }

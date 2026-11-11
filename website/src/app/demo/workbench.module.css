@@ -1,4 +1,4 @@
-.shell { --bg: #101b2b; --panel: #172438; --muted: #a8b8cb; --line: #304157; --blue: #a4c9fa; min-height: 100vh; background: var(--bg); color: #f0f4fa; font-family: var(--font-geist-sans), sans-serif; padding: 0 5vw; }
+.shell { --bg: #101b2b; --panel: #172438; --muted: #a8b8cb; --line: #304157; --blue: #a4c9fa; min-height: 100vh; background: var(--bg); color: #f0f4fa; font-family: var(--font-ibm-plex-sans), sans-serif; padding: 0 5vw; }
 .shell button, .shell input, .shell textarea { font: inherit; }
 .shell button, .shell a { -webkit-tap-highlight-color: transparent; }
 .shell button { cursor: pointer; }

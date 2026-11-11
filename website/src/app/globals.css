@@ -1,10 +1,11 @@
 @import "tailwindcss";
 
 /* ============================================================
-   SOVA — dark cinematic + liquid glass
+   Clove — shared interface tokens
    Near-black base, near-white ink, monochrome glass surfaces with a
    masked gradient border, and vermilion reserved only as a live signal.
-   Display = Instrument Serif, body = Geist, utility = Geist Mono.
+   Display = Roboto Flex, body = IBM Plex Sans, UI = Roboto.
+   Instrument Serif is retained for the wordmark; code uses Roboto Mono.
    ============================================================ */
 :root {
   --paper:    #0A0A0C;   /* page ground — near-black */
@@ -29,8 +30,9 @@
 }
 
 @theme inline {
-  --font-display: var(--font-instrument);
-  --font-sans:    var(--font-geist-sans);
+  --font-display: var(--font-roboto-flex);
+  --font-sans:    var(--font-ibm-plex-sans);
+  --font-ui:      var(--font-roboto);
   --font-mono:    var(--font-roboto-mono);
 
   --color-paper:   var(--paper);
@@ -86,11 +88,11 @@
 
 @layer components {
   /* --- type --- */
-  .font-display { font-family: var(--font-display), serif; }
+  .font-display { font-family: var(--font-display), sans-serif; }
   .mono { font-family: var(--font-mono), monospace; }
 
   .display {
-    font-family: var(--font-display), serif;
+    font-family: var(--font-display), sans-serif;
     font-weight: 400;
     letter-spacing: -0.015em;
     line-height: 1.03;

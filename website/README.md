@@ -2,7 +2,9 @@
 
 Clove's landing page lives in `website/` within
 [aniiiiXD/sovaaaaaa](https://github.com/aniiiiXD/sovaaaaaa).
-It retains Sova's owl mark, paper palette, dojo artwork, and typography.
+It retains Sova's owl mark, paper palette, and dojo artwork. Roboto Flex sets
+the headings, IBM Plex Sans the body, and Roboto the interface labels.
+The wordmark retains Instrument Serif, and code samples retain Roboto Mono.
 
 ## Deployment target
 
