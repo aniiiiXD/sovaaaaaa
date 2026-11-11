@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { BOOKING_URL, CONTACT_EMAIL, CONTACT_MAILTO } from "@/lib/site";
+import { BOOKING_URL, CONTACT_EMAIL, CONTACT_MAILTO, PRODUCT_ORIGIN } from "@/lib/site";
 import s from "./Chrome.module.css";
 
-const PRODUCT = [["Explore the APIs", "/#apis"], ["Model catalog", "/models"], ["Demo", "/demo"], ["Documentation", "/docs"], ["Developer portal", "/portal"]] as const;
+const PRODUCT = [["Explore the APIs", "/#apis"], ["Model catalog", `${PRODUCT_ORIGIN}/models`], ["Demo", "/demo"], ["Documentation", `${PRODUCT_ORIGIN}/docs`], ["Developer portal", `${PRODUCT_ORIGIN}/portal`]] as const;
 const STUDIO = [["About Clove", "/about"], ["Careers", "/careers"], ["Get in touch", "/#contact"]] as const;
 
 export default function DojoFooter() {

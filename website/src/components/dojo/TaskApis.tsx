@@ -2,6 +2,7 @@
 
 import { useId, useRef, useState, type KeyboardEvent } from "react";
 import Link from "next/link";
+import { PRODUCT_ORIGIN } from "@/lib/site";
 import s from "./TaskApis.module.css";
 
 const TASKS = [
@@ -41,7 +42,7 @@ function requestFor(task: Task) {
     max_tokens: 256,
   }, null, 2);
 
-  return String.raw`curl https://sova-native.vercel.app/api/v1/chat/completions \
+  return String.raw`curl ${PRODUCT_ORIGIN}/api/v1/chat/completions \
   -H "Authorization: Bearer $SOVA_API_KEY" \
   -H "Content-Type: application/json" \
   -d '${body.replace(/'/g, "'\\''")}'`;
@@ -132,9 +133,9 @@ export default function TaskApis() {
           <p className={s.copyStatus} role="status" aria-live="polite">{copyStatus === "copied" ? "Request copied." : copyStatus === "error" ? "Copy is unavailable. Select the request above to copy it manually." : ""}</p>
         </div>
 
-        <div className={s.links}><Link href="/docs/api-reference/chat-completions">Read the API reference <Arrow /></Link><Link href="/portal">Open the developer portal <Arrow /></Link></div>
+        <div className={s.links}><Link href={`${PRODUCT_ORIGIN}/docs/api-reference/chat-completions`}>Read the API reference <Arrow /></Link><Link href={`${PRODUCT_ORIGIN}/portal`}>Open the developer portal <Arrow /></Link></div>
       </div>)}
-      <p className={s.catalogNote}>These task presets use a shared base model with server-side instructions. <Link href="/models">Explore the full model catalog.</Link></p>
+      <p className={s.catalogNote}>These task presets use a shared base model with server-side instructions. <Link href={`${PRODUCT_ORIGIN}/models`}>Explore the full model catalog.</Link></p>
     </div>
   );
 }

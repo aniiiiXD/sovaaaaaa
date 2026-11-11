@@ -30,8 +30,9 @@ The contact form uses `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, and optional
 `NOTIFICATION_EMAIL` as the recipient when `CONTACT_TO_EMAIL` is absent.
 Set `NEXT_PUBLIC_CONTACT_EMAIL` to display a public email address.
 
-API examples retain the existing `sova-native.vercel.app` endpoint, model IDs,
-and key format. The landing rebrand does not migrate the API or portal's
+API examples and product-service links retain the existing
+`sova-native.vercel.app` deployment, model IDs, and key format. The landing
+rebrand does not migrate the API or portal's
 database, authentication, or AWS access. Configure and verify those services
 separately before relying on them in `clove-landing`.
 

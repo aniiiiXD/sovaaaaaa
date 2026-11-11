@@ -3,7 +3,7 @@ import DemoWorkbench from "./workbench";
 import { demoAvailability } from "@/lib/serving-config";
 
 export const metadata: Metadata = {
-  title: "Sova Studio | Finance workflow demo",
+  title: "Clove Studio | Finance workflow demo",
   description: "Run a finance workflow, inspect its calculations, and scope a pilot on your own data.",
   robots: { index: false, follow: false },
 };

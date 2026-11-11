@@ -2,14 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { BOOKING_URL } from "@/lib/site";
+import { BOOKING_URL, PRODUCT_ORIGIN } from "@/lib/site";
 import s from "./Chrome.module.css";
 
 const LINKS = [
   ["APIs", "/#apis"],
   ["Custom models", "/#services"],
   ["Demo", "/#live-demo"],
-  ["Docs", "/docs"],
+  ["Docs", `${PRODUCT_ORIGIN}/docs`],
 ] as const;
 
 export default function DojoNav() {

@@ -7,7 +7,7 @@ import TrainingLoop from "@/components/dojo/TrainingLoop";
 import TaskApis from "@/components/dojo/TaskApis";
 import HomeDemo from "@/components/HomeDemo";
 import ContactForm from "@/components/ContactForm";
-import { BOOKING_URL } from "@/lib/site";
+import { BOOKING_URL, PRODUCT_ORIGIN } from "@/lib/site";
 import { demoAvailability } from "@/lib/serving-config";
 import s from "./dojo.module.css";
 
@@ -70,7 +70,7 @@ export default function Home() {
             <p className={s.heroDescription}>Financial analysis. Engineering. Reasoning. Choose a task, send your question, and put the answer to work in your product.</p>
             <div className={s.heroActions}>
               <a href="#apis" className={s.primary}>Explore the APIs <Arrow down /></a>
-              <Link href="/docs" className={s.textLink}>Read the docs <Arrow /></Link>
+              <Link href={`${PRODUCT_ORIGIN}/docs`} className={s.textLink}>Read the docs <Arrow /></Link>
             </div>
             <p className={s.heroOwnership}>One endpoint. Three task presets. OpenAI-compatible.</p>
           </div>
@@ -85,7 +85,7 @@ export default function Home() {
         <div className={s.demoGround}>
           <div className={`${s.wrap} ${s.demoIntro}`}><p className={s.sectionNote}>On the training floor</p><p>An inspectable finance example.<br />A recorded answer, with the source and measurements attached.</p></div>
           <HomeDemo {...demoAvailability(process.env)} />
-          <div className={`${s.wrap} ${s.demoRoute}`}><Link href="/demo" className={s.textLink}>Open the full workbench <Arrow /></Link><Link href="/docs" className={s.textLink}>Read the API docs <Arrow /></Link></div>
+          <div className={`${s.wrap} ${s.demoRoute}`}><Link href="/demo" className={s.textLink}>Open the full workbench <Arrow /></Link><Link href={`${PRODUCT_ORIGIN}/docs`} className={s.textLink}>Read the API docs <Arrow /></Link></div>
         </div>
 
         <section id="calls" className={`${s.wrap} ${s.manifesto}`} aria-labelledby="manifesto-title">
