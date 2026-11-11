@@ -25,11 +25,11 @@ export async function sendInquiry(
   }
 
   const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_TO_EMAIL;
-  const from = process.env.CONTACT_FROM_EMAIL ?? "Sova <onboarding@resend.dev>";
+  const to = process.env.CONTACT_TO_EMAIL ?? process.env.NOTIFICATION_EMAIL;
+  const from = process.env.CONTACT_FROM_EMAIL ?? "Clove <onboarding@resend.dev>";
 
   if (!apiKey || !to) {
-    console.error("Contact: RESEND_API_KEY or CONTACT_TO_EMAIL is unset.");
+    console.error("Contact: email delivery is not configured.");
     return { status: "error", message: "The form is offline. Email us instead." };
   }
 
@@ -38,7 +38,7 @@ export async function sendInquiry(
     to,
     // So hitting reply in the inbox goes straight back to the sender.
     replyTo: email,
-    subject: `Sova enquiry — ${name}`,
+    subject: `Clove enquiry — ${name}`,
     text: [
       `Name:  ${name}`,
       `Email: ${email}`,

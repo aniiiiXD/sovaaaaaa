@@ -21,14 +21,15 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "SOVA | Sovereign inference for the world",
+  title: "Clove | APIs that do the job",
   description:
-    "SOVA runs your work on models proven against your own evals: frontier quality without frontier bills, on infrastructure you control. Evals, specialist models, and an engineer on your account.",
-  metadataBase: new URL("https://sova-native.vercel.app"),
+    "Financial analysis, engineering, and reasoning through one OpenAI-compatible API. Explore task presets and custom models for your workflow.",
+  metadataBase: new URL("https://www.cloveos.com"),
   openGraph: {
-    title: "SOVA · Sovereign inference for the world",
+    title: "Clove | APIs that do the job",
     description:
-      "Your workflows deserve their own model. Evals first, specialist models second, engineers on account, on infrastructure you control.",
+      "Choose a task. Send a question. Put the answer to work.",
+    siteName: "Clove",
     type: "website",
   },
 };

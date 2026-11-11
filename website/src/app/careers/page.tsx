@@ -4,9 +4,9 @@ import Footer from "@/components/Footer";
 import { BOOKING_URL, CONTACT_MAILTO } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Careers · Sova",
+  title: "Careers · Clove",
   description:
-    "We hire slowly and only exceptional engineers. Everyone at Sova scopes, builds, and ships to production.",
+    "We hire slowly and only exceptional engineers. Everyone at Clove scopes, builds, and ships to production.",
 };
 
 const LOOKING_FOR: [string, string][] = [

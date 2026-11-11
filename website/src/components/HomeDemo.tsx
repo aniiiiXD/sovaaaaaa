@@ -141,7 +141,7 @@ export default function HomeDemo({ liveEnabled, baselineConnected, baselineLabel
 
   return <section ref={section} id="live-demo" aria-labelledby="live-demo-title" className={s.section}>
     <div className="container-x">
-      <div className={s.heading}><h2 id="live-demo-title" className={`display ${s.title}`}>One question. See the difference.</h2><p>Your workflow. Two models. The numbers underneath.</p></div>
+      <div className={s.heading}><h2 id="live-demo-title" className={`display ${s.title}`}>See the work, up close.</h2><p>A financial question. The source. An answer you can inspect.</p></div>
       <div className={s.demo}>
         <form className={s.prompt} onSubmit={event => { event.preventDefault(); run(); }}>
           <label htmlFor="comparison-question" className={s.srOnly}>Ask both models about Aster’s financial results</label>
@@ -154,8 +154,8 @@ export default function HomeDemo({ liveEnabled, baselineConnected, baselineLabel
             const result = shown[kind];
             const loading = busy.includes(kind);
             const error = dirty ? undefined : errors[kind];
-            return <section key={kind} aria-label={kind === "specialist" ? "Sova answer" : `${baselineLabel} answer`} className={s.panel}>
-              <header className={s.panelHeader}><span className={kind === "specialist" ? s.sovaMark : s.gptMark} aria-hidden="true">{kind === "specialist" ? "S" : "G"}</span><div><h3>{kind === "specialist" ? "Sova" : baselineLabel}</h3><p>{kind === "specialist" ? "Post-trained Qwen" : baselineName}</p></div><span className={s.panelStatus}>{loading ? "Answering" : result ? recorded ? "Recorded" : "Complete" : ""}</span></header>
+            return <section key={kind} aria-label={kind === "specialist" ? "Clove answer" : `${baselineLabel} answer`} className={s.panel}>
+              <header className={s.panelHeader}><span className={kind === "specialist" ? s.sovaMark : s.gptMark} aria-hidden="true">{kind === "specialist" ? "C" : "↔"}</span><div><h3>{kind === "specialist" ? "Clove" : baselineLabel}</h3><p>{kind === "specialist" ? "Fin-o1 · Qwen-based finance model" : baselineName}</p></div><span className={s.panelStatus}>{loading ? "Answering" : result ? recorded ? "Recorded" : "Complete" : ""}</span></header>
               <div className={s.answerBody} aria-busy={loading}>
                 {error ? <p className={s.error} role="alert">{error}</p> : result ? <>
                   <Answer key={`${kind}-${revision}`} text={result.brief?.summary ?? "The model did not return a structured brief. Open the response below to inspect it."} skip={skip} />
@@ -169,10 +169,10 @@ export default function HomeDemo({ liveEnabled, baselineConnected, baselineLabel
         <div className={s.playback}><span>Answer animation is a visual replay.</span>{Object.keys(shown).length > 0 && <button type="button" onClick={() => setSkip(true)}>Show full answers</button>}</div>
         <table className={s.comparison}>
           <caption className={s.srOnly}>Speed, response time and calculation accuracy comparison</caption>
-          <thead><tr><th scope="col">Results</th><th scope="col">Sova</th><th scope="col">{baselineLabel}</th></tr></thead>
+          <thead><tr><th scope="col">Results</th><th scope="col">Clove</th><th scope="col">{baselineLabel}</th></tr></thead>
           <tbody><tr><th scope="row">Speed</th><td>{value("specialist", "speed")}</td><td>{value("baseline", "speed")}</td></tr><tr><th scope="row">Time to answer</th><td>{value("specialist", "time")}</td><td>{value("baseline", "time")}</td></tr><tr><th scope="row">Accuracy on task</th><td>{value("specialist", "accuracy")}</td><td>{value("baseline", "accuracy")}</td></tr></tbody>
         </table>
-        <div className={s.footnotes}><details><summary>How we measure</summary><p>Checks cover four calculations in this fictional source, not overall accuracy. Effective speed is output tokens divided by full response time, including reasoning and waiting. The recorded Sova run took 11.083 seconds for 659 output tokens. There is no recorded frontier baseline yet. No comparative advantage has been established. Answer animations do not represent original token arrival times.</p></details><button type="button" onClick={() => setAccessOpen(true)}>Run live models ↗</button></div>
+        <div className={s.footnotes}><details><summary>How we measure</summary><p>Checks cover four calculations in this fictional source, not overall accuracy. Effective speed is output tokens divided by full response time, including reasoning and waiting. The recorded Clove run took 11.083 seconds for 659 output tokens. There is no recorded frontier baseline yet. No comparative advantage has been established. Answer animations do not represent original token arrival times.</p></details><button type="button" onClick={() => setAccessOpen(true)}>Run live models ↗</button></div>
       </div>
       <div className={s.cta}><a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn btn-primary">Talk to us <span aria-hidden="true">↗</span></a></div>
     </div>

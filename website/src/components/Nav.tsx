@@ -58,7 +58,7 @@ export default function Nav() {
       >
         <Link href="/#top" className="relative flex items-baseline gap-2">
           <span className="font-display text-[1.2rem] font-semibold tracking-[-0.03em] text-[var(--ink)] 2xl:text-[1.4rem]">
-            Sova
+            Clove
           </span>
           <span className="mono hidden text-[0.6rem] tracking-[0.22em] text-[var(--faint)] sm:inline 2xl:text-xs">
             SOVEREIGN INFERENCE
